@@ -53,7 +53,10 @@
   <div class="unlock-container">
     <h2>Shh... This page is hidden for a reason.</h2>
     <p>Enter the secret code only **you** can figure out 👀</p>
-    <input type="password" id="password" placeholder="Your guess...">
+    <div style="position: relative; display: inline-block; width: 100%;">
+  <input type="password" id="password" placeholder="Your guess..." style="padding-right: 40px; width: 100%; box-sizing: border-box;">
+  <button id="toggleBtn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">👁️</button>
+</div>
     <button onclick="checkPassword()">Unlock</button>
     <div class="message" id="message"></div>
   </div>
@@ -68,6 +71,18 @@
         document.getElementById("message").innerText = "Hmm... Try again. You’ve got this!";
       }
     }
+const toggleBtn = document.getElementById('toggleBtn');
+const passwordInput = document.getElementById('password');
+
+toggleBtn.addEventListener('click', () => {
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleBtn.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    toggleBtn.textContent = '👁️';
+  }
+});
   </script>
 </body>
 </html>
