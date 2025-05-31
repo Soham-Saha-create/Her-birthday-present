@@ -2,79 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Letter Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Letter Archives</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Georgia', serif;
-      background-color: #fff8f0;
-      color: #333;
-      padding: 40px;
-      line-height: 1.7;
+      background-color: #f9f2ec;
+      color: #4b2e2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 10px;
     }
 
     h1 {
-      color: #b24c63;
+      font-size: 2.2em;
+      margin-bottom: 20px;
       text-align: center;
+      font-family: 'Playfair Display', serif;
     }
 
-    .entry {
-      margin: 40px 0;
-      padding: 20px;
-      background: #fef2f4;
-      border-left: 6px solid #b24c63;
-      border-radius: 8px;
+    .envelope-container {
+      text-align: center;
+      margin-bottom: 40px;
+      cursor: pointer;
+      transition: transform 0.4s ease;
     }
 
-    .date {
-      font-weight: bold;
-      color: #b24c63;
+    .envelope-container:hover {
+      transform: scale(1.05);
+    }
+
+    .envelope-image {
+      width: 180px;
+      height: auto;
+      transition: transform 0.6s ease;
     }
 
     .shayari {
-      margin-top: 10px;
       font-style: italic;
-      color: #6d4c41;
-      background-color: #fff1e1;
-      padding: 10px;
-      border-left: 4px solid #d8a48f;
-      border-radius: 4px;
+      font-size: 1em;
+      margin-top: 10px;
+      color: #7a4c4c;
     }
 
-    a {
-      display: block;
-      margin-top: 30px;
-      text-align: center;
-      text-decoration: none;
-      color: #fff;
-      background-color: #b24c63;
-      padding: 12px 24px;
-      border-radius: 8px;
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
+    .letter-content {
+      display: none;
+      margin-top: 20px;
+      max-width: 600px;
+      background-color: #fffaf5;
+      border: 1px solid #cba;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+      font-size: 1.1em;
+      line-height: 1.6em;
+      animation: fadeIn 1s ease forwards;
     }
 
-    a:hover {
-      background-color: #99334d;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .letter-content {
+        padding: 20px;
+        font-size: 1em;
+      }
+
+      .shayari {
+        font-size: 0.95em;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>📜 Letter Archive</h1>
 
-  <div class="entry">
-    <div class="date">10th Floor Moment</div>
-    <p>We all sat together, but it was just her and me standing side by side, leaning against the railing. I remember the breeze, the silence between us, and how everything just slowed down for a minute. Like time paused just for us.</p>
-    <div class="shayari">"Hawa mein kuch baatein thi, uss shaam ka nasha tha,<br>Woh paas thi, magar phir bhi kuch faasla tha."</div>
+  <h1>Letter Archives</h1>
+
+  <div class="envelope-container" onclick="openLetter(this)">
+    <img src="images/envelope.png" alt="Envelope" class="envelope-image" />
+    <div class="shayari">"Tumhari muskurahat... sabse khaas paighaam hoti hai."</div>
+
+    <div class="letter-content">
+      <p>Dear you,</p>
+      <p>I don’t even know where to begin. There’s so much I’ve always wanted to say but never had the words — until now. Maybe because some feelings aren’t meant to be said out loud... they’re meant to be written.</p>
+      <p>This is one of those letters, tucked away inside a dream and sent only to the one it was meant for. You.</p>
+      <p>Forever yours,</p>
+      <p><i>Someone who's always been watching you smile.</i></p>
+    </div>
   </div>
 
-  <div class="entry">
-    <div class="date">First Bike Ride</div>
-    <p>She held onto me tighter than I expected. We roamed through empty roads, and I swear the world disappeared behind that mirror. Her laughter, the wind in her hair — something I could relive forever.</p>
-    <div class="shayari">"Peeche baithi thi woh, zindagi se chipki hui,<br>Ek pal mein sab kuch tha, jo kabhi maanga hi nahi."</div>
-  </div>
+  <script>
+    function openLetter(container) {
+      const letter = container.querySelector('.letter-content');
+      if (letter.style.display === 'block') {
+        letter.style.display = 'none';
+      } else {
+        letter.style.display = 'block';
+        letter.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  </script>
 
-  <a href="index.html">← Back to Home</a>
 </body>
 </html>
