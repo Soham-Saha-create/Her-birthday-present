@@ -11,6 +11,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
     .unlock-container {
@@ -19,30 +20,62 @@
       border-radius: 20px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       text-align: center;
-      max-width: 400px;
+      width: 90%;
+      max-width: 420px;
     }
 
-    input[type="password"] {
-  padding: 10px;
-  font-size: 16px;
-  margin-top: 15px;
-  width: 100%;      /* Make it fill the container width */
-  max-width: 300px; /* Optional: cap max width to keep it neat */
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box; /* ensures padding is included in width */
-}
+    h2 {
+      color: #333;
+      font-size: 22px;
     }
 
-    button {
+    p {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .password-wrapper input {
+      padding: 12px 45px 12px 15px;
+      font-size: 17px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .password-wrapper button#toggleBtn {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .unlock-btn {
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 12px 25px;
       background-color: #ffb6b9;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
       color: white;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .unlock-btn:hover {
+      background-color: #ff9aa2;
     }
 
     .message {
@@ -55,37 +88,40 @@
 <body>
   <div class="unlock-container">
     <h2>Shh... This page is hidden for a reason.</h2>
-    <p>Enter the secret code only **you** can figure out 👀</p>
-    <div style="position: relative; display: inline-block; width: 100%;">
-  <input type="password" id="password" placeholder="Your guess..." style="padding-right: 40px; width: 100%; box-sizing: border-box;">
-  <button id="toggleBtn" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">👁️</button>
-</div>
-    <button onclick="checkPassword()">Unlock</button>
+    <p>Enter the secret code only <strong>you</strong> can figure out 👀</p>
+
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Your guess...">
+      <button type="button" id="toggleBtn">👁️</button>
+    </div>
+
+    <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
     <div class="message" id="message"></div>
   </div>
 
   <script>
     function checkPassword() {
       const password = document.getElementById("password").value.trim().toLowerCase();
-      const correct = "chandulovesbiryani"; // your secret password here (change it!)
+      const correct = "chandulovesbiryani"; // Change this to your actual secret
       if (password === correct) {
         window.location.href = "secret.html";
       } else {
         document.getElementById("message").innerText = "Hmm... Try again. You’ve got this!";
       }
     }
-const toggleBtn = document.getElementById('toggleBtn');
-const passwordInput = document.getElementById('password');
 
-toggleBtn.addEventListener('click', () => {
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-    toggleBtn.textContent = '🙈';
-  } else {
-    passwordInput.type = 'password';
-    toggleBtn.textContent = '👁️';
-  }
-});
+    const toggleBtn = document.getElementById('toggleBtn');
+    const passwordInput = document.getElementById('password');
+
+    toggleBtn.addEventListener('click', () => {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.textContent = '🙈';
+      } else {
+        passwordInput.type = 'password';
+        toggleBtn.textContent = '👁️';
+      }
+    });
   </script>
 </body>
 </html>
