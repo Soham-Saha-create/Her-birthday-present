@@ -2,79 +2,141 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Memory Lane</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fff8f0;
+      background-color: #fff9f4;
+      margin: 0;
+      padding: 0;
       color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #ff7b9c;
+      margin-bottom: 10px;
+    }
+
+    .intro {
       max-width: 800px;
-      margin: 20px auto;
+      margin: 0 auto;
+      font-size: 1.2em;
+      padding: 0 20px 40px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .memory-block {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      max-width: 900px;
+      margin: 40px auto;
       padding: 0 20px;
     }
-    h1 {
+
+    .memory-block:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .memory-text {
+      flex: 1 1 300px;
+      padding: 20px;
+      font-size: 1.1em;
+      line-height: 1.5;
+    }
+
+    .memory-img {
+      flex: 1 1 300px;
       text-align: center;
-      color: #d1576f;
     }
-    .pic-section {
-      margin: 30px 0;
-      text-align: center;
+
+    .memory-img img {
+      max-width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .pic-section img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 15px;
-      margin: 10px 0;
-      box-shadow: 0 0 15px rgba(209, 87, 111, 0.4);
+
+    .us-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 60px 0 40px;
+      flex-wrap: wrap;
     }
-   .us-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 40px;
-}
 
-.us-btn {
-  padding: 14px 30px;
-  background-color: #ffb6b9;
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  transition: transform 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+    .us-btn {
+      padding: 14px 28px;
+      background-color: #ffc0cb;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, background-color 0.3s;
+    }
 
-.us-btn:hover {
-  transform: scale(1.05);
-}
+    .us-btn:hover {
+      background-color: #ff9aa2;
+      transform: scale(1.05);
+    }
 
+    .us-btn.disabled {
+      background-color: #ddd;
+      color: #666;
+      pointer-events: none;
+      box-shadow: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Memory Lane</h1>
+  <header>
+    <h1>Memory Lane</h1>
+  </header>
 
-  <!-- Example pictures and text -->
-  <div class="pic-section">
+  <section class="intro">
     <p>I don’t know how many times I’ve looked at your photos — from the tiny little you wrapped in a blanket, to the girl I see today who somehow carries both mischief and magic in her eyes.</p>
-    <img src="images/baby1.jpg" alt="Baby picture" />
-    <img src="images/mischievous1.jpg" alt="Mischievous moment" />
-  </div>
+  </section>
 
-  <div class="pic-section">
-    <p>This page isn’t just a bunch of pictures… it’s me reliving your journey. Your baby cheeks, your goofy school days, the glow-ups, the birthday smiles — every moment that made you you.</p>
-    <img src="images/school1.jpg" alt="School days" />
-    <img src="images/birthday1.jpg" alt="Birthday smiles" />
-  </div>
+  <section class="memory-block">
+    <div class="memory-text">
+      <p>This page isn’t just a bunch of pictures… it’s me reliving your journey. Your baby cheeks, your goofy school days, the glow-ups, the birthday smiles — every moment that made you you.</p>
+    </div>
+    <div class="memory-img">
+      <img src="images/baby.jpg" alt="Baby You" />
+    </div>
+  </section>
 
-  <div class="pic-section">
-    <p>So scroll slow. Take your time. Every picture here is a chapter, and every chapter? A reason why you became someone unforgettable to me.</p>
-  </div>
+  <section class="memory-block">
+    <div class="memory-text">
+      <p>I’ve been quietly collecting these, asking around, digging through memories, all just so I could see the story of you — the one that started way before I even knew you… but now, I can’t imagine not knowing.</p>
+    </div>
+    <div class="memory-img">
+      <img src="images/school.jpg" alt="School Days" />
+    </div>
+  </section>
 
-  <!-- New button for "Us" section -->
-  <a href="us.html" class="us-button">Our Story & Moments →</a>
+  <section class="memory-block">
+    <div class="memory-text">
+      <p>So scroll slow. Take your time. Every picture here is a chapter, and every chapter? A reason why you became someone unforgettable to me.</p>
+    </div>
+    <div class="memory-img">
+      <img src="images/random1.jpg" alt="Random Cute Moment" />
+    </div>
+  </section>
+
+  <div class="us-buttons">
+    <a href="us.html" class="us-btn">Our Story</a>
+    <a href="#" class="us-btn disabled">Moments</a>
+  </div>
 </body>
 </html>
