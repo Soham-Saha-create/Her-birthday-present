@@ -1,40 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Memory Lane</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff8f0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffafc;
       color: #333;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 20px;
-      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
     }
     h1 {
-      color: #d94f4f;
       text-align: center;
-      margin-bottom: 30px;
-      font-weight: 700;
+      color: #d14f7f;
+      margin-bottom: 40px;
     }
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 1.5em;
+    .memory-block {
+      margin-bottom: 50px;
+    }
+    .memory-block img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 15px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 15px;
+    }
+    .section-title {
+      margin-top: 50px;
+      font-size: 1.5em;
+      color: #a93463;
+      text-align: center;
+      border-bottom: 2px dashed #ffaec2;
+      padding-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Memory Lane</h1>
-  <p>
-    Hey Chandu,<br /><br />
-    I don’t know how many times I’ve looked at your photos — from the tiny little you wrapped in a blanket, to the girl I see today who somehow carries both mischief and magic in her eyes.<br /><br />
-    This page isn’t just a bunch of pictures… it’s me reliving your journey. Your baby cheeks, your goofy school days, the glow-ups, the birthday smiles — every moment that made you <em>you</em>.<br /><br />
-    I’ve been quietly collecting these, asking around, digging through memories, all just so I could see the story of you — the one that started way before I even knew you… but now, I can’t imagine not knowing.<br /><br />
-    So scroll slow. Take your time. Every picture here is a chapter, and every chapter? A reason why you became someone unforgettable to me.
-  </p>
-  <!-- You can add your photos below -->
+  <div class="container">
+    <h1>Memory Lane</h1>
+
+    <div class="memory-block">
+      <p>I don’t know how many times I’ve looked at your photos — from the tiny little you wrapped in a blanket, to the girl I see today who somehow carries both mischief and magic in her eyes.</p>
+      <img src="img1.jpg" alt="Baby pic">
+      <img src="img2.jpg" alt="Mischievous moment">
+    </div>
+
+    <div class="memory-block">
+      <p>This page isn’t just a bunch of pictures… it’s me reliving your journey. Your baby cheeks, your goofy school days, the glow-ups, the birthday smiles — every moment that made you *you*.</p>
+      <img src="img3.jpg" alt="School pic">
+      <img src="img4.jpg" alt="Birthday moment">
+    </div>
+
+    <div class="memory-block">
+      <p>I’ve been quietly collecting these, asking around, digging through memories, all just so I could see the story of you — the one that started way before I even knew you… but now, I can’t imagine not knowing.</p>
+      <img src="img5.jpg" alt="Random moment">
+      <img src="img6.jpg" alt="Recent photo">
+    </div>
+
+    <div class="memory-block">
+      <p>So scroll slow. Take your time. Every picture here is a chapter, and every chapter? A reason why you became someone unforgettable to me.</p>
+    </div>
+
+    <div class="section-title">The Memory Tree</div>
+    <div class="grid">
+      <img src="tree1.jpg" alt="Tree image 1">
+      <img src="tree2.jpg" alt="Tree image 2">
+      <img src="tree3.jpg" alt="Tree image 3">
+      <img src="tree4.jpg" alt="Tree image 4">
+      <!-- Add more as needed -->
+    </div>
+
+    <div class="section-title">Us</div>
+    <div class="grid">
+      <img src="us1.jpg" alt="Us 1">
+      <img src="us2.jpg" alt="Us 2">
+      <img src="us3.jpg" alt="Us 3">
+      <!-- Add more as needed -->
+    </div>
+  </div>
 </body>
 </html>
