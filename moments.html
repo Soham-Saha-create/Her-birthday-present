@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moments</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff6f0;
+      color: #333;
+    }
+
+    header {
+      background-color: #ffb6b9;
+      padding: 20px 40px;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .moment {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .moment img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .moment-text {
+      padding: 20px;
+    }
+
+    .moment-text h2 {
+      margin: 0 0 10px;
+      font-size: 1.5em;
+      color: #e2556c;
+    }
+
+    .moment-text p {
+      margin: 0;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-style: italic;
+      color: #777;
+    }
+
+    @media (min-width: 768px) {
+      .moment {
+        flex-direction: row;
+      }
+
+      .moment img {
+        width: 50%;
+      }
+
+      .moment-text {
+        width: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Our Sweetest Moments</h1>
+  </header>
+
+  <div class="container">
+
+    <div class="moment">
+      <img src="assets/moments/moment1.jpg" alt="Moment 1">
+      <div class="moment-text">
+        <h2>The Day We Met</h2>
+        <p>I don't know if fate was being funny or kind, but somehow — we ended up in each other's orbit. And that moment? It still lingers.</p>
+      </div>
+    </div>
+
+    <div class="moment">
+      <img src="assets/moments/moment2.jpg" alt="Moment 2">
+      <div class="moment-text">
+        <h2>That One Walk</h2>
+        <p>We weren’t in a hurry. We weren’t even saying much. Just walking, laughing — but somehow it felt like time paused just for us.</p>
+      </div>
+    </div>
+
+    <div class="moment">
+      <img src="assets/moments/moment3.jpg" alt="Moment 3">
+      <div class="moment-text">
+        <h2>The Laugh That Stuck</h2>
+        <p>It echoed. It made me smile days later. It made the worst day feel a little warmer. That laugh of yours? Unfairly perfect.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Many more to come... if you want them to.
+  </footer>
+
+</body>
+</html>
