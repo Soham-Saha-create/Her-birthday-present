@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Our Sweetest Moments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     * {
       box-sizing: border-box;
@@ -27,27 +28,27 @@
     }
 
     header h1 {
-      font-size: 3em;
+      font-size: 2.5em;
       letter-spacing: 1px;
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 700px;
       margin: 40px auto;
-      padding: 0 20px;
+      padding: 0 16px;
     }
 
     .moment {
       background-color: #fff;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      margin-bottom: 50px;
+      margin-bottom: 40px;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-in-out;
       display: flex;
       flex-direction: column;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.6s ease-in-out;
     }
 
     .moment.visible {
@@ -62,12 +63,12 @@
     }
 
     .moment-text {
-      padding: 30px;
+      padding: 24px;
     }
 
     .moment-text h2 {
       color: #e2556c;
-      font-size: 2em;
+      font-size: 1.7em;
       margin-bottom: 10px;
     }
 
@@ -78,9 +79,10 @@
 
     footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 30px 20px;
       font-style: italic;
       color: #777;
+      font-size: 1em;
     }
 
     @media (min-width: 768px) {
