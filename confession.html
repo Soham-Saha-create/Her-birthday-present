@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confession Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9f4ef;
+      color: #333;
+      padding: 20px;
+    }
+
+    .section {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-3px);
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
+      color: #e87ea2;
+    }
+
+    .section p {
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .audio-player {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .audio-player button {
+      background: #e87ea2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .audio-player button:hover {
+      background: #d4648d;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      font-style: italic;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <h2>Hey...</h2>
+    <p>// [PLACEHOLDER] — This is where your intro goes. Soft, sincere, straight from you. Maybe something like: “If you’re here… that means you really scanned that code.”</p>
+  </div>
+
+  <div class="section">
+    <p>// [PLACEHOLDER] — Here begins your heartfelt flow. The thoughts you’ve always wanted to express, piece by piece.</p>
+  </div>
+
+  <div class="section">
+    <p>// [PLACEHOLDER] — Talk about the “almosts”, the maybes, the moments you kept quiet, what your heart wanted but didn’t say.</p>
+  </div>
+
+  <div class="section">
+    <p>// [PLACEHOLDER] — Add your final touch. Maybe something like: “No expectations, no answers needed. Just wanted you to know.”</p>
+  </div>
+
+  <div class="audio-player">
+    <button onclick="document.getElementById('audio').play()">🎧 Hear me say it</button>
+    <audio id="audio" controls style="display:none;">
+      <source src="your-recorded-shayari.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="footer">
+    This page wasn’t for replies. Just for truths.
+  </div>
+
+</body>
+</html>
