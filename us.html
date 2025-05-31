@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Story</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f9e6e7, #ffe3ec);
+      color: #50394c;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+    .story-section {
+      margin-bottom: 50px;
+      position: relative;
+    }
+    .story-section p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    /* Example fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Image styles */
+    .story-pic {
+      display: block;
+      margin: 20px auto;
+      max-width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(80, 57, 76, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>Our Story</h1>
+
+  <div class="story-section fade-in" style="animation-delay: 0.2s;">
+    <p>From the moment we first met, a new chapter began — full of laughter, secrets, and moments I never want to forget.</p>
+    <img src="images/us1.jpg" alt="Our first memory" class="story-pic" />
+  </div>
+
+  <div class="story-section fade-in" style="animation-delay: 0.6s;">
+    <p>Every adventure, every silly fight, every quiet moment — they all brought us closer in ways words can’t explain.</p>
+    <img src="images/us2.jpg" alt="Fun times together" class="story-pic" />
+  </div>
+
+  <!-- More story sections to be added as you want -->
+
+</body>
+</html>
