@@ -1,182 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Letter Archives</title>
-<style>
-  body {
-    background: #f9f1e7;
-    font-family: 'Georgia', serif;
-    padding: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-  }
-
-  .envelope {
-    width: 130px;
-    height: 90px;
-    background: #fff3e0;
-    border: 2px solid #d4a373;
-    border-radius: 10px 10px 3px 3px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    position: relative;
-    cursor: pointer;
-    transform-origin: center bottom;
-    transition: box-shadow 0.3s ease;
-    --angle: 0deg; /* default */
-  }
-  .envelope:hover {
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-  }
-
-  /* The "flap" of envelope */
-  .envelope::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 130px;
-    height: 60px;
-    background: linear-gradient(135deg, #ffdbb4 0%, #f3b76b 100%);
-    border-radius: 10px 10px 0 0;
-    clip-path: polygon(0 0, 50% 60%, 100% 0);
-    z-index: 10;
-    transform-origin: center bottom;
-    transition: transform 0.6s ease;
-  }
-
-  /* Letter content hidden by default */
-  .letter-content {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 240px;
-    padding: 20px;
-    background: #fff7e6;
-    border: 1.5px solid #d4a373;
-    border-radius: 8px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    font-style: italic;
-    color: #a86a28;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    z-index: 20;
-  }
-
-  /* Show letter content when open */
-  .envelope.open .letter-content {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(15px);
-  }
-
-  /* Animate the flap opening */
-  .envelope.open::before {
-    transform: rotateX(160deg);
-    transition-timing-function: ease-in-out;
-  }
-
-  /* Animate envelope zoom and rotate */
-  @keyframes openEnvelope {
-    0% {
-      transform: scale(1) rotate(var(--angle));
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Letter Archives</title>
+  <style>
+    body {
+      background: #f9f1e7;
+      font-family: 'Georgia', serif;
+      padding: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
     }
-    50% {
-      transform: scale(1.1) rotate(calc(var(--angle) + 5deg));
-    }
-    100% {
-      transform: scale(1) rotate(var(--angle));
-    }
-  }
 
-  .envelope.open {
-    animation: openEnvelope 0.6s forwards;
-  }
+    .envelope {
+      width: 130px;
+      height: 90px;
+      background: #fff3e0;
+      border: 2px solid #d4a373;
+      border-radius: 10px 10px 3px 3px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      position: relative;
+      cursor: pointer;
+      transform: rotate(var(--angle, 0deg));
+      transition: transform 0.3s ease;
+    }
 
-  /* Shayari text below each envelope */
-  .shayari {
-    margin-top: 10px;
-    text-align: center;
-    font-family: 'Georgia', serif;
-    color: #b66e1b;
-    font-size: 0.9rem;
-    max-width: 140px;
-  }
-</style>
+    .envelope:hover {
+      transform: scale(1.05) rotate(var(--angle, 0deg));
+    }
+
+    .shayari {
+      margin-top: 10px;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      color: #b66e1b;
+      font-size: 0.9rem;
+      max-width: 140px;
+    }
+
+    /* Modal Styling */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .letter-box {
+      background: #fff7e6;
+      border: 2px solid #d4a373;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 90%;
+      padding: 30px;
+      overflow-y: auto;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+      animation: unfold 0.5s ease-out;
+      font-size: 1.1rem;
+      color: #7a3e00;
+      font-family: 'Georgia', serif;
+      position: relative;
+    }
+
+    @keyframes unfold {
+      0% {
+        transform: scale(0.7) rotateX(40deg);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1) rotateX(0);
+        opacity: 1;
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: #aa5e10;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #7a3e00;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="envelope" style="--angle: 2deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 1</strong><br />
-      “In your laughter, I find my melody.”
-    </div>
-    <div class="shayari">A laugh that lights my world.</div>
-  </div>
+<!-- Envelopes -->
+<div class="envelope" style="--angle: 2deg;" onclick="openLetter(`In your laughter, I find my melody.`)">
+  <div class="shayari">A laugh that lights my world.</div>
+</div>
 
-  <div class="envelope" style="--angle: -3deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 2</strong><br />
-      “Your eyes, a secret garden of dreams.”
-    </div>
-    <div class="shayari">A gaze I’ll never forget.</div>
-  </div>
+<div class="envelope" style="--angle: -3deg;" onclick="openLetter(`Your eyes, a secret garden of dreams.`)">
+  <div class="shayari">A gaze I’ll never forget.</div>
+</div>
 
-  <div class="envelope" style="--angle: 5deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 3</strong><br />
-      “Every moment with you is poetry in motion.”
-    </div>
-    <div class="shayari">Our moments, like verses.</div>
-  </div>
+<div class="envelope" style="--angle: 5deg;" onclick="openLetter(`Every moment with you is poetry in motion.`)">
+  <div class="shayari">Our moments, like verses.</div>
+</div>
 
-  <div class="envelope" style="--angle: -4deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 4</strong><br />
-      “Your smile turns ordinary days into magic.”
-    </div>
-    <div class="shayari">Magic in a smile.</div>
-  </div>
+<div class="envelope" style="--angle: -4deg;" onclick="openLetter(`Your smile turns ordinary days into magic.`)">
+  <div class="shayari">Magic in a smile.</div>
+</div>
 
-  <div class="envelope" style="--angle: 3deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 5</strong><br />
-      “In your warmth, I find my home.”
-    </div>
-    <div class="shayari">Home is wherever you are.</div>
-  </div>
+<div class="envelope" style="--angle: 3deg;" onclick="openLetter(`In your warmth, I find my home.`)">
+  <div class="shayari">Home is wherever you are.</div>
+</div>
 
-  <div class="envelope" style="--angle: -2deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 6</strong><br />
-      “Your voice, the sweetest song I know.”
-    </div>
-    <div class="shayari">A melody to cherish.</div>
-  </div>
+<div class="envelope" style="--angle: -2deg;" onclick="openLetter(`Your voice, the sweetest song I know.`)">
+  <div class="shayari">A melody to cherish.</div>
+</div>
 
-  <div class="envelope" style="--angle: 4deg;" onclick="openLetter(this)">
-    <div class="letter-content">
-      <strong>Letter 7</strong><br />
-      “With you, every day is a beautiful story.”
-    </div>
-    <div class="shayari">Our endless story.</div>
+<div class="envelope" style="--angle: 4deg;" onclick="openLetter(`With you, every day is a beautiful story.`)">
+  <div class="shayari">Our endless story.</div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="letterModal" onclick="closeModal(event)">
+  <div class="letter-box">
+    <button class="close-btn" onclick="closeModal(event)">&times;</button>
+    <div id="letterText"></div>
   </div>
+</div>
 
 <script>
-  function openLetter(el) {
-    // Close all others
-    document.querySelectorAll('.envelope.open').forEach(env => {
-      if (env !== el) {
-        env.classList.remove('open');
-      }
-    });
-    // Toggle current envelope open state
-    el.classList.toggle('open');
+  function openLetter(text) {
+    const modal = document.getElementById("letterModal");
+    const letterText = document.getElementById("letterText");
+    letterText.innerHTML = text;
+    modal.classList.add("active");
+  }
+
+  function closeModal(event) {
+    if (
+      event.target.classList.contains("modal") ||
+      event.target.classList.contains("close-btn")
+    ) {
+      document.getElementById("letterModal").classList.remove("active");
+    }
   }
 </script>
 
