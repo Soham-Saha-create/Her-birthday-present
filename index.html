@@ -1,62 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hey Chandu</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fdf6f0;
-      color: #333;
-      text-align: center;
-      padding: 50px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Welcome | For Her</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap');
 
+  /* Root & Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body, html {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #fcefee, #d9e6f2);
+    overflow-x: hidden;
+    color: #3a2e39;
+  }
+
+  /* Animated Gradient Background */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(-45deg, #ffd7d9, #b3d7f7, #f8f4e3, #a7c6f9);
+    background-size: 400% 400%;
+    animation: gradientShift 30s ease infinite;
+    z-index: -2;
+  }
+
+  @keyframes gradientShift {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+
+  /* Floating petals background */
+  .petals {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+  }
+  .petal {
+    position: absolute;
+    background: #ffd7d9;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    opacity: 0.3;
+    filter: drop-shadow(0 0 2px #ff758f);
+    animation: fall 15s linear infinite;
+  }
+  @keyframes fall {
+    0% {transform: translateY(-100px) rotate(0deg);}
+    100% {transform: translateY(110vh) rotate(360deg);}
+  }
+
+  /* Petal variations */
+  .petal:nth-child(1) {width: 20px; height: 14px; left: 10%; animation-delay: 0s;}
+  .petal:nth-child(2) {width: 25px; height: 17px; left: 25%; animation-delay: 3s; animation-duration: 18s;}
+  .petal:nth-child(3) {width: 18px; height: 12px; left: 40%; animation-delay: 6s;}
+  .petal:nth-child(4) {width: 22px; height: 16px; left: 60%; animation-delay: 9s; animation-duration: 20s;}
+  .petal:nth-child(5) {width: 15px; height: 10px; left: 75%; animation-delay: 12s;}
+  .petal:nth-child(6) {width: 19px; height: 13px; left: 85%; animation-delay: 15s; animation-duration: 17s;}
+
+  /* Container & Greeting */
+  .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 2s ease forwards;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4.2rem;
+    margin-bottom: 0.2em;
+    color: #e8566f;
+    text-shadow: 1px 1px 4px #fff2f6;
+  }
+
+  p.subtitle {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-bottom: 2.5em;
+    color: #6b506f;
+  }
+
+  /* Menu Buttons */
+  nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav a {
+    background: #ff7f91;
+    color: white;
+    font-weight: 600;
+    padding: 14px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgb(255 127 145 / 0.4);
+    transition: 
+      background-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+    position: relative;
+  }
+  nav a:hover, nav a:focus {
+    background: #e64b63;
+    box-shadow: 0 8px 20px rgb(230 75 99 / 0.6);
+    transform: translateY(-4px);
+    outline: none;
+  }
+
+  nav a::after {
+    content: "»";
+    position: absolute;
+    right: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  nav a:hover::after {
+    opacity: 1;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    margin-top: 3rem;
+    font-style: italic;
+    color: #c15d6f;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
     h1 {
-      font-size: 2.5rem;
-      color: #d56c7b;
+      font-size: 3rem;
     }
-
-    p {
-      font-size: 1.2rem;
-      margin-top: 20px;
+    nav a {
+      padding: 12px 22px;
+      font-size: 1rem;
     }
-
-    .menu {
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .menu a {
-      text-decoration: none;
-      color: #fff;
-      background-color: #d56c7b;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s;
-      width: fit-content;
-    }
-
-    .menu a:hover {
-      background-color: #c55768;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <h1>Hey Chandu, so you finally made it here.</h1>
-  <p>This is something solely designed for you.<br>
-  A lot to explore, and a lot to crack. Enjoy. ❤</p>
+  <div class="petals">
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+  </div>
 
-  <div class="menu">
-    <a href="letters.html">📜 Letter Archive</a>
-    <a href="memory.html">📸 Memory Lane</a>
-    <a href="confession.html">💌 Confession Page</a>
-    <a href="unlock.html">🔒 Secret Page</a>
+  <div class="container">
+    <h1>Hey, You</h1>
+    <p class="subtitle">Welcome to a day made just for you.</p>
+    <nav>
+      <a href="letter-archive.html" tabindex="1">Letter Archive</a>
+      <a href="memory.html" tabindex="2">Memory Lane</a>
+      <a href="confession.html" tabindex="3">Confession</a>
+      <a href="secret.html" tabindex="4">Secret</a>
+      <a href="us.html" tabindex="5">Us</a>
+    </nav>
+    <p class="tooltip">Explore everything. One click at a time.</p>
   </div>
 </body>
 </html>
