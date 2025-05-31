@@ -1,118 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Letter Archives</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #f9f2ec;
-      color: #4b2e2e;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 10px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Letter Archives</title>
+<style>
+  body {
+    background: #f9f1e7;
+    font-family: 'Georgia', serif;
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
 
-    h1 {
-      font-size: 2.2em;
-      margin-bottom: 20px;
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-    }
+  .envelope {
+    width: 130px;
+    height: 90px;
+    background: #fff3e0;
+    border: 2px solid #d4a373;
+    border-radius: 10px 10px 3px 3px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    position: relative;
+    cursor: pointer;
+    transform-origin: center bottom;
+    transition: box-shadow 0.3s ease;
+    --angle: 0deg; /* default */
+  }
+  .envelope:hover {
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  }
 
-    .envelope-container {
-      text-align: center;
-      margin-bottom: 40px;
-      cursor: pointer;
-      transition: transform 0.4s ease;
-    }
+  /* The "flap" of envelope */
+  .envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 130px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffdbb4 0%, #f3b76b 100%);
+    border-radius: 10px 10px 0 0;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    z-index: 10;
+    transform-origin: center bottom;
+    transition: transform 0.6s ease;
+  }
 
-    .envelope-container:hover {
-      transform: scale(1.05);
-    }
+  /* Letter content hidden by default */
+  .letter-content {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    padding: 20px;
+    background: #fff7e6;
+    border: 1.5px solid #d4a373;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    font-style: italic;
+    color: #a86a28;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    z-index: 20;
+  }
 
-    .envelope-image {
-      width: 180px;
-      height: auto;
-      transition: transform 0.6s ease;
-    }
+  /* Show letter content when open */
+  .envelope.open .letter-content {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(15px);
+  }
 
-    .shayari {
-      font-style: italic;
-      font-size: 1em;
-      margin-top: 10px;
-      color: #7a4c4c;
-    }
+  /* Animate the flap opening */
+  .envelope.open::before {
+    transform: rotateX(160deg);
+    transition-timing-function: ease-in-out;
+  }
 
-    .letter-content {
-      display: none;
-      margin-top: 20px;
-      max-width: 600px;
-      background-color: #fffaf5;
-      border: 1px solid #cba;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
-      font-size: 1.1em;
-      line-height: 1.6em;
-      animation: fadeIn 1s ease forwards;
+  /* Animate envelope zoom and rotate */
+  @keyframes openEnvelope {
+    0% {
+      transform: scale(1) rotate(var(--angle));
     }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    50% {
+      transform: scale(1.1) rotate(calc(var(--angle) + 5deg));
     }
-
-    @media (max-width: 600px) {
-      .letter-content {
-        padding: 20px;
-        font-size: 1em;
-      }
-
-      .shayari {
-        font-size: 0.95em;
-      }
+    100% {
+      transform: scale(1) rotate(var(--angle));
     }
-  </style>
+  }
+
+  .envelope.open {
+    animation: openEnvelope 0.6s forwards;
+  }
+
+  /* Shayari text below each envelope */
+  .shayari {
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    color: #b66e1b;
+    font-size: 0.9rem;
+    max-width: 140px;
+  }
+</style>
 </head>
 <body>
 
-  <h1>Letter Archives</h1>
-
-  <div class="envelope-container" onclick="openLetter(this)">
-    <img src="images/envelope.png" alt="Envelope" class="envelope-image" />
-    <div class="shayari">"Tumhari muskurahat... sabse khaas paighaam hoti hai."</div>
-
+  <div class="envelope" style="--angle: 2deg;" onclick="openLetter(this)">
     <div class="letter-content">
-      <p>Dear you,</p>
-      <p>I don’t even know where to begin. There’s so much I’ve always wanted to say but never had the words — until now. Maybe because some feelings aren’t meant to be said out loud... they’re meant to be written.</p>
-      <p>This is one of those letters, tucked away inside a dream and sent only to the one it was meant for. You.</p>
-      <p>Forever yours,</p>
-      <p><i>Someone who's always been watching you smile.</i></p>
+      <strong>Letter 1</strong><br />
+      “In your laughter, I find my melody.”
     </div>
+    <div class="shayari">A laugh that lights my world.</div>
   </div>
 
-  <script>
-    function openLetter(container) {
-      const letter = container.querySelector('.letter-content');
-      if (letter.style.display === 'block') {
-        letter.style.display = 'none';
-      } else {
-        letter.style.display = 'block';
-        letter.scrollIntoView({ behavior: 'smooth' });
+  <div class="envelope" style="--angle: -3deg;" onclick="openLetter(this)">
+    <div class="letter-content">
+      <strong>Letter 2</strong><br />
+      “Your eyes, a secret garden of dreams.”
+    </div>
+    <div class="shayari">A gaze I’ll never forget.</div>
+  </div>
+
+  <div class="envelope" style="--angle: 5deg;" onclick="openLetter(this)">
+    <div class="letter-content">
+      <strong>Letter 3</strong><br />
+      “Every moment with you is poetry in motion.”
+    </div>
+    <div class="shayari">Our moments, like verses.</div>
+  </div>
+
+  <div class="envelope" style="--angle: -4deg;" onclick="openLetter(this)">
+    <div class="letter-content">
+      <strong>Letter 4</strong><br />
+      “Your smile turns ordinary days into magic.”
+    </div>
+    <div class="shayari">Magic in a smile.</div>
+  </div>
+
+  <div class="envelope" style="--angle: 3deg;" onclick="openLetter(this)">
+    <div class="letter-content">
+      <strong>Letter 5</strong><br />
+      “In your warmth, I find my home.”
+    </div>
+    <div class="shayari">Home is wherever you are.</div>
+  </div>
+
+  <div class="envelope" style="--angle: -2deg;" onclick="openLetter(this)">
+    <div class="letter-content">
+      <strong>Letter 6</strong><br />
+      “Your voice, the sweetest song I know.”
+    </div>
+    <div class="shayari">A melody to cherish.</div>
+  </div>
+
+  <div class="envelope" style="--angle: 4deg;" onclick="openLetter(this)">
+    <div class="letter-content">
+      <strong>Letter 7</strong><br />
+      “With you, every day is a beautiful story.”
+    </div>
+    <div class="shayari">Our endless story.</div>
+  </div>
+
+<script>
+  function openLetter(el) {
+    // Close all others
+    document.querySelectorAll('.envelope.open').forEach(env => {
+      if (env !== el) {
+        env.classList.remove('open');
       }
-    }
-  </script>
+    });
+    // Toggle current envelope open state
+    el.classList.toggle('open');
+  }
+</script>
 
 </body>
 </html>
