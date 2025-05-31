@@ -12,13 +12,38 @@
       text-align: center;
       padding: 50px;
     }
+
     h1 {
       font-size: 2.5rem;
       color: #d56c7b;
     }
+
     p {
       font-size: 1.2rem;
       margin-top: 20px;
+    }
+
+    .menu {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #d56c7b;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+      width: fit-content;
+    }
+
+    .menu a:hover {
+      background-color: #c55768;
     }
   </style>
 </head>
@@ -26,5 +51,12 @@
   <h1>Hey Chandu, so you finally made it here.</h1>
   <p>This is something solely designed for you.<br>
   A lot to explore, and a lot to crack. Enjoy. ❤</p>
+
+  <div class="menu">
+    <a href="letters.html">📜 Letter Archive</a>
+    <a href="memory.html">📸 Memory Lane</a>
+    <a href="confession.html">💌 Confession Page</a>
+    <a href="secret.html">🔒 Secret Page</a>
+  </div>
 </body>
 </html>
