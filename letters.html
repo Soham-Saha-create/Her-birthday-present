@@ -4,15 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Letter Archives</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cardo&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #f9f1e7;
-      font-family: 'Georgia', serif;
-      padding: 40px;
+      background: linear-gradient(to bottom, #fffaf0, #fbe7d0);
+      font-family: 'Cardo', serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px 30px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #b25e16;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    .container {
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
       justify-content: center;
+      gap: 30px;
+      padding: 20px;
+      animation: fadeIn 2s ease-in;
     }
 
     .envelope {
@@ -21,24 +42,28 @@
       background: #fff3e0;
       border: 2px solid #d4a373;
       border-radius: 10px 10px 3px 3px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       position: relative;
       cursor: pointer;
       transform: rotate(var(--angle, 0deg));
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s;
+      animation: slideIn 1s ease-out;
     }
 
     .envelope:hover {
       transform: scale(1.05) rotate(var(--angle, 0deg));
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
     .shayari {
       margin-top: 10px;
       text-align: center;
-      font-family: 'Georgia', serif;
+      font-family: 'Cardo', serif;
       color: #b66e1b;
       font-size: 0.9rem;
       max-width: 140px;
+      opacity: 0.85;
+      animation: fadeInUp 1.5s ease-in-out;
     }
 
     /* Modal Styling */
@@ -47,8 +72,8 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -64,30 +89,20 @@
     }
 
     .letter-box {
-      background: #fff7e6;
+      background: #fffaf5;
       border: 2px solid #d4a373;
       border-radius: 12px;
       max-width: 90%;
       max-height: 90%;
       padding: 30px;
       overflow-y: auto;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-      animation: unfold 0.5s ease-out;
-      font-size: 1.1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      animation: unfold 0.6s ease-out;
+      font-size: 1.2rem;
       color: #7a3e00;
-      font-family: 'Georgia', serif;
+      font-family: 'Cardo', serif;
       position: relative;
-    }
-
-    @keyframes unfold {
-      0% {
-        transform: scale(0.7) rotateX(40deg);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1) rotateX(0);
-        opacity: 1;
-      }
+      line-height: 1.7;
     }
 
     .close-btn {
@@ -96,7 +111,7 @@
       right: 20px;
       background: none;
       border: none;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       color: #aa5e10;
       cursor: pointer;
     }
@@ -104,37 +119,75 @@
     .close-btn:hover {
       color: #7a3e00;
     }
+
+    @keyframes unfold {
+      0% {
+        transform: scale(0.7) rotateX(30deg);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1) rotateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: rotate(var(--angle, 0deg)) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      } 100% {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- Envelopes -->
-<div class="envelope" style="--angle: 2deg;" onclick="openLetter(`In your laughter, I find my melody.`)">
-  <div class="shayari">A laugh that lights my world.</div>
-</div>
+<header>Letter Archives</header>
 
-<div class="envelope" style="--angle: -3deg;" onclick="openLetter(`Your eyes, a secret garden of dreams.`)">
-  <div class="shayari">A gaze I’ll never forget.</div>
-</div>
-
-<div class="envelope" style="--angle: 5deg;" onclick="openLetter(`Every moment with you is poetry in motion.`)">
-  <div class="shayari">Our moments, like verses.</div>
-</div>
-
-<div class="envelope" style="--angle: -4deg;" onclick="openLetter(`Your smile turns ordinary days into magic.`)">
-  <div class="shayari">Magic in a smile.</div>
-</div>
-
-<div class="envelope" style="--angle: 3deg;" onclick="openLetter(`In your warmth, I find my home.`)">
-  <div class="shayari">Home is wherever you are.</div>
-</div>
-
-<div class="envelope" style="--angle: -2deg;" onclick="openLetter(`Your voice, the sweetest song I know.`)">
-  <div class="shayari">A melody to cherish.</div>
-</div>
-
-<div class="envelope" style="--angle: 4deg;" onclick="openLetter(`With you, every day is a beautiful story.`)">
-  <div class="shayari">Our endless story.</div>
+<div class="container">
+  <div class="envelope" style="--angle: 2deg;" onclick="openLetter(`In your laughter, I find my melody.`)">
+    <div class="shayari">A laugh that lights my world.</div>
+  </div>
+  <div class="envelope" style="--angle: -3deg;" onclick="openLetter(`Your eyes, a secret garden of dreams.`)">
+    <div class="shayari">A gaze I’ll never forget.</div>
+  </div>
+  <div class="envelope" style="--angle: 4deg;" onclick="openLetter(`Every moment with you is poetry in motion.`)">
+    <div class="shayari">Our moments, like verses.</div>
+  </div>
+  <div class="envelope" style="--angle: -4deg;" onclick="openLetter(`Your smile turns ordinary days into magic.`)">
+    <div class="shayari">Magic in a smile.</div>
+  </div>
+  <div class="envelope" style="--angle: 3deg;" onclick="openLetter(`In your warmth, I find my home.`)">
+    <div class="shayari">Home is wherever you are.</div>
+  </div>
+  <div class="envelope" style="--angle: -2deg;" onclick="openLetter(`Your voice, the sweetest song I know.`)">
+    <div class="shayari">A melody to cherish.</div>
+  </div>
+  <div class="envelope" style="--angle: 5deg;" onclick="openLetter(`With you, every day is a beautiful story.`)">
+    <div class="shayari">Our endless story.</div>
+  </div>
 </div>
 
 <!-- Modal -->
