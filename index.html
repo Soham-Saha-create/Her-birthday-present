@@ -2,79 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday, You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f5f0ff, #d9e4ff);
-      height: 100vh;
+      padding: 0;
+      background: linear-gradient(to right, #fff0f5, #ffe4e1);
+      font-family: 'Poppins', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #333;
+      min-height: 100vh;
       text-align: center;
-      padding: 2rem;
     }
 
     h1 {
+      font-family: 'Dancing Script', cursive;
       font-size: 3rem;
+      color: #e75480;
       margin-bottom: 0.5rem;
-      animation: fadeInDown 1s ease forwards;
     }
 
     p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      animation: fadeInUp 1.2s ease forwards;
+      font-size: 1.1rem;
+      color: #555;
       max-width: 600px;
+      margin-bottom: 2rem;
     }
 
-    nav {
+    .menu {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: column;
       gap: 1rem;
-      animation: fadeInUp 2s ease forwards;
     }
 
-    nav a {
+    .menu a {
       text-decoration: none;
-      padding: 1rem 2rem;
-      background-color: #7c5fe9;
+      background-color: #ffb6b9;
       color: white;
-      border-radius: 25px;
+      padding: 12px 24px;
+      border-radius: 30px;
       font-weight: bold;
-      transition: transform 0.3s, background-color 0.3s;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.2s;
     }
 
-    nav a:hover {
-      background-color: #5a3fc0;
-      transform: scale(1.05);
+    .menu a:hover {
+      background-color: #ff9aa2;
+      transform: translateY(-2px);
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <h1>Hey, You.</h1>
-  <p>Welcome to a little world built just for you — go ahead, explore every corner, it’s all yours.</p>
-  <nav>
-    <a href="letter-archive.html">Letter Archives</a>
+  <h1>Happy Birthday, You ✨</h1>
+  <p>It’s not just a website. It’s a journey, a letter, a memory vault — all wrapped up in one surprise. Dive in. Every click hides a piece of “us.”</p>
+  
+  <div class="menu">
+    <a href="letter.html">Letter Archive</a>
     <a href="memory.html">Memory Lane</a>
     <a href="confession.html">Confession</a>
-    <a href="secret.html">Secret Page</a>
-  </nav>
+    <a href="unlock.html">Secret Page</a>
+  </div>
+
+  <footer>
+    Made with too much love 💌 by someone who cares way too much.
+  </footer>
 </body>
 </html>
