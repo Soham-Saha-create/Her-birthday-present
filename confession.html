@@ -1,89 +1,128 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <title>A Letter Close to My Heart</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Confession Letter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Crimson+Text&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  background: linear-gradient(to bottom, #fff3f0, #ffe4e1);
-  font-family: 'Dancing Script', cursive;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-  color: #4b2e2e;
-}
+    body {
+      font-family: 'Crimson Text', serif;
+      background: linear-gradient(to bottom, #fff0f5, #ffe4e1);
+      color: #3d2b2b;
+      line-height: 1.7;
+      overflow-x: hidden;
+      padding: 40px 16px;
+    }
 
-.note {
-  background: #fff;
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 700px;
-  width: 90%;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-  line-height: 1.8;
-  font-size: 1.6em;
-  white-space: pre-line;
-  opacity: 0;
-  transform: scale(0.9);
-  animation: unfold 1s ease forwards;
-  animation-delay: 1s;
-}
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-@keyframes unfold {
-  0% {
-    transform: scaleY(0);
-    opacity: 0;
-  }
-  100% {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-}
+    .intro {
+      font-size: 1.1em;
+      font-style: italic;
+      margin-bottom: 30px;
+      color: #6a4e4e;
+    }
 
-.intro-text {
-  font-size: 1.2em;
-  color: #a14a4a;
-  text-align: center;
-  margin-bottom: 20px;
-  animation: fadeIn 2s ease forwards;
-}
+    .letter {
+      background-color: #fffaf7;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      font-size: 1.2em;
+      position: relative;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 2s ease-in-out, padding 1s ease-in-out;
+    }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .letter.visible {
+      max-height: 2000px;
+      padding: 30px;
+    }
 
+    .letter p {
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .signature {
+      text-align: right;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8em;
+      margin-top: 30px;
+      color: #b34c4c;
+    }
+
+    .envelope-btn {
+      margin: 40px auto;
+      padding: 14px 28px;
+      font-size: 1em;
+      background-color: #e26d5c;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .envelope-btn:hover {
+      background-color: #d1544b;
+    }
   </style>
 </head>
-<body>  <div class="intro-text">
-    I’m keeping this page simple — it’s not about the animations, but the emotions.
-  </div>  <div class="note">
-    <p>Hey Chandu,</p><p>Crazy how it's been such a long time since we first met, first talked, first became friends. So much has happened in between this time, hasn't it? I’ve had my share of mess-ups, and we’ve had our share of misunderstandings, arguments, and fights.</p>
+<body>
 
-<p>But something has always remained constant in my life — it’s you. You've been the Northern Star in my heart, unmoving, always shining. I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time, and I failed to be patient enough to give it to you.</p>
+  <div class="container">
+    <div class="intro">
+      I’m keeping this page simple—<br>it’s not about the animations, it’s about the emotions.
+    </div>
 
-<p>But after everything, something truly clicked inside me. I’ve tried to run from it, bury it, distract myself. But where has my heart always settled? With you. It’s always been you.</p>
+    <button class="envelope-btn" onclick="openLetter()">Open the Letter</button>
 
-<p>And even after everything, you were there when I needed someone the most. Through the sleepless nights, the tears, the silence — you listened. You never once refused to hear me out. You stayed. Whether you wanted to or not, you stayed. And oh, do I love you for that.</p>
+    <div class="letter" id="confessionLetter">
+      <p>Hey Chandu,</p>
+      <p>
+        Crazy how it’s been such a long time since we first met, first talked, first became friends. So much has happened in between, hasn’t it? I’ve had my share of mess-ups. We’ve had our share of misunderstandings, arguments, and fights. But...
+      </p>
+      <p>
+        Something has always remained constant in my life — it’s you. You’ve been the Northern Star in my sky, never shifting from the place you hold in my heart. I know I’ve broken your trust, shattered it multiple times. Maybe all you needed was time, and I failed to be patient enough.
+      </p>
+      <p>
+        But after everything, something really clicked inside me. I’ve tried everything, but where has my heart always settled? On you. It’s always been you.
+      </p>
+      <p>
+        Even after everything, you were there when I needed someone the most. During those sleepless nights, when I was crying my heart out, you were the one who listened — without judgment, without frustration. Even if you didn’t want to, you never said a bad word. And oh, do I love you for that!
+      </p>
+      <p>
+        I didn’t write this letter as a proposal — it’s not. But I can say this much: I’m trying to be better. Not so you choose me, but so I’m worthy if you ever do.
+      </p>
 
-<p>I didn’t write this letter as a proposal. It’s not that. But I can say this much — I am trying to be better. Not for anyone else, not even for you... but for the version of me I want you to be proud of. I don’t want you to choose me. But if you ever do — I want to be worth choosing.</p>
+      <div class="signature">
+        Yours Loving,<br>Soham
+      </div>
+    </div>
+  </div>
 
-<p>Yours Loving,<br>Soham</p>
-
-  </div></body>
+  <script>
+    function openLetter() {
+      const letter = document.getElementById('confessionLetter');
+      letter.classList.add('visible');
+      window.scrollTo({
+        top: letter.offsetTop - 20,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
 </html>
