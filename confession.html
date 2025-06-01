@@ -1,100 +1,200 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Confession Page</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Heart's Confession</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f9f4ef;
-      color: #333;
-      padding: 20px;
-    }
+      padding: 0;
+    }body {
+  font-family: 'Georgia', serif;
+  background: linear-gradient(to bottom, #ffe3e3, #ffd6e8);
+  color: #3d2c2e;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
 
-    .section {
-      max-width: 800px;
-      margin: 40px auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
+/* Floating petals animation */
+.petal {
+  position: fixed;
+  background-image: url('assets/graphics/petal.png'); /* placeholder path */
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  animation: floatPetal linear infinite;
+  z-index: 0;
+}
+@keyframes floatPetal {
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
+}
 
-    .section:hover {
-      transform: translateY(-3px);
-    }
+header {
+  text-align: center;
+  padding: 60px 20px 20px;
+  font-size: 2.8em;
+  color: #b33951;
+  font-family: 'Brush Script MT', cursive;
+  position: relative;
+  z-index: 1;
+}
 
-    .section h2 {
-      margin-bottom: 15px;
-      color: #e87ea2;
-    }
+/* Audio toggle button */
+.audio-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #b33951;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
 
-    .section p {
-      line-height: 1.8;
-      font-size: 17px;
-    }
+.confession-container {
+  max-width: 700px;
+  margin: 100px auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
 
-    .audio-player {
-      margin-top: 40px;
-      text-align: center;
-    }
+.confession {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-in-out;
+  margin-bottom: 80px;
+  background: #fff8f5;
+  border-left: 5px solid #d35c74;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
 
-    .audio-player button {
-      background: #e87ea2;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+.confession.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .audio-player button:hover {
-      background: #d4648d;
-    }
+.confession h3 {
+  color: #c02c4c;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  position: relative;
+  z-index: 2;
+}
 
-    .footer {
-      text-align: center;
-      margin-top: 60px;
-      font-style: italic;
-      color: #888;
-    }
+.confession p {
+  position: relative;
+  z-index: 2;
+  min-height: 60px;
+}
+
+footer {
+  text-align: center;
+  font-style: italic;
+  font-size: 1em;
+  padding: 80px 20px;
+  color: #7a585c;
+  position: relative;
+  z-index: 1;
+}
+
   </style>
 </head>
 <body>
+  <!-- Floating petals container (will be generated via JS) -->  <!-- Audio toggle button --><button class="audio-toggle" id="audioToggle">♪</button> <audio id="bgMusic" loop> <source src="assets/audio/soft-melody.mp3" type="audio/mpeg"> </audio>
 
-  <div class="section">
-    <h2>Hey...</h2>
-    <p>// [PLACEHOLDER] — This is where your intro goes. Soft, sincere, straight from you. Maybe something like: “If you’re here… that means you really scanned that code.”</p>
-  </div>
+  <header>
+    My Heart's Confession
+  </header>  <div class="confession-container">
+    <div class="confession" data-text="I never imagined a single glance could rewrite every chapter I’d written about love before. But then you walked in—and suddenly, nothing else mattered.">
+      <h3>When I Saw You</h3>
+      <p></p>
+    </div><div class="confession" data-text="I held back a thousand words each time we talked. Not because I didn’t want to say them—but because they all melted the moment I looked into your eyes.">
+  <h3>What I Never Said</h3>
+  <p></p>
+</div>
 
-  <div class="section">
-    <p>// [PLACEHOLDER] — Here begins your heartfelt flow. The thoughts you’ve always wanted to express, piece by piece.</p>
-  </div>
+<div class="confession" data-text="Your smile, your voice, the way you blink twice when you're thinking—these are the constellations in my universe. The map that always leads me home.">
+  <h3>Every Little Thing</h3>
+  <p></p>
+</div>
 
-  <div class="section">
-    <p>// [PLACEHOLDER] — Talk about the “almosts”, the maybes, the moments you kept quiet, what your heart wanted but didn’t say.</p>
-  </div>
+<div class="confession" data-text="If you knew how often I replay our moments like lullabies in my head, you'd know that you've become my favorite kind of silence—peaceful, permanent, precious.">
+  <h3>If You Only Knew</h3>
+  <p></p>
+</div>
 
-  <div class="section">
-    <p>// [PLACEHOLDER] — Add your final touch. Maybe something like: “No expectations, no answers needed. Just wanted you to know.”</p>
-  </div>
+  </div>  <footer>
+    If you've made it this far, maybe you feel it too.
+  </footer>  <script>
+    // Generate floating petals randomly
+    function createPetals() {
+      const count = 10;
+      for (let i = 0; i < count; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = 10 + Math.random() * 10 + 's';
+        petal.style.animationDelay = Math.random() * -20 + 's';
+        petal.style.opacity = 0.5 + Math.random() * 0.5;
+        document.body.appendChild(petal);
+      }
+    }
 
-  <div class="audio-player">
-    <button onclick="document.getElementById('audio').play()">🎧 Hear me say it</button>
-    <audio id="audio" controls style="display:none;">
-      <source src="your-recorded-shayari.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
+    // IntersectionObserver for confessions
+    const confessions = document.querySelectorAll('.confession');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.8;
+      confessions.forEach(conf => {
+        const top = conf.getBoundingClientRect().top;
+        if (top < triggerBottom) {
+          conf.classList.add('visible');
+          typeText(conf);
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', () => {
+      revealOnScroll();
+      createPetals();
+    });
 
-  <div class="footer">
-    This page wasn’t for replies. Just for truths.
-  </div>
+    // Typewriter effect for each confession
+    function typeText(element) {
+      const p = element.querySelector('p');
+      if (p.textContent.trim()) return; // already typed
+      const text = element.getAttribute('data-text');
+      let idx = 0;
+      const typing = setInterval(() => {
+        p.textContent += text.charAt(idx);
+        idx++;
+        if (idx === text.length) clearInterval(typing);
+      }, 40);
+    }
 
-</body>
+    // Audio toggle
+    const audioToggle = document.getElementById('audioToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    audioToggle.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        audioToggle.textContent = '🔇';
+      } else {
+        bgMusic.pause();
+        audioToggle.textContent = '♪';
+      }
+    });
+  </script></body>
 </html>
