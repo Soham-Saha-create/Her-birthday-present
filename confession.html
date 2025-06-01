@@ -1,200 +1,138 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Heart's Confession</title>
+  <title>From My Heart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }body {
-  font-family: 'Georgia', serif;
-  background: linear-gradient(to bottom, #ffe3e3, #ffd6e8);
-  color: #3d2c2e;
-  line-height: 1.6;
-  overflow-x: hidden;
-  position: relative;
-}
+      box-sizing: border-box;
+    }
 
-/* Floating petals animation */
-.petal {
-  position: fixed;
-  background-image: url('assets/graphics/petal.png'); /* placeholder path */
-  background-size: contain;
-  width: 20px;
-  height: 20px;
-  opacity: 0.8;
-  animation: floatPetal linear infinite;
-  z-index: 0;
-}
-@keyframes floatPetal {
-  0% { transform: translateY(-50px) rotate(0deg); opacity: 0.8; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
-}
+    body {
+      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+      font-family: 'Open Sans', sans-serif;
+      color: #2f2f2f;
+      overflow-x: hidden;
+    }
 
-header {
-  text-align: center;
-  padding: 60px 20px 20px;
-  font-size: 2.8em;
-  color: #b33951;
-  font-family: 'Brush Script MT', cursive;
-  position: relative;
-  z-index: 1;
-}
+    .letter-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+    }
 
-/* Audio toggle button */
-.audio-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #b33951;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  z-index: 2;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      color: #8b1e3f;
+      margin-bottom: 30px;
+      animation: fadeInDown 1.5s ease;
+    }
 
-.confession-container {
-  max-width: 700px;
-  margin: 100px auto;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
-}
+    .letter {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      max-width: 800px;
+      line-height: 1.8;
+      font-size: 1.2em;
+      white-space: pre-wrap;
+      animation: fadeInUp 2s ease;
+    }
 
-.confession {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.8s ease-in-out;
-  margin-bottom: 80px;
-  background: #fff8f5;
-  border-left: 5px solid #d35c74;
-  padding: 30px 25px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
+    .signature {
+      margin-top: 40px;
+      text-align: right;
+      font-style: italic;
+      font-weight: bold;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5em;
+      color: #b04155;
+    }
 
-.confession.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-.confession h3 {
-  color: #c02c4c;
-  margin-bottom: 15px;
-  font-size: 1.5em;
-  position: relative;
-  z-index: 2;
-}
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-.confession p {
-  position: relative;
-  z-index: 2;
-  min-height: 60px;
-}
+    .floating-hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
 
-footer {
-  text-align: center;
-  font-style: italic;
-  font-size: 1em;
-  padding: 80px 20px;
-  color: #7a585c;
-  position: relative;
-  z-index: 1;
-}
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      clip-path: polygon(50% 0%, 61% 7%, 70% 18%, 75% 30%, 78% 43%, 78% 56%, 75% 68%, 70% 80%, 61% 90%, 50% 97%, 39% 90%, 30% 80%, 25% 68%, 22% 56%, 22% 43%, 25% 30%, 30% 18%, 39% 7%);
+      animation: float 8s infinite ease-in;
+      opacity: 0.6;
+    }
 
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(1); }
+      100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <!-- Floating petals container (will be generated via JS) -->  <!-- Audio toggle button --><button class="audio-toggle" id="audioToggle">♪</button> <audio id="bgMusic" loop> <source src="assets/audio/soft-melody.mp3" type="audio/mpeg"> </audio>
+  <div class="floating-hearts"></div>
+  <div class="letter-wrapper">
+    <h1>From My Heart...</h1>
+    <div class="letter">
+      Hey Chandu,
 
-  <header>
-    My Heart's Confession
-  </header>  <div class="confession-container">
-    <div class="confession" data-text="I never imagined a single glance could rewrite every chapter I’d written about love before. But then you walked in—and suddenly, nothing else mattered.">
-      <h3>When I Saw You</h3>
-      <p></p>
-    </div><div class="confession" data-text="I held back a thousand words each time we talked. Not because I didn’t want to say them—but because they all melted the moment I looked into your eyes.">
-  <h3>What I Never Said</h3>
-  <p></p>
-</div>
+      Crazy how it’s been such a long time since we first met, first talked, and first became friends. So much has happened in between, hasn’t it? I’ve had my share of mess-ups, and we’ve had our share of misunderstandings, arguments, and fights.
 
-<div class="confession" data-text="Your smile, your voice, the way you blink twice when you're thinking—these are the constellations in my universe. The map that always leads me home.">
-  <h3>Every Little Thing</h3>
-  <p></p>
-</div>
+      But through it all, one thing has remained constant in my life — you.
+      You’ve been the Northern Star in my sky — the one that never shifted, no matter how chaotic everything else got.
 
-<div class="confession" data-text="If you knew how often I replay our moments like lullabies in my head, you'd know that you've become my favorite kind of silence—peaceful, permanent, precious.">
-  <h3>If You Only Knew</h3>
-  <p></p>
-</div>
+      I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time… and I failed to be patient enough.
 
-  </div>  <footer>
-    If you've made it this far, maybe you feel it too.
-  </footer>  <script>
-    // Generate floating petals randomly
-    function createPetals() {
-      const count = 10;
-      for (let i = 0; i < count; i++) {
-        const petal = document.createElement('div');
-        petal.classList.add('petal');
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = 10 + Math.random() * 10 + 's';
-        petal.style.animationDelay = Math.random() * -20 + 's';
-        petal.style.opacity = 0.5 + Math.random() * 0.5;
-        document.body.appendChild(petal);
-      }
+      But after everything, something finally clicked in me. I tried running, tried distracting myself, but where did my heart always return?
+      To you.
+      It has always been you.
+
+      And even after everything — despite the hurt and the distance — you were there for me when I needed someone the most. Through the sleepless nights, when I cried my heart out, you stayed. You listened when no one else did. Even when it might have been hard for you, you never refused, never turned me away. You just… listened. And oh, how I love you for that.
+
+      I didn’t write this as a proposal. It’s not that. But I just want you to know — I’m trying. I’m trying to be better. Not because I expect you to choose me, but because if you ever do, I want to be someone worthy of that choice.
+
+      That’s all from me.
+
+      <div class="signature">Yours lovingly,<br>Soham</div>
+    </div>
+  </div>
+
+  <script>
+    // Generate floating hearts
+    const container = document.querySelector('.floating-hearts');
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDelay = Math.random() * 8 + 's';
+      container.appendChild(heart);
     }
-
-    // IntersectionObserver for confessions
-    const confessions = document.querySelectorAll('.confession');
-    const revealOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.8;
-      confessions.forEach(conf => {
-        const top = conf.getBoundingClientRect().top;
-        if (top < triggerBottom) {
-          conf.classList.add('visible');
-          typeText(conf);
-        }
-      });
-    };
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', () => {
-      revealOnScroll();
-      createPetals();
-    });
-
-    // Typewriter effect for each confession
-    function typeText(element) {
-      const p = element.querySelector('p');
-      if (p.textContent.trim()) return; // already typed
-      const text = element.getAttribute('data-text');
-      let idx = 0;
-      const typing = setInterval(() => {
-        p.textContent += text.charAt(idx);
-        idx++;
-        if (idx === text.length) clearInterval(typing);
-      }, 40);
-    }
-
-    // Audio toggle
-    const audioToggle = document.getElementById('audioToggle');
-    const bgMusic = document.getElementById('bgMusic');
-    audioToggle.addEventListener('click', () => {
-      if (bgMusic.paused) {
-        bgMusic.play();
-        audioToggle.textContent = '🔇';
-      } else {
-        bgMusic.pause();
-        audioToggle.textContent = '♪';
-      }
-    });
-  </script></body>
+  </script>
+</body>
 </html>
