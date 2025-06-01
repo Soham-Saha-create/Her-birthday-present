@@ -2,151 +2,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>From My Heart</title>
+  <title>Confession Letter</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }body {
-  font-family: 'Georgia', serif;
-  background: linear-gradient(to bottom, #ffe6e6, #ffe6ff);
-  color: #333;
-  min-height: 100vh;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-  position: relative;
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-  font-size: 2em;
-  margin-bottom: 10px;
-  color: #c94f7c;
-  text-align: center;
+body {
+  background: linear-gradient(to bottom, #fff3f0, #ffe4e1);
+  font-family: 'Dancing Script', cursive;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  color: #4b2e2e;
 }
 
 .note {
-  font-style: italic;
-  margin-bottom: 30px;
-  color: #666;
-  text-align: center;
-}
-
-.letter-wrapper {
-  perspective: 1000px;
-  width: 90%;
-  max-width: 700px;
-}
-
-.letter {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  padding: 30px;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
   line-height: 1.8;
-  font-size: 1.1em;
-  color: #444;
-  transform: rotateX(-90deg);
-  transform-origin: top;
-  animation: unfold 2.5s ease-out forwards;
+  font-size: 1.6em;
+  white-space: pre-line;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: unfold 1s ease forwards;
+  animation-delay: 1s;
 }
 
 @keyframes unfold {
   0% {
-    transform: rotateX(-90deg);
+    transform: scaleY(0);
     opacity: 0;
   }
   100% {
-    transform: rotateX(0deg);
+    transform: scaleY(1);
     opacity: 1;
   }
 }
 
-.signature {
-  margin-top: 20px;
-  text-align: right;
-  font-style: italic;
-  color: #c94f7c;
+.intro-text {
+  font-size: 1.2em;
+  color: #a14a4a;
+  text-align: center;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease forwards;
 }
 
-.hearts {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1;
-}
-
-.heart {
-  width: 15px;
-  height: 15px;
-  background: #ff7eb9;
-  position: absolute;
-  transform: rotate(45deg);
-  animation: float 10s infinite;
-  opacity: 0.7;
-}
-
-.heart::before,
-.heart::after {
-  content: '';
-  width: 15px;
-  height: 15px;
-  background: #ff7eb9;
-  position: absolute;
-  border-radius: 50%;
-}
-
-.heart::before {
-  top: -7.5px;
-  left: 0;
-}
-
-.heart::after {
-  left: -7.5px;
-  top: 0;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0) rotate(45deg);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-100vh) rotate(45deg);
+@keyframes fadeIn {
+  from {
     opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
   </style>
 </head>
-<body>
-  <div class="hearts">
-    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
-    <div class="heart" style="left: 50%; animation-delay: 4s;"></div>
-    <div class="heart" style="left: 70%; animation-delay: 1s;"></div>
-    <div class="heart" style="left: 90%; animation-delay: 3s;"></div>
-  </div>  <h1>From My Heart...</h1>
-  <p class="note">I'm keeping this page simple — because this one's not about the animations, it's about the emotions.</p>  <div class="letter-wrapper">
-    <div class="letter">
-      <p>Hey Chandu,</p><p>Crazy how it's been such a long time since we first met, first talked, and first became friends. So much has happened between then and now, hasn’t it? I've had my share of mistakes, and we’ve had our share of misunderstandings, arguments, and fights. But...</p>
+<body>  <div class="intro-text">
+    I’m keeping this page simple — it’s not about the animations, but the emotions.
+  </div>  <div class="note">
+    <p>Hey Chandu,</p><p>Crazy how it's been such a long time since we first met, first talked, first became friends. So much has happened in between this time, hasn't it? I’ve had my share of mess-ups, and we’ve had our share of misunderstandings, arguments, and fights.</p>
 
-  <p>Something has always remained constant in my life — it’s you. You’ve been the Northern Star in my sky, never changing your place in my heart. I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time, and I failed to be patient enough to give you that.</p>
+<p>But something has always remained constant in my life — it’s you. You've been the Northern Star in my heart, unmoving, always shining. I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time, and I failed to be patient enough to give it to you.</p>
 
-  <p>But after everything, something really clicked in me. I've tried everything, but my heart always settles in one place — you. It’s always been you. And even after all that happened, you were still there when I needed someone most. Through the sleepless nights, when I was crying my heart out — you listened. Even when it wasn’t easy. You never refused to be there. You stayed, even if silently. And oh, do I love you for that.</p>
+<p>But after everything, something truly clicked inside me. I’ve tried to run from it, bury it, distract myself. But where has my heart always settled? With you. It’s always been you.</p>
 
-  <p>This isn’t a proposal — it’s not. But I can say this much: I’m trying to be better for you. I don’t want you to choose me. I just want to become the kind of person who’s worthy — if you ever do.</p>
+<p>And even after everything, you were there when I needed someone the most. Through the sleepless nights, the tears, the silence — you listened. You never once refused to hear me out. You stayed. Whether you wanted to or not, you stayed. And oh, do I love you for that.</p>
 
-  <p class="signature">Yours, with all my love,<br/>Soham</p>
-</div>
+<p>I didn’t write this letter as a proposal. It’s not that. But I can say this much — I am trying to be better. Not for anyone else, not even for you... but for the version of me I want you to be proud of. I don’t want you to choose me. But if you ever do — I want to be worth choosing.</p>
 
-  </div>
-</body>
+<p>Yours Loving,<br>Soham</p>
+
+  </div></body>
 </html>
