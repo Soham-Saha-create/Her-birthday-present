@@ -1,71 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Our Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f9e6e7, #ffe3ec);
-      color: #50394c;
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #fdebd0, #fad0c4, #c0a3e5, #2c3e50);
+      color: #fff;
       overflow-x: hidden;
-    }
-    h1 {
-      text-align: center;
-      font-size: 3rem;
-      margin-bottom: 40px;
-      letter-spacing: 2px;
-    }
-    .story-section {
-      margin-bottom: 50px;
-      position: relative;
-    }
-    .story-section p {
-      font-size: 1.2rem;
-      line-height: 1.5;
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    /* Example fade-in animation */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s forwards;
-    }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    /* Image styles */
-    .story-pic {
-      display: block;
-      margin: 20px auto;
-      max-width: 300px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(80, 57, 76, 0.3);
-    }
+    }.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 3rem;
+}
+
+.memory {
+  margin: 4rem 0;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  position: relative;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.memory.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.memory:nth-child(odd) {
+  margin-left: 10%;
+}
+
+.memory:nth-child(even) {
+  margin-right: 10%;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #ffe6f0;
+}
+
+.shayari {
+  font-style: italic;
+  color: #e0d4ff;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3rem 0;
+}
+
+.btn {
+  padding: 0.7rem 1.5rem;
+  background-color: #fff;
+  color: #2c3e50;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #f9c5d1;
+}
+
   </style>
 </head>
 <body>
-  <h1>Our Story</h1>
+  <div class="container">
+    <h1>Our Story</h1><div class="memory">
+  <div class="title">Where It All Began</div>
+  <div class="shayari">Teri muskurahat meri pehli khushi thi...</div>
+</div>
 
-  <div class="story-section fade-in" style="animation-delay: 0.2s;">
-    <p>From the moment we first met, a new chapter began — full of laughter, secrets, and moments I never want to forget.</p>
-    <img src="images/us1.jpg" alt="Our first memory" class="story-pic" />
-  </div>
+<div class="memory">
+  <div class="title">Laughs That Never Faded</div>
+  <div class="shayari">Hansna teri aadat thi, aur woh mujh mein ghul gayi thi...</div>
+</div>
 
-  <div class="story-section fade-in" style="animation-delay: 0.6s;">
-    <p>Every adventure, every silly fight, every quiet moment — they all brought us closer in ways words can’t explain.</p>
-    <img src="images/us2.jpg" alt="Fun times together" class="story-pic" />
-  </div>
+<div class="memory">
+  <div class="title">Silent Understandings</div>
+  <div class="shayari">Bina kahe sab keh jaate the, aankhon ki zubaan se...</div>
+</div>
 
-  <!-- More story sections to be added as you want -->
+<div class="memory">
+  <div class="title">Holding On</div>
+  <div class="shayari">Mitti se bhi gehri thi woh dosti...</div>
+</div>
 
-</body>
+<div class="memory">
+  <div class="title">Unspoken Feelings</div>
+  <div class="shayari">Kuch baatein kehne se nahi, mehsoos karne se samjhi jaati hain...</div>
+</div>
+
+<div class="memory">
+  <div class="title">Still Here</div>
+  <div class="shayari">Saath chalna hi sab kuch nahi, ruk kar kisi ka intezaar karna bhi mohabbat hai...</div>
+</div>
+
+<div class="btn-container">
+  <a href="../index.html" class="btn">🏡 Home</a>
+  <a href="moments.html" class="btn">📸 Moments</a>
+</div>
+
+  </div>  <script>
+    const memories = document.querySelectorAll('.memory');
+
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      memories.forEach(mem => {
+        const memTop = mem.getBoundingClientRect().top;
+        if (memTop < triggerBottom) {
+          mem.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script></body>
 </html>
