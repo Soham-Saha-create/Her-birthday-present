@@ -44,16 +44,30 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       margin-bottom: 40px;
       overflow: hidden;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.6s ease-in-out;
       display: flex;
       flex-direction: column;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: all 0.8s ease-in-out;
+      cursor: pointer;
     }
 
-    .moment.visible {
+    .moment.left.visible {
+      transform: translateX(0);
       opacity: 1;
-      transform: translateY(0);
+    }
+
+    .moment.right.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .moment.left {
+      transform: translateX(-60px);
+    }
+
+    .moment.right {
+      transform: translateX(60px);
     }
 
     .moment img {
@@ -83,6 +97,31 @@
       font-style: italic;
       color: #777;
       font-size: 1em;
+    }
+
+    /* Image popup modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 182, 185, 0.6);
+    }
+
+    .modal.show {
+      display: flex;
     }
 
     @media (min-width: 768px) {
@@ -115,7 +154,7 @@
 
   <div class="container">
 
-    <div class="moment">
+    <div class="moment left">
       <img src="assets/moments/moment1.jpg" alt="Moment 1" />
       <div class="moment-text">
         <h2>The Day We Met</h2>
@@ -123,7 +162,7 @@
       </div>
     </div>
 
-    <div class="moment">
+    <div class="moment right">
       <img src="assets/moments/moment2.jpg" alt="Moment 2" />
       <div class="moment-text">
         <h2>That One Walk</h2>
@@ -131,7 +170,7 @@
       </div>
     </div>
 
-    <div class="moment">
+    <div class="moment left">
       <img src="assets/moments/moment3.jpg" alt="Moment 3" />
       <div class="moment-text">
         <h2>The Laugh That Stuck</h2>
@@ -145,9 +184,13 @@
     Many more to come... if you're still writing this story with me.
   </footer>
 
+  <!-- Modal -->
+  <div class="modal" id="imageModal">
+    <img id="modalImage" src="" alt="Expanded moment image" />
+  </div>
+
   <script>
     const moments = document.querySelectorAll('.moment');
-
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -156,8 +199,21 @@
       });
     }, { threshold: 0.3 });
 
-    moments.forEach(moment => {
-      observer.observe(moment);
+    moments.forEach(moment => observer.observe(moment));
+
+    // Image modal popup
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+
+    document.querySelectorAll('.moment img').forEach(img => {
+      img.addEventListener('click', () => {
+        modal.classList.add('show');
+        modalImg.src = img.src;
+      });
+    });
+
+    modal.addEventListener('click', () => {
+      modal.classList.remove('show');
     });
   </script>
 
