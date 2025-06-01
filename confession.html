@@ -1,138 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>From My Heart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
+    }body {
+  font-family: 'Georgia', serif;
+  background: linear-gradient(to bottom, #ffe6e6, #ffe6ff);
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+}
 
-    body {
-      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-      font-family: 'Open Sans', sans-serif;
-      color: #2f2f2f;
-      overflow-x: hidden;
-    }
+h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #c94f7c;
+  text-align: center;
+}
 
-    .letter-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      position: relative;
-    }
+.note {
+  font-style: italic;
+  margin-bottom: 30px;
+  color: #666;
+  text-align: center;
+}
 
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3em;
-      color: #8b1e3f;
-      margin-bottom: 30px;
-      animation: fadeInDown 1.5s ease;
-    }
+.letter-wrapper {
+  perspective: 1000px;
+  width: 90%;
+  max-width: 700px;
+}
 
-    .letter {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-      max-width: 800px;
-      line-height: 1.8;
-      font-size: 1.2em;
-      white-space: pre-wrap;
-      animation: fadeInUp 2s ease;
-    }
+.letter {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 30px;
+  line-height: 1.8;
+  font-size: 1.1em;
+  color: #444;
+  transform: rotateX(-90deg);
+  transform-origin: top;
+  animation: unfold 2.5s ease-out forwards;
+}
 
-    .signature {
-      margin-top: 40px;
-      text-align: right;
-      font-style: italic;
-      font-weight: bold;
-      font-family: 'Great Vibes', cursive;
-      font-size: 1.5em;
-      color: #b04155;
-    }
+@keyframes unfold {
+  0% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.signature {
+  margin-top: 20px;
+  text-align: right;
+  font-style: italic;
+  color: #c94f7c;
+}
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
 
-    .floating-hearts {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-    }
+.heart {
+  width: 15px;
+  height: 15px;
+  background: #ff7eb9;
+  position: absolute;
+  transform: rotate(45deg);
+  animation: float 10s infinite;
+  opacity: 0.7;
+}
 
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      clip-path: polygon(50% 0%, 61% 7%, 70% 18%, 75% 30%, 78% 43%, 78% 56%, 75% 68%, 70% 80%, 61% 90%, 50% 97%, 39% 90%, 30% 80%, 25% 68%, 22% 56%, 22% 43%, 25% 30%, 30% 18%, 39% 7%);
-      animation: float 8s infinite ease-in;
-      opacity: 0.6;
-    }
+.heart::before,
+.heart::after {
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #ff7eb9;
+  position: absolute;
+  border-radius: 50%;
+}
 
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(1); }
-      100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
-    }
+.heart::before {
+  top: -7.5px;
+  left: 0;
+}
+
+.heart::after {
+  left: -7.5px;
+  top: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(45deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 <body>
-  <div class="floating-hearts"></div>
-  <div class="letter-wrapper">
-    <h1>From My Heart...</h1>
+  <div class="hearts">
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="heart" style="left: 70%; animation-delay: 1s;"></div>
+    <div class="heart" style="left: 90%; animation-delay: 3s;"></div>
+  </div>  <h1>From My Heart...</h1>
+  <p class="note">I'm keeping this page simple — because this one's not about the animations, it's about the emotions.</p>  <div class="letter-wrapper">
     <div class="letter">
-      Hey Chandu,
+      <p>Hey Chandu,</p><p>Crazy how it's been such a long time since we first met, first talked, and first became friends. So much has happened between then and now, hasn’t it? I've had my share of mistakes, and we’ve had our share of misunderstandings, arguments, and fights. But...</p>
 
-      Crazy how it’s been such a long time since we first met, first talked, and first became friends. So much has happened in between, hasn’t it? I’ve had my share of mess-ups, and we’ve had our share of misunderstandings, arguments, and fights.
+  <p>Something has always remained constant in my life — it’s you. You’ve been the Northern Star in my sky, never changing your place in my heart. I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time, and I failed to be patient enough to give you that.</p>
 
-      But through it all, one thing has remained constant in my life — you.
-      You’ve been the Northern Star in my sky — the one that never shifted, no matter how chaotic everything else got.
+  <p>But after everything, something really clicked in me. I've tried everything, but my heart always settles in one place — you. It’s always been you. And even after all that happened, you were still there when I needed someone most. Through the sleepless nights, when I was crying my heart out — you listened. Even when it wasn’t easy. You never refused to be there. You stayed, even if silently. And oh, do I love you for that.</p>
 
-      I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time… and I failed to be patient enough.
+  <p>This isn’t a proposal — it’s not. But I can say this much: I’m trying to be better for you. I don’t want you to choose me. I just want to become the kind of person who’s worthy — if you ever do.</p>
 
-      But after everything, something finally clicked in me. I tried running, tried distracting myself, but where did my heart always return?
-      To you.
-      It has always been you.
+  <p class="signature">Yours, with all my love,<br/>Soham</p>
+</div>
 
-      And even after everything — despite the hurt and the distance — you were there for me when I needed someone the most. Through the sleepless nights, when I cried my heart out, you stayed. You listened when no one else did. Even when it might have been hard for you, you never refused, never turned me away. You just… listened. And oh, how I love you for that.
-
-      I didn’t write this as a proposal. It’s not that. But I just want you to know — I’m trying. I’m trying to be better. Not because I expect you to choose me, but because if you ever do, I want to be someone worthy of that choice.
-
-      That’s all from me.
-
-      <div class="signature">Yours lovingly,<br>Soham</div>
-    </div>
   </div>
-
-  <script>
-    // Generate floating hearts
-    const container = document.querySelector('.floating-hearts');
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.animationDelay = Math.random() * 8 + 's';
-      container.appendChild(heart);
-    }
-  </script>
 </body>
 </html>
