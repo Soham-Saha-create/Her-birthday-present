@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Our Story</title>
+  <title>Our Story</n  ></title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* Base styles */
@@ -47,273 +46,263 @@
       margin-bottom: 1.5rem;
       text-align: center;
       text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
-    }
+    }/* Branches layout */
+.branches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  position: relative;
+  padding-bottom: 4rem;
+}
 
-    /* Branches layout */
-    .branches {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      position: relative;
-      padding-bottom: 4rem;
-    }
+/* Each “memory” node */
+.memory {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  width: 160px;
+  padding: 1rem;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  position: relative;
+  border: 2px solid transparent;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.memory.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.memory:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  border-color: #f8b500;
+  z-index: 10;
+}
 
-    /* Each “memory” node */
-    .memory {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      width: 160px;
-      padding: 1rem;
-      cursor: pointer;
-      text-align: center;
-      color: #fff;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      position: relative;
-      border: 2px solid transparent;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    .memory.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .memory:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      border-color: #f8b500;
-      z-index: 10;
-    }
+/* Thumbnail images */
+.memory img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transition: transform 0.25s ease;
+}
+.memory:hover img {
+  transform: scale(1.05);
+}
 
-    /* Thumbnail images */
-    .memory img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 0.8rem;
-      object-fit: cover;
-      aspect-ratio: 4/3;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      transition: transform 0.25s ease;
-    }
-    .memory:hover img {
-      transform: scale(1.05);
-    }
+/* Title below thumbnail */
+.memory-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+/* Shayari text snippet */
+.memory-text {
+  font-style: italic;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  height: 3rem;
+  overflow: hidden;
+}
 
-    /* Title below thumbnail */
-    .memory-title {
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-    }
-    /* Shayari text snippet */
-    .memory-text {
-      font-style: italic;
-      font-size: 0.9rem;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-      height: 3rem;
-      overflow: hidden;
-    }
+/* Navigation button for Moments only */
+.nav-buttons {
+  text-align: center;
+  margin-top: 2rem;
+}
+.nav-buttons a {
+  background: #f8b500;
+  color: #2c3e50;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.75rem 1.8rem;
+  margin: 0 1rem;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+.nav-buttons a:hover {
+  background: #fdebd0;
+  color: #5a2a9e;
+}
 
-    /* Navigation buttons */
-    .nav-buttons {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .nav-buttons a {
-      background: #f8b500;
-      color: #2c3e50;
-      font-weight: 700;
-      text-decoration: none;
-      padding: 0.75rem 1.8rem;
-      margin: 0 1rem;
-      border-radius: 40px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: background 0.3s ease, color 0.3s ease;
-      user-select: none;
-    }
-    .nav-buttons a:hover {
-      background: #fdebd0;
-      color: #5a2a9e;
-    }
+/* Modal overlay */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 9999;
+  padding: 1rem;
+}
+.modal.active {
+  visibility: visible;
+  opacity: 1;
+}
 
-    /* Modal overlay */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 9999;
-      padding: 1rem;
-    }
-    .modal.active {
-      visibility: visible;
-      opacity: 1;
-    }
+/* Modal content box */
+.modal-content {
+  background: #fff;
+  color: #2c3e50;
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 20px;
+  overflow-y: auto;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  position: relative;
+  animation: popupAnim 0.4s ease forwards;
+  line-height: 1.6;
+  font-family: 'Crimson Text', serif;
+}
+@keyframes popupAnim {
+  from { transform: scale(0.6) translateY(50px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
 
-    /* Modal content box */
-    .modal-content {
-      background: #fff;
-      color: #2c3e50;
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 20px;
-      overflow-y: auto;
-      padding: 2rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-      position: relative;
-      animation: popupAnim 0.4s ease forwards;
-      line-height: 1.6;
-      font-family: 'Crimson Text', serif;
-    }
-    @keyframes popupAnim {
-      from { transform: scale(0.6) translateY(50px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
-    }
+/* Close button inside modal */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  color: #5a2a9e;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+.close-btn:hover {
+  color: #f8b500;
+}
 
-    /* Close button inside modal */
-    .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: transparent;
-      border: none;
-      font-size: 1.8rem;
-      color: #5a2a9e;
-      cursor: pointer;
-      user-select: none;
-      transition: color 0.3s ease;
-    }
-    .close-btn:hover {
-      color: #f8b500;
-    }
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .memory {
+    width: 140px;
+    padding: 0.75rem;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+  .nav-buttons a {
+    padding: 0.5rem 1.2rem;
+    margin: 0 0.5rem;
+  }
+  .modal-content {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
 
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      .memory {
-        width: 140px;
-        padding: 0.75rem;
-      }
-      h1 {
-        font-size: 2.5rem;
-      }
-      .nav-buttons a {
-        padding: 0.5rem 1.2rem;
-        margin: 0 0.5rem;
-      }
-      .modal-content {
-        padding: 1rem;
-        font-size: 1rem;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Dark overlay behind content for contrast -->
-  <div class="overlay"></div>
-
-  <div class="container">
-    <h1>Our Story</h1>
-    <h2>Every moment, a branch of love growing stronger</h2>
-
-    <div class="branches">
-      <!-- Memory 1 -->
-      <div class="memory" 
-           data-title="First Mischievous Smile" 
-           data-text="I still remember how your eyes sparkled with mischief, turning an ordinary day extraordinary." 
-           data-img="images/mischievous-smile.jpg">
-        <img src="images/mischievous-smile-thumb.jpg" alt="First Mischievous Smile" />
-        <div class="memory-title">First Mischievous Smile</div>
-        <div class="memory-text">I still remember how your eyes sparkled with mischief, turning an ordinary day extraordinary.</div>
-      </div>
-
-      <!-- Memory 2 -->
-      <div class="memory" 
-           data-title="Birthday Glow-Up" 
-           data-text="Each birthday you shone brighter, your joy radiating like sunshine, lighting up every room." 
-           data-img="images/birthday-glowup.jpg">
-        <img src="images/birthday-glowup-thumb.jpg" alt="Birthday Glow-Up" />
-        <div class="memory-title">Birthday Glow-Up</div>
-        <div class="memory-text">Each birthday you shone brighter, your joy radiating like sunshine, lighting up every room.</div>
-      </div>
-
-      <!-- Memory 3 -->
-      <div class="memory" 
-           data-title="School Days Fun" 
-           data-text="Those afternoons at tuition when laughter echoed louder than any lesson." 
-           data-img="images/school-days.jpg">
-        <img src="images/school-days-thumb.jpg" alt="School Days Fun" />
-        <div class="memory-title">School Days Fun</div>
-        <div class="memory-text">Those afternoons at tuition when laughter echoed louder than any lesson.</div>
-      </div>
-
-      <!-- Memory 4 -->
-      <div class="memory" 
-           data-title="Sunset Walks" 
-           data-text="Walking by your side as the sun dipped below the horizon—pure magic." 
-           data-img="images/sunset-walks.jpg">
-        <img src="images/sunset-walks-thumb.jpg" alt="Sunset Walks" />
-        <div class="memory-title">Sunset Walks</div>
-        <div class="memory-text">Walking by your side as the sun dipped below the horizon—pure magic.</div>
-      </div>
-
-      <!-- Memory 5 -->
-      <div class="memory" 
-           data-title="Starry Nights" 
-           data-text="Under a blanket of stars, our dreams whispered promises of forever." 
-           data-img="images/starry-nights.jpg">
-        <img src="images/starry-nights-thumb.jpg" alt="Starry Nights" />
-        <div class="memory-title">Starry Nights</div>
-        <div class="memory-text">Under a blanket of stars, our dreams whispered promises of forever.</div>
-      </div>
-
-      <!-- Memory 6 -->
-      <div class="memory" 
-           data-title="Rainy Day Laughter" 
-           data-text="Caught in the rain, drenched but so happy—your laughter made that storm beautiful." 
-           data-img="images/rainy-laughter.jpg">
-        <img src="images/rainy-laughter-thumb.jpg" alt="Rainy Day Laughter" />
-        <div class="memory-title">Rainy Day Laughter</div>
-        <div class="memory-text">Caught in the rain, drenched but so happy—your laughter made that storm beautiful.</div>
-      </div>
-
-      <!-- Memory 7 -->
-      <div class="memory" 
-           data-title="Midnight Chats" 
-           data-text="Those late-night talks where our hearts spoke louder than words." 
-           data-img="images/midnight-chats.jpg">
-        <img src="images/midnight-chats-thumb.jpg" alt="Midnight Chats" />
-        <div class="memory-title">Midnight Chats</div>
-        <div class="memory-text">Those late-night talks where our hearts spoke louder than words.</div>
-      </div>
-    </div>
-
-    <div class="nav-buttons">
-      <a href="../index.html">🏡 Back to Home</a>
-      <a href="moments.html">📸 View Moments</a>
-    </div>
+  <!-- Overlay behind content for contrast -->
+  <div class="overlay"></div>  <div class="container">
+    <h1>Our Story</n1>
+    <h2>Every moment, a branch of love growing stronger</h2><div class="branches">
+  <!-- Memory 1 -->
+  <div class="memory" 
+       data-title="First Mischievous Smile" 
+       data-text="I still remember how your eyes sparkled with mischief, turning an ordinary day extraordinary." 
+       data-img="images/mischievous-smile.jpg">
+    <img src="images/mischievous-smile-thumb.jpg" alt="First Mischievous Smile" />
+    <div class="memory-title">First Mischievous Smile</div>
+    <div class="memory-text">I still remember how your eyes sparkled with mischief, turning an ordinary day extraordinary.</div>
   </div>
 
-  <!-- Modal structure -->
-  <div class="modal" id="modal">
+  <!-- Memory 2 -->
+  <div class="memory" 
+       data-title="Birthday Glow-Up" 
+       data-text="Each birthday you shone brighter, your joy radiating like sunshine, lighting up every room." 
+       data-img="images/birthday-glowup.jpg">
+    <img src="images/birthday-glowup-thumb.jpg" alt="Birthday Glow-Up" />
+    <div class="memory-title">Birthday Glow-Up</div>
+    <div class="memory-text">Each birthday you shone brighter, your joy radiating like sunshine, lighting up every room.</div>
+  </div>
+
+  <!-- Memory 3 -->
+  <div class="memory" 
+       data-title="School Days Fun" 
+       data-text="Those afternoons at tuition when laughter echoed louder than any lesson." 
+       data-img="images/school-days.jpg">
+    <img src="images/school-days-thumb.jpg" alt="School Days Fun" />
+    <div class="memory-title">School Days Fun</div>
+    <div class="memory-text">Those afternoons at tuition when laughter echoed louder than any lesson.</div>
+  </div>
+
+  <!-- Memory 4 -->
+  <div class="memory" 
+       data-title="Sunset Walks" 
+       data-text="Walking by your side as the sun dipped below the horizon—pure magic." 
+       data-img="images/sunset-walks.jpg">
+    <img src="images/sunset-walks-thumb.jpg" alt="Sunset Walks" />
+    <div class="memory-title">Sunset Walks</div>
+    <div class="memory-text">Walking by your side as the sun dipped below the horizon—pure magic.</div>
+  </div>
+
+  <!-- Memory 5 -->
+  <div class="memory" 
+       data-title="Starry Nights" 
+       data-text="Under a blanket of stars, our dreams whispered promises of forever." 
+       data-img="images/starry-nights.jpg">
+    <img src="images/starry-nights-thumb.jpg" alt="Starry Nights" />
+    <div class="memory-title">Starry Nights</div>
+    <div class="memory-text">Under a blanket of stars, our dreams whispered promises of forever.</div>
+  </div>
+
+  <!-- Memory 6 -->
+  <div class="memory" 
+       data-title="Rainy Day Laughter" 
+       data-text="Caught in the rain, drenched but so happy—your laughter made that storm beautiful." 
+       data-img="images/rainy-laughter.jpg">
+    <img src="images/rainy-laughter-thumb.jpg" alt="Rainy Day Laughter" />
+    <div class="memory-title">Rainy Day Laughter</div>
+    <div class="memory-text">Caught in the rain, drenched but so happy—your laughter made that storm beautiful.</div>
+  </div>
+
+  <!-- Memory 7 -->
+  <div class="memory" 
+       data-title="Midnight Chats" 
+       data-text="Those late-night talks where our hearts spoke louder than words." 
+       data-img="images/midnight-chats.jpg">
+    <img src="images/midnight-chats-thumb.jpg" alt="Midnight Chats" />
+    <div class="memory-title">Midnight Chats</div>
+    <div class="memory-text">Those late-night talks where our hearts spoke louder than words.</div>
+  </div>
+</div>
+
+<div class="nav-buttons">
+  <a href="moments.html">📸 View Moments</a>
+</div>
+
+  </div>  <!-- Modal (pop-up) structure -->  <div class="modal" id="modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">&times;</button>
       <h2 id="modalTitle"></h2>
       <img id="modalImg" src="" alt="" style="width:100%; border-radius: 12px; margin: 1rem 0;" />
       <p id="modalText"></p>
     </div>
-  </div>
-
-  <script>
-    // Scroll-triggered reveal
+  </div>  <script>
+    // Scroll-triggered reveal for memory nodes
     const memories = document.querySelectorAll('.memory');
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
@@ -351,6 +340,5 @@
     function closeModal() {
       modal.classList.remove('active');
     }
-  </script>
-</body>
+  </script></body>
 </html>
