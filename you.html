@@ -3,102 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>You — Photo Album</title>
+  <title>You — Photo Book</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Basic reset */
-    * {
-      box-sizing: border-box;
-    }
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      background: #fffaf8;
+      background: #faf5f2;
       font-family: 'Quicksand', sans-serif;
+      color: #333;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px 20px;
-      color: #333;
-      user-select: none;
+      overflow-x: hidden;
     }
+
     h1 {
       color: #e75480;
-      margin-bottom: 20px;
       font-size: 2.5rem;
-      text-align: center;
+      margin-bottom: 30px;
     }
 
-    /* Album container with booklet style */
-    .album {
-      perspective: 1500px;
+    /* Book container */
+    .book {
       width: 90vw;
       max-width: 900px;
-      height: 500px;
+      height: 520px;
+      perspective: 2000px;
       position: relative;
     }
 
-    /* Page container - will animate page turns */
-    .page {
+    /* Each page spread */
+    .spread {
       width: 100%;
       height: 100%;
-      background: #fff0f4;
-      box-shadow: 0 10px 20px rgba(231, 84, 128, 0.25);
-      border-radius: 15px;
-      display: flex;
-      justify-content: space-between;
-      padding: 30px;
-      box-sizing: border-box;
+      position: absolute;
+      top: 0; left: 0;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
+
+    /* Left and right pages */
+    .page {
+      width: 50%;
+      height: 100%;
+      background: #fff8f5;
       position: absolute;
       top: 0;
-      left: 0;
-      transform-origin: left center;
-      transition: transform 0.8s ease, opacity 0.8s ease;
-      opacity: 1;
+      border: 1px solid #dcd0c0;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 20px;
       backface-visibility: hidden;
     }
-
-    /* Left and Right side containers inside page */
-    .side {
+    .page img {
       width: 48%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    /* Each image box */
-    .photo {
-      width: 100%;
-      flex: 1;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(231, 84, 128, 0.2);
-      cursor: pointer;
-      position: relative;
+      height: 48%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
     }
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 12px;
-    }
-    .photo:hover {
+    .page img:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(231, 84, 128, 0.4);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
 
-    /* Page turn animations */
-    .page.turning-left {
-      transform: rotateY(-180deg);
-      opacity: 0;
-      pointer-events: none;
+    .left {
+      left: 0;
+      transform-origin: left center;
     }
-    .page.turning-right {
-      transform: rotateY(180deg);
-      opacity: 0;
-      pointer-events: none;
+    .right {
+      left: 50%;
+      transform-origin: left center;
+    }
+
+    /* When flipping forward, rotate entire spread */
+    .flipped {
+      transform: rotateY(-180deg);
     }
 
     /* Navigation buttons */
@@ -130,68 +117,29 @@
       transform: none;
     }
 
-    /* Fullscreen photo modal */
-    #photoModal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
-    }
-    #photoModal.visible {
-      visibility: visible;
-      opacity: 1;
-    }
-    #photoModal img {
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(255, 182, 185, 0.7);
-    }
-    #photoModal .close-btn {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      font-weight: bold;
-      background: rgba(0,0,0,0.3);
-      padding: 8px 14px;
-      border-radius: 50%;
-      line-height: 1;
-      transition: background-color 0.3s ease;
-    }
-    #photoModal .close-btn:hover {
-      background: rgba(0,0,0,0.6);
-    }
-
-    /* Responsive */
+    /* For mobile: smaller height */
     @media (max-width: 700px) {
-      .album {
-        height: 400px;
-      }
+      .book { height: 400px; }
     }
     @media (max-width: 450px) {
-      .album {
-        height: 350px;
-      }
+      .book { height: 350px; }
+      .page img { width: 48%; height: 48%; }
     }
   </style>
 </head>
 <body>
-  <h1>You — Photo Album</h1>
+  <h1>You — Photo Book</h1>
 
-  <div class="album" id="album">
-    <div class="page" id="page">
-      <div class="side left-side" id="leftSide"></div>
-      <div class="side right-side" id="rightSide"></div>
+  <div class="book">
+    <div class="spread" id="spread">
+      <!-- Left Page -->
+      <div class="page left" id="leftPage">
+        <!-- 2 photos per side inserted here -->
+      </div>
+      <!-- Right Page -->
+      <div class="page right" id="rightPage">
+        <!-- 2 photos per side inserted here -->
+      </div>
     </div>
   </div>
 
@@ -200,90 +148,116 @@
     <button class="nav-btn" id="nextBtn">Next ›</button>
   </div>
 
-  <!-- Fullscreen photo modal -->
-  <div id="photoModal">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <img src="" alt="Zoomed Photo" id="modalImg" />
-  </div>
-
   <script>
-    // Replace these URLs with your 80 actual image paths
-    const images = [];
-    for (let i = 1; i <= 80; i++) {
-      images.push(`https://picsum.photos/id/${100 + i}/400/300`);
-    }
+    // 1. Replace these with your actual 80+ image URLs
+    const images = [
+      'media/you/photo1.jpg',  'media/you/photo2.jpg',  'media/you/photo3.jpg',  'media/you/photo4.jpg',
+      'media/you/photo5.jpg',  'media/you/photo6.jpg',  'media/you/photo7.jpg',  'media/you/photo8.jpg',
+      'media/you/photo9.jpg',  'media/you/photo10.jpg', 'media/you/photo11.jpg', 'media/you/photo12.jpg',
+      'media/you/photo13.jpg', 'media/you/photo14.jpg', 'media/you/photo15.jpg', 'media/you/photo16.jpg',
+      'media/you/photo17.jpg', 'media/you/photo18.jpg', 'media/you/photo19.jpg', 'media/you/photo20.jpg',
+      'media/you/photo21.jpg', 'media/you/photo22.jpg', 'media/you/photo23.jpg', 'media/you/photo24.jpg',
+      'media/you/photo25.jpg', 'media/you/photo26.jpg', 'media/you/photo27.jpg', 'media/you/photo28.jpg',
+      'media/you/photo29.jpg', 'media/you/photo30.jpg', 'media/you/photo31.jpg', 'media/you/photo32.jpg',
+      'media/you/photo33.jpg', 'media/you/photo34.jpg', 'media/you/photo35.jpg', 'media/you/photo36.jpg',
+      'media/you/photo37.jpg', 'media/you/photo38.jpg', 'media/you/photo39.jpg', 'media/you/photo40.jpg',
+      'media/you/photo41.jpg', 'media/you/photo42.jpg', 'media/you/photo43.jpg', 'media/you/photo44.jpg',
+      'media/you/photo45.jpg', 'media/you/photo46.jpg', 'media/you/photo47.jpg', 'media/you/photo48.jpg',
+      'media/you/photo49.jpg', 'media/you/photo50.jpg', 'media/you/photo51.jpg', 'media/you/photo52.jpg',
+      'media/you/photo53.jpg', 'media/you/photo54.jpg', 'media/you/photo55.jpg', 'media/you/photo56.jpg',
+      'media/you/photo57.jpg', 'media/you/photo58.jpg', 'media/you/photo59.jpg', 'media/you/photo60.jpg',
+      'media/you/photo61.jpg', 'media/you/photo62.jpg', 'media/you/photo63.jpg', 'media/you/photo64.jpg',
+      'media/you/photo65.jpg', 'media/you/photo66.jpg', 'media/you/photo67.jpg', 'media/you/photo68.jpg',
+      'media/you/photo69.jpg', 'media/you/photo70.jpg', 'media/you/photo71.jpg', 'media/you/photo72.jpg',
+      'media/you/photo73.jpg', 'media/you/photo74.jpg', 'media/you/photo75.jpg', 'media/you/photo76.jpg',
+      'media/you/photo77.jpg', 'media/you/photo78.jpg', 'media/you/photo79.jpg', 'media/you/photo80.jpg'
+    ];
 
-    const photosPerPage = 4;
-    const totalPages = Math.ceil(images.length / photosPerPage);
-    let currentPage = 0;
+    const photosPerSpread = 4; // 2 per page
+    const totalSpreads = Math.ceil(images.length / photosPerSpread);
+    let currentSpread = 0;
 
-    const leftSide = document.getElementById('leftSide');
-    const rightSide = document.getElementById('rightSide');
+    // DOM refs
+    const leftPage = document.getElementById('leftPage');
+    const rightPage = document.getElementById('rightPage');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const page = document.getElementById('page');
+    const spread = document.getElementById('spread');
 
-    // Modal elements
-    const photoModal = document.getElementById('photoModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeModalBtn = document.getElementById('closeModal');
+    // Function to render one spread (4 images) onto pages
+    function renderSpread(idx) {
+      leftPage.innerHTML = '';
+      rightPage.innerHTML = '';
 
-    function renderPage(pageNum) {
-      leftSide.innerHTML = '';
-      rightSide.innerHTML = '';
-
-      const startIndex = pageNum * photosPerPage;
-      const endIndex = Math.min(startIndex + photosPerPage, images.length);
+      const startIndex = idx * photosPerSpread;
+      const endIndex = Math.min(startIndex + photosPerSpread, images.length);
       const currentImages = images.slice(startIndex, endIndex);
 
-      // Left side - first two images
+      // Left page: images[0], images[1]
       for (let i = 0; i < 2; i++) {
         if (currentImages[i]) {
           const photoDiv = document.createElement('div');
           photoDiv.className = 'photo';
           photoDiv.innerHTML = `<img src="${currentImages[i]}" alt="Photo ${startIndex + i + 1}">`;
-          photoDiv.addEventListener('click', () => openModal(currentImages[i]));
-          leftSide.appendChild(photoDiv);
+          // Random slight tilt
+          const angle = (Math.random() * 6 - 3).toFixed(1);
+          photoDiv.style.transform = `rotate(${angle}deg)`;
+          leftPage.appendChild(photoDiv);
         }
       }
 
-      // Right side - next two images
+      // Right page: images[2], images[3]
       for (let i = 2; i < 4; i++) {
         if (currentImages[i]) {
           const photoDiv = document.createElement('div');
           photoDiv.className = 'photo';
           photoDiv.innerHTML = `<img src="${currentImages[i]}" alt="Photo ${startIndex + i + 1}">`;
-          photoDiv.addEventListener('click', () => openModal(currentImages[i]));
-          rightSide.appendChild(photoDiv);
+          const angle = (Math.random() * 6 - 3).toFixed(1);
+          photoDiv.style.transform = `rotate(${angle}deg)`;
+          rightPage.appendChild(photoDiv);
         }
       }
 
-      prevBtn.disabled = (pageNum === 0);
-      nextBtn.disabled = (pageNum === totalPages - 1);
+      // Update button states
+      prevBtn.disabled = (idx === 0);
+      nextBtn.disabled = (idx === totalSpreads - 1);
     }
 
-    function turnPage(direction) {
-      if (direction === 'next' && currentPage < totalPages - 1) {
-        page.classList.add('turning-left');
+    // Flip animation logic
+    function flipPage(direction) {
+      if (direction === 'next' && currentSpread < totalSpreads - 1) {
+        spread.classList.add('turning-left');
         setTimeout(() => {
-          currentPage++;
-          renderPage(currentPage);
-          page.classList.remove('turning-left');
+          currentSpread++;
+          renderSpread(currentSpread);
+          spread.classList.remove('turning-left');
         }, 800);
-      } else if (direction === 'prev' && currentPage > 0) {
-        page.classList.add('turning-right');
+      }
+      else if (direction === 'prev' && currentSpread > 0) {
+        spread.classList.add('turning-right');
         setTimeout(() => {
-          currentPage--;
-          renderPage(currentPage);
-          page.classList.remove('turning-right');
+          currentSpread--;
+          renderSpread(currentSpread);
+          spread.classList.remove('turning-right');
         }, 800);
       }
     }
 
-    prevBtn.addEventListener('click', () => turnPage('prev'));
-    nextBtn.addEventListener('click', () => turnPage('next'));
+    prevBtn.addEventListener('click', () => flipPage('prev'));
+    nextBtn.addEventListener('click', () => flipPage('next'));
 
-    // Modal functions
+    // Photo modal (fullscreen zoom)
+    const photoModal = document.createElement('div');
+    photoModal.id = 'photoModal';
+    photoModal.innerHTML = `
+      <span class="close-btn">&times;</span>
+      <img src="" alt="Zoomed Photo" id="modalImg" />
+    `;
+    document.body.appendChild(photoModal);
+
+    const modalImg = document.getElementById('modalImg');
+    const closeModalBtn = photoModal.querySelector('.close-btn');
+
     function openModal(src) {
       modalImg.src = src;
       photoModal.classList.add('visible');
@@ -292,27 +266,34 @@
       photoModal.classList.remove('visible');
       modalImg.src = '';
     }
+
+    // Attach click listeners to dynamic photo elements
+    function attachPhotoListeners() {
+      document.querySelectorAll('.photo img').forEach(img => {
+        img.addEventListener('click', () => openModal(img.src));
+      });
+    }
+
     closeModalBtn.addEventListener('click', closeModal);
     photoModal.addEventListener('click', (e) => {
       if (e.target === photoModal) closeModal();
     });
 
-    // Swipe support for mobile
+    // Swipe support for mobile (left/right swipe)
     let startX = 0;
-    page.addEventListener('touchstart', (e) => {
+    spread.addEventListener('touchstart', (e) => {
       startX = e.changedTouches[0].screenX;
     });
-    page.addEventListener('touchend', (e) => {
+    spread.addEventListener('touchend', (e) => {
       const endX = e.changedTouches[0].screenX;
-      if (startX - endX > 50) {
-        turnPage('next');
-      } else if (endX - startX > 50) {
-        turnPage('prev');
-      }
+      if (startX - endX > 50) flipPage('next');
+      else if (endX - startX > 50) flipPage('prev');
     });
 
-    // Initial render
-    renderPage(currentPage);
+    // Initial render and listeners
+    renderSpread(currentSpread);
+    // Delay attaching photo listeners until after initial render
+    setTimeout(attachPhotoListeners, 1000);
   </script>
 </body>
 </html>
