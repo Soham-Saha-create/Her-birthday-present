@@ -1,190 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Heart's Confession</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Crimson+Text&display=swap" rel="stylesheet">
-  <style>
-    /* Reset & Box-Sizing */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Confession Letter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Playfair+Display&display=swap');
 
-    /* Body & Background */
-    body {
-      font-family: 'Crimson Text', serif;
-      background: linear-gradient(to bottom, #fff3f0, #ffe4e1);
-      color: #3d2b2b;
-      overflow-x: hidden;
-      padding: 40px 16px;
-      position: relative;
-    }
+  /* Background & Body */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+    font-family: 'Playfair Display', serif;
+    color: #4b2e05;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-    /* Falling leaves container */
-    .leaves {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
+  /* Falling Leaves Container */
+  #leaves {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+  }
 
-    .leaf {
-      position: absolute;
-      top: -60px;
-      width: 30px;
-      height: 30px;
-      background-image: url('assets/graphics/leaf.png');
-      background-size: cover;
+  /* Single Leaf Style */
+  .leaf {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 50% 50%, #b85c00 0%, #7c3c00 80%);
+    clip-path: polygon(50% 0%, 90% 35%, 65% 100%, 35% 100%, 10% 35%);
+    opacity: 0.8;
+    animation-name: fall, sway;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: normal, alternate;
+  }
+
+  /* Leaf Fall Animation */
+  @keyframes fall {
+    0% {
+      transform: translateY(-50px) rotate(0deg);
       opacity: 0.8;
-      animation: spin 8s infinite linear, fall 10s infinite ease-in;
     }
-
-    @keyframes fall {
-      0% { transform: translateY(-60px) rotate(0deg); opacity: 0.8; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Container for everything content */
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    /* Intro text */
-    .intro {
-      font-size: 1.1em;
-      font-style: italic;
-      color: #6a4e4e;
-      margin-bottom: 30px;
-      animation: fadeIn 2s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Letter wrapper to allow scroll */
-    .letter-wrapper {
-      position: relative;
-      width: 100%;
-      margin-bottom: 60px;
-    }
-
-    /* Each paragraph (“line”) initially hidden */
-    .letter p {
-      margin-bottom: 20px;
-      text-align: justify;
+    100% {
+      transform: translateY(110vh) rotate(360deg);
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-      font-size: 1.2em;
-      line-height: 1.8;
     }
+  }
 
-    /* When visible, fade up */
-    .letter p.visible {
-      opacity: 1;
-      transform: translateY(0);
+  /* Leaf Sway Animation */
+  @keyframes sway {
+    0% {
+      transform: translateX(0);
     }
+    100% {
+      transform: translateX(30px);
+    }
+  }
 
-    /* Signature */
-    .signature {
-      text-align: right;
-      font-family: 'Great Vibes', cursive;
-      font-size: 1.8em;
-      margin-top: 30px;
-      color: #b34c4c;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-    .signature.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  /* Container for Letter */
+  .page-container {
+    max-width: 700px;
+    margin: 140px auto 80px;
+    background: #fffefb;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 40px 40px 60px;
+    position: relative;
+    z-index: 10;
+    overflow-y: auto;
+    max-height: 75vh;
+    scroll-behavior: smooth;
+  }
+
+  /* Intro text */
+  .intro {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #bb6b1d;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Letter container */
+  .letter {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #4b2e05;
+  }
+
+  /* Each paragraph initially hidden */
+  .letter p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin-bottom: 24px;
+  }
+
+  /* Show paragraph when active */
+  .letter p.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Signature style */
+  .signature {
+    margin-top: 50px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    text-align: right;
+    color: #b15900;
+  }
+
+  /* Scrollbar style */
+  .page-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  .page-container::-webkit-scrollbar-thumb {
+    background: #bb6b1d;
+    border-radius: 20px;
+  }
+  .page-container::-webkit-scrollbar-track {
+    background: #fffefb;
+  }
+
+</style>
 </head>
 <body>
 
-  <!-- Falling Leaves in Background -->
-  <div class="leaves" id="leavesContainer"></div>
+<!-- Falling leaves container -->
+<div id="leaves"></div>
 
-  <!-- Main Content -->
-  <div class="container">
-    <div class="intro">
-      I’m keeping this page simple—<br>it’s not about the animations, it’s about the emotions.
-    </div>
+<div class="page-container" id="pageContainer">
 
-    <div class="letter-wrapper">
-      <div class="letter" id="letterContent">
-        <p>Hey Chandu,</p>
-
-        <p>Crazy how it’s been such a long time since we first met, first talked, and first became friends. So much has happened in between, hasn’t it? I’ve had my share of mess-ups, and we’ve had our share of misunderstandings, arguments, and fights.</p>
-
-        <p>But something has always remained constant in my life — it’s you. You’ve been the Northern Star in my sky, never shifting from the place you hold in my heart. I know I’ve broken your trust, shattered it more than once. Maybe all you needed was time, and I failed to be patient enough to give it to you.</p>
-
-        <p>But after everything, something really clicked inside me. I’ve tried to run from it, bury it, distract myself. But where has my heart always settled? With you. It’s always been you.</p>
-
-        <p>Even after everything, you were there when I needed someone the most. During those sleepless nights, when I was crying my heart out, you listened — without judgment, without frustration. Even if it wasn’t easy, you stayed. And oh, how I love you for that.</p>
-
-        <p>I didn’t write this letter as a proposal — it’s not. But I can say this much: I’m trying to be better. Not for anyone else, not even for you... but so I’m worthy if you ever do choose me.</p>
-
-        <div class="signature" id="signature">Yours Loving,<br>Soham</div>
-      </div>
-    </div>
+  <div class="intro">
+    I am keeping this page simple — it's not about animations, but about emotions.
   </div>
 
-  <script>
-    // 1. Create falling leaves
-    function spawnLeaves() {
-      const container = document.getElementById('leavesContainer');
-      const leafCount = 12;
-      for (let i = 0; i < leafCount; i++) {
-        const leaf = document.createElement('div');
-        leaf.classList.add('leaf');
-        leaf.style.left = Math.random() * 100 + '%';
-        leaf.style.animationDuration = (8 + Math.random() * 5) + 's';
-        leaf.style.animationDelay = Math.random() * -10 + 's';
-        container.appendChild(leaf);
+  <div class="letter" id="letter">
+    <p>Hey Chandu,</p>
+    <p>Crazy how it's been such a long time since we first met, first talked, first became friends. So much has happened in between this time, hasn't it? I have had my share of fuck ups, we have had our share of misunderstandings, arguments, and fights. But...</p>
+    <p>Something has always remained constant in my life — it's you. You have been the Northern Star in my life which never changed its place in my heart. I know I have broken your trust, shattered it multiple times. Maybe all you needed was some time and I failed to be patient enough.</p>
+    <p>But after everything, something really clicked in me. I have tried everything but where has my heart always settled? In you, it's always been you. And even after everything, you were there when I needed you the most. The sleepless nights, crying my heart out, you were there, to listen, when no one was. No matter if you liked it or not, you never refused to listen, you spent nights listening to my ranting and never spat a bad word. And oh do I love you for that!</p>
+    <p>I didn't write this letter as a proposal, it is not. But I can say this much that I am trying to be better for you. I don't want you to choose me but I want myself to be perfect if you ever do. That was all from me.</p>
+    <p class="signature">Yours Loving,<br>Soham</p>
+  </div>
+</div>
+
+<script>
+  // Create multiple leaves
+  const leavesContainer = document.getElementById('leaves');
+  const leafCount = 20;
+
+  for(let i=0; i<leafCount; i++){
+    const leaf = document.createElement('div');
+    leaf.classList.add('leaf');
+
+    // Random horizontal start position (0-100vw)
+    leaf.style.left = Math.random() * 100 + 'vw';
+
+    // Random animation duration (10-20s)
+    leaf.style.animationDuration = (10 + Math.random()*10) + 's';
+
+    // Random animation delay to stagger
+    leaf.style.animationDelay = (Math.random() * 20) + 's';
+
+    // Random sway distance
+    const swayDist = 10 + Math.random()*20;
+    leaf.style.setProperty('--sway-dist', swayDist + 'px');
+
+    leavesContainer.appendChild(leaf);
+  }
+
+  // Letter unfold on scroll
+  const paragraphs = document.querySelectorAll('.letter p');
+
+  function revealParagraphs() {
+    const container = document.getElementById('pageContainer');
+    const scrollBottom = container.scrollTop + container.clientHeight;
+
+    paragraphs.forEach((p, index) => {
+      const pTop = p.offsetTop;
+      if(scrollBottom > pTop + 20) {  // Add a little offset for early reveal
+        p.classList.add('visible');
       }
-    }
-
-    // 2. Reveal paragraphs on scroll
-    function setupScrollReveal() {
-      const paragraphs = document.querySelectorAll('.letter p');
-      const signature = document.getElementById('signature');
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.2 });
-
-      paragraphs.forEach(p => observer.observe(p));
-      observer.observe(signature);
-    }
-
-    // Run on load
-    window.addEventListener('load', () => {
-      spawnLeaves();
-      setupScrollReveal();
     });
-  </script>
+  }
+
+  const pageContainer = document.getElementById('pageContainer');
+  pageContainer.addEventListener('scroll', revealParagraphs);
+
+  // Reveal paragraphs on page load if visible
+  window.addEventListener('load', () => {
+    revealParagraphs();
+  });
+</script>
+
 </body>
 </html>
