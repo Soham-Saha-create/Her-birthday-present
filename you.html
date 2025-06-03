@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You — Photo Album</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Basic reset */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #fffaf8;
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      color: #333;
+      user-select: none;
+    }
+    h1 {
+      color: #e75480;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    /* Album container with booklet style */
+    .album {
+      perspective: 1500px;
+      width: 90vw;
+      max-width: 900px;
+      height: 500px;
+      position: relative;
+    }
+
+    /* Page container - will animate page turns */
+    .page {
+      width: 100%;
+      height: 100%;
+      background: #fff0f4;
+      box-shadow: 0 10px 20px rgba(231, 84, 128, 0.25);
+      border-radius: 15px;
+      display: flex;
+      justify-content: space-between;
+      padding: 30px;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: left center;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      opacity: 1;
+      backface-visibility: hidden;
+    }
+
+    /* Left and Right side containers inside page */
+    .side {
+      width: 48%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Each image box */
+    .photo {
+      width: 100%;
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(231, 84, 128, 0.2);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+    }
+    .photo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(231, 84, 128, 0.4);
+    }
+
+    /* Page turn animations */
+    .page.turning-left {
+      transform: rotateY(-180deg);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .page.turning-right {
+      transform: rotateY(180deg);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Navigation buttons */
+    .nav-buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+    .nav-btn {
+      background-color: #ffb6b9;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: none;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: #ff9aa2;
+      transform: translateY(-2px);
+    }
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Fullscreen photo modal */
+    #photoModal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+    #photoModal.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+    #photoModal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(255, 182, 185, 0.7);
+    }
+    #photoModal .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
+      background: rgba(0,0,0,0.3);
+      padding: 8px 14px;
+      border-radius: 50%;
+      line-height: 1;
+      transition: background-color 0.3s ease;
+    }
+    #photoModal .close-btn:hover {
+      background: rgba(0,0,0,0.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .album {
+        height: 400px;
+      }
+    }
+    @media (max-width: 450px) {
+      .album {
+        height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>You — Photo Album</h1>
+
+  <div class="album" id="album">
+    <div class="page" id="page">
+      <div class="side left-side" id="leftSide"></div>
+      <div class="side right-side" id="rightSide"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" disabled>‹ Previous</button>
+    <button class="nav-btn" id="nextBtn">Next ›</button>
+  </div>
+
+  <!-- Fullscreen photo modal -->
+  <div id="photoModal">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <img src="" alt="Zoomed Photo" id="modalImg" />
+  </div>
+
+  <script>
+    // Replace these URLs with your 80 actual image paths
+    const images = [];
+    for (let i = 1; i <= 80; i++) {
+      images.push(`https://picsum.photos/id/${100 + i}/400/300`);
+    }
+
+    const photosPerPage = 4;
+    const totalPages = Math.ceil(images.length / photosPerPage);
+    let currentPage = 0;
+
+    const leftSide = document.getElementById('leftSide');
+    const rightSide = document.getElementById('rightSide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const page = document.getElementById('page');
+
+    // Modal elements
+    const photoModal = document.getElementById('photoModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    function renderPage(pageNum) {
+      leftSide.innerHTML = '';
+      rightSide.innerHTML = '';
+
+      const startIndex = pageNum * photosPerPage;
+      const endIndex = Math.min(startIndex + photosPerPage, images.length);
+      const currentImages = images.slice(startIndex, endIndex);
+
+      // Left side - first two images
+      for (let i = 0; i < 2; i++) {
+        if (currentImages[i]) {
+          const photoDiv = document.createElement('div');
+          photoDiv.className = 'photo';
+          photoDiv.innerHTML = `<img src="${currentImages[i]}" alt="Photo ${startIndex + i + 1}">`;
+          photoDiv.addEventListener('click', () => openModal(currentImages[i]));
+          leftSide.appendChild(photoDiv);
+        }
+      }
+
+      // Right side - next two images
+      for (let i = 2; i < 4; i++) {
+        if (currentImages[i]) {
+          const photoDiv = document.createElement('div');
+          photoDiv.className = 'photo';
+          photoDiv.innerHTML = `<img src="${currentImages[i]}" alt="Photo ${startIndex + i + 1}">`;
+          photoDiv.addEventListener('click', () => openModal(currentImages[i]));
+          rightSide.appendChild(photoDiv);
+        }
+      }
+
+      prevBtn.disabled = (pageNum === 0);
+      nextBtn.disabled = (pageNum === totalPages - 1);
+    }
+
+    function turnPage(direction) {
+      if (direction === 'next' && currentPage < totalPages - 1) {
+        page.classList.add('turning-left');
+        setTimeout(() => {
+          currentPage++;
+          renderPage(currentPage);
+          page.classList.remove('turning-left');
+        }, 800);
+      } else if (direction === 'prev' && currentPage > 0) {
+        page.classList.add('turning-right');
+        setTimeout(() => {
+          currentPage--;
+          renderPage(currentPage);
+          page.classList.remove('turning-right');
+        }, 800);
+      }
+    }
+
+    prevBtn.addEventListener('click', () => turnPage('prev'));
+    nextBtn.addEventListener('click', () => turnPage('next'));
+
+    // Modal functions
+    function openModal(src) {
+      modalImg.src = src;
+      photoModal.classList.add('visible');
+    }
+    function closeModal() {
+      photoModal.classList.remove('visible');
+      modalImg.src = '';
+    }
+    closeModalBtn.addEventListener('click', closeModal);
+    photoModal.addEventListener('click', (e) => {
+      if (e.target === photoModal) closeModal();
+    });
+
+    // Swipe support for mobile
+    let startX = 0;
+    page.addEventListener('touchstart', (e) => {
+      startX = e.changedTouches[0].screenX;
+    });
+    page.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].screenX;
+      if (startX - endX > 50) {
+        turnPage('next');
+      } else if (endX - startX > 50) {
+        turnPage('prev');
+      }
+    });
+
+    // Initial render
+    renderPage(currentPage);
+  </script>
+</body>
+</html>
