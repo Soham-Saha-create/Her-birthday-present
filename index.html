@@ -5,65 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welcome | Our Story</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quicksand&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap');
 
     body {
       margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #f9f1f0, #fff6f0);
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #fcefe3, #f9e4d4);
       color: #5a3e36;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
       align-items: center;
       justify-content: center;
+      min-height: 100vh;
       padding: 40px 20px;
       text-align: center;
     }
 
     h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
       font-size: 3rem;
-      margin-bottom: 0.5em;
-      color: #b36b5e;
+      margin-bottom: 0.7em;
+      color: #8b5e50;
       opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 1s ease forwards;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
     }
 
-    p {
-      font-size: 1.2rem;
-      line-height: 1.6;
+    p.description {
+      font-size: 1.15rem;
       max-width: 600px;
-      margin: 0 auto 2em auto;
+      margin: 0 auto 3em auto;
+      line-height: 1.6;
+      color: #6b4e43;
       opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 1s ease forwards;
-      animation-delay: 0.4s;
-      color: #7b574e;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.6s;
     }
 
     .btn {
-      background-color: #b36b5e;
-      color: #fff6f0;
+      background-color: #a9776e;
+      color: #f7f1ec;
       border: none;
-      padding: 14px 36px;
       border-radius: 30px;
+      padding: 14px 36px;
       font-size: 1.1rem;
       cursor: pointer;
-      box-shadow: 0 6px 10px rgba(179, 107, 94, 0.4);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 1s ease forwards;
-      animation-delay: 0.8s;
+      box-shadow: 0 6px 14px rgba(169, 119, 110, 0.4);
       text-decoration: none;
-      display: inline-block;
+      font-weight: 600;
+      font-family: 'Open Sans', sans-serif;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      flex: 1 1 40%;
+      max-width: 250px;
+      text-align: center;
     }
 
     .btn:hover {
-      background-color: #a35a51;
-      box-shadow: 0 8px 14px rgba(163, 90, 81, 0.6);
+      background-color: #8b5e50;
+      box-shadow: 0 8px 18px rgba(139, 94, 80, 0.6);
+    }
+
+    footer {
+      margin-top: auto;
+      font-size: 0.9rem;
+      color: #a1887f;
+      padding: 20px 10px 10px 10px;
+      font-style: italic;
     }
 
     @keyframes fadeUp {
@@ -73,41 +94,35 @@
       }
     }
 
-    footer {
-      margin-top: auto;
-      font-size: 0.9rem;
-      color: #a38a82;
-      padding: 20px 10px 10px 10px;
-    }
-
-    /* subtle heart icon */
-    .heart {
-      color: #b36b5e;
-      font-size: 1.5rem;
-      margin-left: 8px;
-      animation: pulse 3s infinite;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+    @media (max-width: 480px) {
+      .buttons-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .btn {
+        max-width: 100%;
+        flex: none;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Welcome to Our Story<span class="heart">❤</span></h1>
-  <p>
-    A gentle journey of moments shared, smiles exchanged, and memories created —  
-    all wrapped up in a warm, friendly embrace.
+  <h1>Welcome to Our Story</h1>
+  <p class="description">
+    A warm space where memories blossom, laughter lingers, and friendship  
+    gently grows into something truly special.
   </p>
 
-  <a href="memorylane.html" class="btn">Explore Our Memories</a>
+  <div class="buttons-container">
+    <a href="letters.html" class="btn">Letter Archive</a>
+    <a href="memorylane.html" class="btn">Memory Lane</a>
+    <a href="confession.html" class="btn">Confession</a>
+    <a href="secret.html" class="btn">Secret Page</a>
+  </div>
 
   <footer>
-    Made with ❤️ and a whole lot of hope.
+    Made with care and a hopeful heart.
   </footer>
 
 </body>
