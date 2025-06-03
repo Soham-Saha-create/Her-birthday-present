@@ -2,160 +2,113 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday, You</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome | Our Story</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quicksand&display=swap');
 
     body {
-      height: 100vh;
-      background: linear-gradient(to right, #fffafc, #ffe4ec);
-      overflow: hidden;
+      margin: 0;
       font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #f9f1f0, #fff6f0);
+      color: #5a3e36;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
       align-items: center;
       justify-content: center;
-      position: relative;
+      padding: 40px 20px;
+      text-align: center;
     }
 
     h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3.5rem;
-      color: #e75480;
-      animation: fadeIn 1.5s ease-in-out forwards;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 0.5em;
+      color: #b36b5e;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s ease forwards;
     }
 
     p {
-      font-size: 1.1rem;
-      color: #444;
+      font-size: 1.2rem;
+      line-height: 1.6;
       max-width: 600px;
-      margin: 1rem 0 2rem;
-      text-align: center;
-      animation: fadeIn 2s ease-in-out forwards;
+      margin: 0 auto 2em auto;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.4s;
+      color: #7b574e;
     }
 
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      z-index: 2;
-    }
-
-    .menu a {
-      text-decoration: none;
-      background: #ffb6b9;
-      color: white;
-      padding: 14px 30px;
-      border-radius: 50px;
-      font-weight: bold;
+    .btn {
+      background-color: #b36b5e;
+      color: #fff6f0;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 30px;
       font-size: 1.1rem;
-      box-shadow: 0 8px 20px rgba(255, 182, 185, 0.4);
-      transition: all 0.3s ease;
-      animation: slideUp 2s ease-in-out forwards;
+      cursor: pointer;
+      box-shadow: 0 6px 10px rgba(179, 107, 94, 0.4);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.8s;
+      text-decoration: none;
+      display: inline-block;
     }
 
-    .menu a:hover {
-      background: #ff9aa2;
-      transform: scale(1.05);
+    .btn:hover {
+      background-color: #a35a51;
+      box-shadow: 0 8px 14px rgba(163, 90, 81, 0.6);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     footer {
-      margin-top: 3rem;
+      margin-top: auto;
       font-size: 0.9rem;
-      color: #888;
-      z-index: 2;
-      animation: fadeIn 3s ease-in-out forwards;
+      color: #a38a82;
+      padding: 20px 10px 10px 10px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Floating hearts */
+    /* subtle heart icon */
     .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      transform: rotate(-45deg);
-      animation: float 10s linear infinite;
-      opacity: 0.6;
+      color: #b36b5e;
+      font-size: 1.5rem;
+      margin-left: 8px;
+      animation: pulse 3s infinite;
+      display: inline-block;
+      vertical-align: middle;
     }
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: 10px;
-      top: 0;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0) rotate(-45deg);
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-100vh) rotate(-45deg);
-        opacity: 0;
-      }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
   </style>
 </head>
 <body>
-  <h1>Happy Birthday, You ✨</h1>
-  <p>Not just a webpage. It’s your story, your sparkle, your surprise. So take your time — there’s a lot to find, feel, and smile about.</p>
 
-  <div class="menu">
-    <a href="letters.html">Letter Archive</a>
-    <a href="memory.html">Memory Lane</a>
-    <a href="confession.html">Confession</a>
-    <a href="unlock.html">Secret Page</a>
-  </div>
+  <h1>Welcome to Our Story<span class="heart">❤</span></h1>
+  <p>
+    A gentle journey of moments shared, smiles exchanged, and memories created —  
+    all wrapped up in a warm, friendly embrace.
+  </p>
+
+  <a href="memorylane.html" class="btn">Explore Our Memories</a>
 
   <footer>
-    Made with way too much love 💌 by someone who kinda can’t stop.
+    Made with ❤️ and a whole lot of hope.
   </footer>
 
-  <!-- Floating hearts -->
-  <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = `${Math.random() * 100}vw`;
-      heart.style.animationDuration = `${5 + Math.random() * 5}s`;
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 10000);
-    }
-
-    setInterval(createHeart, 400);
-  </script>
 </body>
 </html>
