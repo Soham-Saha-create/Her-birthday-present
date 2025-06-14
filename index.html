@@ -2,128 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome | Our Story</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home | Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap');
-
     body {
       margin: 0;
-      font-family: 'Open Sans', sans-serif;
-      background: linear-gradient(135deg, #fcefe3, #f9e4d4);
-      color: #5a3e36;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to bottom, #fff8f0, #fbeee6);
+      color: #333;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
-      padding: 40px 20px;
       text-align: center;
     }
 
-    h1 {
-      font-family: 'Merriweather', serif;
-      font-weight: 700;
+    header {
+      padding: 60px 20px 30px;
+    }
+
+    header h1 {
       font-size: 3rem;
-      margin-bottom: 0.7em;
-      color: #8b5e50;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards;
+      margin-bottom: 10px;
+      color: #e26d6d;
     }
 
-    p.description {
-      font-size: 1.15rem;
-      max-width: 600px;
-      margin: 0 auto 3em auto;
-      line-height: 1.6;
-      color: #6b4e43;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.3s;
+    header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #6e4c4c;
     }
 
-    .buttons-container {
+    .nav-buttons {
+      margin-top: 50px;
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
       justify-content: center;
-      max-width: 600px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.6s;
+      gap: 25px;
     }
 
-    .btn {
-      background-color: #a9776e;
-      color: #f7f1ec;
-      border: none;
-      border-radius: 30px;
-      padding: 14px 36px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(169, 119, 110, 0.4);
+    .nav-buttons a {
       text-decoration: none;
+      padding: 14px 32px;
+      background-color: #ffd6d6;
+      color: #503232;
+      font-size: 1rem;
       font-weight: 600;
-      font-family: 'Open Sans', sans-serif;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      flex: 1 1 40%;
-      max-width: 250px;
-      text-align: center;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .btn:hover {
-      background-color: #8b5e50;
-      box-shadow: 0 8px 18px rgba(139, 94, 80, 0.6);
+    .nav-buttons a:hover {
+      background-color: #f5b3b3;
+      transform: translateY(-3px);
     }
 
     footer {
       margin-top: auto;
+      padding: 20px;
       font-size: 0.9rem;
-      color: #a1887f;
-      padding: 20px 10px 10px 10px;
-      font-style: italic;
-    }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .buttons-container {
-        flex-direction: column;
-        gap: 15px;
-      }
-      .btn {
-        max-width: 100%;
-        flex: none;
-      }
+      color: #a08585;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Us</h1>
+    <p>A journey that began quietly, grew wildly, and now lives here — in these pages, in these memories, in these feelings.</p>
+  </header>
 
-  <h1>Welcome to Our Story</h1>
-  <p class="description">
-    A warm space where memories blossom, laughter lingers, and friendship  
-    gently grows into something truly special.
-  </p>
-
-  <div class="buttons-container">
-    <a href="letters.html" class="btn">Letter Archive</a>
-    <a href="memory.html" class="btn">Memory Lane</a>
-    <a href="confession.html" class="btn">Confession</a>
-    <a href="unlock.html" class="btn">Secret Page</a>
+  <div class="nav-buttons">
+    <a href="letters.html">Letter Archive</a>
+    <a href="memory.html">Memory Lane</a>
+    <a href="confession.html">Heartbeats</a>
+    <a href="secret.html">Secret Page</a>
   </div>
 
   <footer>
-    Made with care and a hopeful heart.
+    Handcrafted by Soham · Built for her 💌
   </footer>
-
 </body>
 </html>
