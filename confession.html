@@ -1,205 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Confession Letter</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Playfair+Display&display=swap');
-
-  /* Background & Body */
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
-    font-family: 'Playfair Display', serif;
-    color: #4b2e05;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  /* Falling Leaves Container */
-  #leaves {
-    pointer-events: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1;
-  }
-
-  /* Single Leaf Style */
-  .leaf {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle at 50% 50%, #b85c00 0%, #7c3c00 80%);
-    clip-path: polygon(50% 0%, 90% 35%, 65% 100%, 35% 100%, 10% 35%);
-    opacity: 0.8;
-    animation-name: fall, sway;
-    animation-timing-function: linear, ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: normal, alternate;
-  }
-
-  /* Leaf Fall Animation */
-  @keyframes fall {
-    0% {
-      transform: translateY(-50px) rotate(0deg);
-      opacity: 0.8;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heartbeats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
     }
-    100% {
-      transform: translateY(110vh) rotate(360deg);
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: #fffaf8;
+      color: #333;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      margin: 40px 20px 10px;
+      font-size: 2.5rem;
+      color: #e75480;
+    }
+    .intro {
+      text-align: center;
+      margin: 10px 20px 30px;
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .polaroid-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 30px;
+    }
+    .polaroid {
+      background: white;
+      width: 200px;
+      padding: 10px 10px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: rotate(var(--tilt));
+      transition: transform 0.4s ease;
       opacity: 0;
+      transform: translateY(40px) scale(0.95);
     }
-  }
-
-  /* Leaf Sway Animation */
-  @keyframes sway {
-    0% {
-      transform: translateX(0);
+    .polaroid.reveal {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(var(--tilt));
     }
-    100% {
-      transform: translateX(30px);
+    .polaroid img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
     }
-  }
-
-  /* Container for Letter */
-  .page-container {
-    max-width: 700px;
-    margin: 140px auto 80px;
-    background: #fffefb;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 40px 40px 60px;
-    position: relative;
-    z-index: 10;
-    overflow-y: auto;
-    max-height: 75vh;
-    scroll-behavior: smooth;
-  }
-
-  /* Intro text */
-  .intro {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #bb6b1d;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Letter container */
-  .letter {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #4b2e05;
-  }
-
-  /* Each paragraph initially hidden */
-  .letter p {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    margin-bottom: 24px;
-  }
-
-  /* Show paragraph when active */
-  .letter p.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Signature style */
-  .signature {
-    margin-top: 50px;
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.6rem;
-    text-align: right;
-    color: #b15900;
-  }
-
-  /* Scrollbar style */
-  .page-container::-webkit-scrollbar {
-    width: 8px;
-  }
-  .page-container::-webkit-scrollbar-thumb {
-    background: #bb6b1d;
-    border-radius: 20px;
-  }
-  .page-container::-webkit-scrollbar-track {
-    background: #fffefb;
-  }
-
-</style>
+    .caption {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      text-align: center;
+      color: #444;
+    }
+  </style>
 </head>
 <body>
+  <h1>Heartbeats</h1>
+  <p class="intro">40 little reasons that flutter in my chest every time I think of you. No glitter, no drama — just things I feel in the quiet corners of my heart.</p>  <div class="polaroid-grid" id="polaroidGrid"></div>  <template id="polaroidTemplate">
+    <div class="polaroid" style="--tilt: 0deg">
+      <img src="" alt="Polaroid" />
+      <div class="caption"></div>
+    </div>
+  </template>  <script>
+    const reasons = [
+      "You somehow always know when something’s wrong.",
+      "The way you say 'hmm' when you're thinking.",
+      "Your laugh. That real one that slips out unexpectedly.",
+      "How your eyes light up when you talk about something you love.",
+      "The random little facts you throw in conversations.",
+      "You make every room feel a little warmer.",
+      "You're kind even when no one's watching.",
+      "You don’t fake things. You’re just… real.",
+      "You listened to me when no one else did.",
+      "The way you notice details. Even the ones I miss.",
+      "You make stupid things fun.",
+      "You believed in me even when I didn’t.",
+      "You’ve seen me at my worst and never walked away.",
+      "You’re stubborn in the best way.",
+      "The way you scrunch your nose when you're annoyed.",
+      "You never pretend to be someone you're not.",
+      "You love sunsets just like I do.",
+      "You’re not afraid to cry.",
+      "You remember small things I said months ago.",
+      "You always share your food. Even if it's fries.",
+      "You’re weird. My kind of weird.",
+      "You call me out when I need it.",
+      "The little doodles you make while thinking.",
+      "How you always try to do the right thing.",
+      "Your voice. Just that.",
+      "You actually care. Deeply.",
+      "You're a safe place without even trying.",
+      "You walk beside, not ahead.",
+      "Your hugs. They hit different.",
+      "You don’t sugarcoat things.",
+      "You made the ordinary feel beautiful.",
+      "You see beauty in chaos.",
+      "You treat people with respect, always.",
+      "You made me want to be better.",
+      "You knew when to speak and when to stay.",
+      "You laugh at your own jokes.",
+      "You weren’t scared to get close.",
+      "You have this quiet strength.",
+      "Even your silence felt like company.",
+      "You. Just you."
+    ];
 
-<!-- Falling leaves container -->
-<div id="leaves"></div>
+    const grid = document.getElementById('polaroidGrid');
+    const template = document.getElementById('polaroidTemplate');
 
-<div class="page-container" id="pageContainer">
-
-  <div class="intro">
-    I am keeping this page simple — it's not about animations, but about emotions.
-  </div>
-
-  <div class="letter" id="letter">
-    <p>Hey Chandu,</p>
-    <p>Crazy how it's been such a long time since we first met, first talked, first became friends. So much has happened in between this time, hasn't it? I have had my share of fuck ups, we have had our share of misunderstandings, arguments, and fights. But...</p>
-    <p>Something has always remained constant in my life — it's you. You have been the Northern Star in my life which never changed its place in my heart. I know I have broken your trust, shattered it multiple times. Maybe all you needed was some time and I failed to be patient enough.</p>
-    <p>But after everything, something really clicked in me. I have tried everything but where has my heart always settled? In you, it's always been you. And even after everything, you were there when I needed you the most. The sleepless nights, crying my heart out, you were there, to listen, when no one was. No matter if you liked it or not, you never refused to listen, you spent nights listening to my ranting and never spat a bad word. And oh do I love you for that!</p>
-    <p>I didn't write this letter as a proposal, it is not. But I can say this much that I am trying to be better for you. I don't want you to choose me but I want myself to be perfect if you ever do. That was all from me.</p>
-    <p class="signature">Yours Loving,<br>Soham</p>
-  </div>
-</div>
-
-<script>
-  // Create multiple leaves
-  const leavesContainer = document.getElementById('leaves');
-  const leafCount = 20;
-
-  for(let i=0; i<leafCount; i++){
-    const leaf = document.createElement('div');
-    leaf.classList.add('leaf');
-
-    // Random horizontal start position (0-100vw)
-    leaf.style.left = Math.random() * 100 + 'vw';
-
-    // Random animation duration (10-20s)
-    leaf.style.animationDuration = (10 + Math.random()*10) + 's';
-
-    // Random animation delay to stagger
-    leaf.style.animationDelay = (Math.random() * 20) + 's';
-
-    // Random sway distance
-    const swayDist = 10 + Math.random()*20;
-    leaf.style.setProperty('--sway-dist', swayDist + 'px');
-
-    leavesContainer.appendChild(leaf);
-  }
-
-  // Letter unfold on scroll
-  const paragraphs = document.querySelectorAll('.letter p');
-
-  function revealParagraphs() {
-    const container = document.getElementById('pageContainer');
-    const scrollBottom = container.scrollTop + container.clientHeight;
-
-    paragraphs.forEach((p, index) => {
-      const pTop = p.offsetTop;
-      if(scrollBottom > pTop + 20) {  // Add a little offset for early reveal
-        p.classList.add('visible');
-      }
+    reasons.forEach((text, i) => {
+      const clone = template.content.cloneNode(true);
+      const polaroid = clone.querySelector('.polaroid');
+      const tilt = (Math.random() * 8 - 4).toFixed(2) + 'deg';
+      polaroid.style.setProperty('--tilt', tilt);
+      clone.querySelector('img').src = `media/heartbeats/polaroid${i + 1}.jpg`;
+      clone.querySelector('.caption').textContent = text;
+      grid.appendChild(clone);
     });
-  }
 
-  const pageContainer = document.getElementById('pageContainer');
-  pageContainer.addEventListener('scroll', revealParagraphs);
+    // Reveal on scroll
+    const revealOnScroll = () => {
+      document.querySelectorAll('.polaroid').forEach(p => {
+        const rect = p.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          p.classList.add('reveal');
+        }
+      });
+    };
 
-  // Reveal paragraphs on page load if visible
-  window.addEventListener('load', () => {
-    revealParagraphs();
-  });
-</script>
-
-</body>
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script></body>
 </html>
