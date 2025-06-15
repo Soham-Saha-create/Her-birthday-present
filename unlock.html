@@ -1,127 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Unlock the Secret</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #fdf6f0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-    }
-
-    .unlock-container {
-      background: #fff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 90%;
-      max-width: 420px;
-    }
-
-    h2 {
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       color: #333;
-      font-size: 22px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #6a1b9a;
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 15px;
-      color: #666;
-      margin-bottom: 25px;
+      max-width: 600px;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
     }
 
-    .password-wrapper {
-      position: relative;
-      width: 100%;
+    .clue {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
 
-    .password-wrapper input {
-      padding: 12px 45px 12px 15px;
-      font-size: 17px;
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .password-wrapper button#toggleBtn {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #555;
-    }
-
-    .unlock-btn {
+    .input-section {
       margin-top: 20px;
-      padding: 12px 25px;
-      background-color: #ffb6b9;
+    }
+
+    input[type="text"] {
+      padding: 10px 16px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      outline: none;
+      width: 220px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #ba68c8;
+      color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #9c27b0;
+    }
+
+    #second-clue {
+      display: none;
+      margin-top: 20px;
       font-weight: bold;
-      color: white;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-
-    .unlock-btn:hover {
-      background-color: #ff9aa2;
-    }
-
-    .message {
-      margin-top: 15px;
-      font-style: italic;
-      color: #c44;
+      color: #d81b60;
     }
   </style>
 </head>
 <body>
-  <div class="unlock-container">
-    <h2>Shh... This page is hidden for a reason.</h2>
-    <p>Enter the secret code only <strong>you</strong> can figure out 👀</p>
+  <h1>Unlock the Secret</h1>
+  <p>This page holds something precious... if you can figure out the key 💌</p>
 
-    <div class="password-wrapper">
-      <input type="password" id="password" placeholder="Your guess...">
-      <button type="button" id="toggleBtn">👁️</button>
+  <div class="clue">
+    <p><strong>Clue 1:</strong> It falls but never breaks. It touches the ground but dances with the wind. 🍂</p>
+    <button onclick="revealClue()">Need another clue?</button>
+    <div id="second-clue">
+      <p><em>Clue 2 (you owe me a kiss for this 😘):</em> It’s what covers the ground in our favorite season.</p>
     </div>
+  </div>
 
-    <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
-    <div class="message" id="message"></div>
+  <div class="input-section">
+    <input type="text" id="answer" placeholder="Enter your answer..." />
+    <br />
+    <button onclick="checkAnswer()">Unlock</button>
+    <p id="feedback" style="color: red; margin-top: 10px;"></p>
   </div>
 
   <script>
-    function checkPassword() {
-      const password = document.getElementById("password").value.trim().toLowerCase();
-      const correct = "chandulovesbiryani"; // Change this to your actual secret
-      if (password === correct) {
-        window.location.href = "secret.html";
-      } else {
-        document.getElementById("message").innerText = "Hmm... Try again. You’ve got this!";
-      }
+    function revealClue() {
+      document.getElementById('second-clue').style.display = 'block';
     }
 
-    const toggleBtn = document.getElementById('toggleBtn');
-    const passwordInput = document.getElementById('password');
-
-    toggleBtn.addEventListener('click', () => {
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleBtn.textContent = '🙈';
+    function checkAnswer() {
+      const answer = document.getElementById('answer').value.trim().toLowerCase();
+      if (answer === 'autumnleaf') {
+        window.location.href = 'secret.html';
       } else {
-        passwordInput.type = 'password';
-        toggleBtn.textContent = '👁️';
+        document.getElementById('feedback').textContent = 'Nope... try again!';
       }
-    });
+    }
   </script>
 </body>
 </html>
