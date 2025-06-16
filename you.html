@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,293 +6,164 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     /* Reset */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }body {
+  background: #faf5f2;
+  font-family: 'Quicksand', sans-serif;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  overflow-x: hidden;
+}
 
-    body {
-      background: #faf5f2;
-      font-family: 'Quicksand', sans-serif;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      overflow-x: hidden;
-    }
+h1 {
+  color: #e75480;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
 
-    h1 {
-      color: #e75480;
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-    }
+/* Book container */
+.book {
+  width: 90vw;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+  perspective: 2000px;
+  position: relative;
+}
 
-    /* Book container */
-    .book {
-      width: 90vw;
-      max-width: 900px;
-      height: 520px;
-      perspective: 2000px;
-      position: relative;
-    }
+/* Spread holds two pages side by side */
+.spread {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  display: flex;
+}
 
-    /* Each page spread */
-    .spread {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0; left: 0;
-      transform-style: preserve-3d;
-      transition: transform 1s ease;
-    }
+/* Both pages use CSS grid 2x2 */
+.page {
+  width: 50%;
+  height: 100%;
+  background: #fff8f5;
+  border: 1px solid #dcd0c0;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  padding: 20px;
+  backface-visibility: hidden;
+}
 
-    /* Left and right pages */
-    .page {
-      width: 50%;
-      height: 100%;
-      background: #fff8f5;
-      position: absolute;
-      top: 0;
-      border: 1px solid #dcd0c0;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-      overflow: hidden;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 20px;
-      backface-visibility: hidden;
-    }
-    .page img {
-      width: 48%;
-      height: 48%;
-      object-fit: cover;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    .page img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
+.page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.page img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
 
-    .left {
-      left: 0;
-      transform-origin: left center;
-    }
-    .right {
-      left: 50%;
-      transform-origin: left center;
-    }
+.left { transform-origin: left center; }
+.right { transform-origin: right center; }
 
-    /* When flipping forward, rotate entire spread */
-    .flipped {
-      transform: rotateY(-180deg);
-    }
+.flipped { transform: rotateY(-180deg); }
 
-    /* Navigation buttons */
-    .nav-buttons {
-      margin-top: 30px;
-      display: flex;
-      gap: 30px;
-      justify-content: center;
-    }
-    .nav-btn {
-      background-color: #ffb6b9;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 14px 30px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: background-color 0.3s, transform 0.2s;
-      user-select: none;
-    }
-    .nav-btn:hover:not(:disabled) {
-      background-color: #ff9aa2;
-      transform: translateY(-2px);
-    }
-    .nav-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+.nav-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+.nav-btn {
+  background-color: #ffb6b9;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background-color 0.3s, transform 0.2s;
+  user-select: none;
+}
+.nav-btn:hover:not(:disabled) {
+  background-color: #ff9aa2;
+  transform: translateY(-2px);
+}
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-    /* For mobile: smaller height */
-    @media (max-width: 700px) {
-      .book { height: 400px; }
-    }
-    @media (max-width: 450px) {
-      .book { height: 350px; }
-      .page img { width: 48%; height: 48%; }
-    }
+@media (max-width: 700px) {
+  .book { aspect-ratio: 4/3; }
+}
+@media (max-width: 450px) {
+  .page { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+}
+
   </style>
 </head>
 <body>
-  <h1>You — Photo Book</h1>
-
-  <div class="book">
+  <h1>You — Photo Book</h1>  <div class="book">
     <div class="spread" id="spread">
-      <!-- Left Page -->
-      <div class="page left" id="leftPage">
-        <!-- 2 photos per side inserted here -->
-      </div>
-      <!-- Right Page -->
-      <div class="page right" id="rightPage">
-        <!-- 2 photos per side inserted here -->
-      </div>
+      <div class="page left" id="leftPage"></div>
+      <div class="page right" id="rightPage"></div>
     </div>
-  </div>
-
-  <div class="nav-buttons">
+  </div>  <div class="nav-buttons">
     <button class="nav-btn" id="prevBtn" disabled>‹ Previous</button>
     <button class="nav-btn" id="nextBtn">Next ›</button>
-  </div>
-
-  <script>
-    // 1. Replace these with your actual 80+ image URLs
+  </div>  <script>
     const images = [
-      'media/you/photo1.jpg',  'media/you/photo2.jpeg',  'media/you/photo3.jpeg',  'media/you/photo4.jpeg',
-      'media/you/photo5.jpeg',  'media/you/photo6.jpeg',  'media/you/photo7.jpeg',  'media/you/photo8.jpeg',
-      'media/you/photo9.jpeg',  'media/you/photo10.jpeg', 'media/you/photo11.jpeg', 'media/you/photo12.jpeg',
-      'media/you/photo13.jpeg', 'media/you/photo14.jpeg', 'media/you/photo15.jpeg', 'media/you/photo16.jpeg',
-      'media/you/photo17.jpeg', 'media/you/photo18.jpeg', 'media/you/photo19.jpeg', 'media/you/photo20.jpeg',
-      'media/you/photo21.jpeg', 'media/you/photo22.jpeg', 'media/you/photo23.jpeg', 'media/you/photo24.jpeg',
-      'media/you/photo25.jpeg', 'media/you/photo26.jpeg', 'media/you/photo27.jpeg', 'media/you/photo28.jpeg',
-      'media/you/photo29.jpeg', 'media/you/photo30.jpeg', 'media/you/photo31.jpeg', 'media/you/photo32.jpeg',
-      'media/you/photo33.jpeg', 'media/you/photo34.jpeg', 'media/you/photo35.jpeg', 'media/you/photo36.jpeg',
-      'media/you/photo37.jpeg', 'media/you/photo38.jpeg', 'media/you/photo39.jpeg', 'media/you/photo40.jpeg',
-      'media/you/photo41.jpeg', 'media/you/photo42.jpeg', 'media/you/photo43.jpeg', 'media/you/photo44.jpeg',
-      'media/you/photo45.jpeg', 'media/you/photo46.jpeg', 'media/you/photo47.jpeg', 'media/you/photo48.jpeg',
-      'media/you/photo49.jpeg', 'media/you/photo50.jpeg', 'media/you/photo51.jpeg', 'media/you/photo52.jpeg',
-      'media/you/photo53.jpeg', 'media/you/photo54.jpeg', 'media/you/photo55.jpeg', 'media/you/photo56.jpeg',
-      'media/you/photo57.jpeg', 'media/you/photo58.jpeg', 'media/you/photo59.jpeg', 'media/you/photo60.jpeg',
-      'media/you/photo61.jpeg', 'media/you/photo62.jpeg', 'media/you/photo63.jpeg', 'media/you/photo64.jpeg',
-      'media/you/photo65.jpeg', 'media/you/photo66.jpeg', 'media/you/photo67.jpeg', 'media/you/photo68.jpeg',
-      'media/you/photo69.jpeg', 'media/you/photo70.jpeg', 'media/you/photo71.jpeg', 'media/you/photo72.jpeg',
-      'media/you/photo73.jpeg', 'media/you/photo74.jpeg', 'media/you/photo75.jpeg', 'media/you/photo76.jpeg',
-      'media/you/photo77.jpeg', 'media/you/photo78.jpeg', 'media/you/photo79.jpeg', 'media/you/photo80.jpeg'
-    ];
+      ...Array(80).keys()].map(i => `media/you/photo${i+1}.jpeg`)
+    const per = 4;
+    const total = Math.ceil(images.length / per);
+    let idx = 0;
 
-    const photosPerSpread = 4; // 2 per page
-    const totalSpreads = Math.ceil(images.length / photosPerSpread);
-    let currentSpread = 0;
-
-    // DOM refs
-    const leftPage = document.getElementById('leftPage');
-    const rightPage = document.getElementById('rightPage');
+    const left = document.getElementById('leftPage');
+    const right = document.getElementById('rightPage');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const spread = document.getElementById('spread');
 
-    // Function to render one spread (4 images) onto pages
-    function renderSpread(idx) {
-      leftPage.innerHTML = '';
-      rightPage.innerHTML = '';
-
-      const startIndex = idx * photosPerSpread;
-      const endIndex = Math.min(startIndex + photosPerSpread, images.length);
-      const currentImages = images.slice(startIndex, endIndex);
-
-      // Left page: images[0], images[1]
-      for (let i = 0; i < 2; i++) {
-        if (currentImages[i]) {
-          const photoDiv = document.createElement('div');
-          photoDiv.className = 'photo';
-          photoDiv.innerHTML = `<img src="${currentImages[i]}" alt="Photo ${startIndex + i + 1}">`;
-          // Random slight tilt
-          const angle = (Math.random() * 6 - 3).toFixed(1);
-          photoDiv.style.transform = `rotate(${angle}deg)`;
-          leftPage.appendChild(photoDiv);
-        }
-      }
-
-      // Right page: images[2], images[3]
-      for (let i = 2; i < 4; i++) {
-        if (currentImages[i]) {
-          const photoDiv = document.createElement('div');
-          photoDiv.className = 'photo';
-          photoDiv.innerHTML = `<img src="${currentImages[i]}" alt="Photo ${startIndex + i + 1}">`;
-          const angle = (Math.random() * 6 - 3).toFixed(1);
-          photoDiv.style.transform = `rotate(${angle}deg)`;
-          rightPage.appendChild(photoDiv);
-        }
-      }
-
-      // Update button states
-      prevBtn.disabled = (idx === 0);
-      nextBtn.disabled = (idx === totalSpreads - 1);
-    }
-
-    // Flip animation logic
-    function flipPage(direction) {
-      if (direction === 'next' && currentSpread < totalSpreads - 1) {
-        spread.classList.add('turning-left');
-        setTimeout(() => {
-          currentSpread++;
-          renderSpread(currentSpread);
-          spread.classList.remove('turning-left');
-        }, 800);
-      }
-      else if (direction === 'prev' && currentSpread > 0) {
-        spread.classList.add('turning-right');
-        setTimeout(() => {
-          currentSpread--;
-          renderSpread(currentSpread);
-          spread.classList.remove('turning-right');
-        }, 800);
-      }
-    }
-
-    prevBtn.addEventListener('click', () => flipPage('prev'));
-    nextBtn.addEventListener('click', () => flipPage('next'));
-
-    // Photo modal (fullscreen zoom)
-    const photoModal = document.createElement('div');
-    photoModal.id = 'photoModal';
-    photoModal.innerHTML = `
-      <span class="close-btn">&times;</span>
-      <img src="" alt="Zoomed Photo" id="modalImg" />
-    `;
-    document.body.appendChild(photoModal);
-
-    const modalImg = document.getElementById('modalImg');
-    const closeModalBtn = photoModal.querySelector('.close-btn');
-
-    function openModal(src) {
-      modalImg.src = src;
-      photoModal.classList.add('visible');
-    }
-    function closeModal() {
-      photoModal.classList.remove('visible');
-      modalImg.src = '';
-    }
-
-    // Attach click listeners to dynamic photo elements
-    function attachPhotoListeners() {
-      document.querySelectorAll('.photo img').forEach(img => {
-        img.addEventListener('click', () => openModal(img.src));
+    function render(i) {
+      left.innerHTML = '';
+      right.innerHTML = '';
+      const chunk = images.slice(i * per, i * per + per);
+      // first two to left, next two to right
+      chunk.forEach((src, j) => {
+        const page = j < 2 ? left : right;
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Photo ${i*per + j + 1}`;
+        page.appendChild(img);
       });
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === total - 1;
     }
 
-    closeModalBtn.addEventListener('click', closeModal);
-    photoModal.addEventListener('click', (e) => {
-      if (e.target === photoModal) closeModal();
-    });
+    function turn(d) {
+      if (d === 'next' && idx < total - 1) {
+        spread.classList.add('flipped');
+        setTimeout(() => { idx++; render(idx); spread.classList.remove('flipped'); }, 800);
+      } else if (d === 'prev' && idx > 0) {
+        spread.classList.add('flipped');
+        setTimeout(() => { idx--; render(idx); spread.classList.remove('flipped'); }, 800);
+      }
+    }
 
-    // Swipe support for mobile (left/right swipe)
-    let startX = 0;
-    spread.addEventListener('touchstart', (e) => {
-      startX = e.changedTouches[0].screenX;
-    });
-    spread.addEventListener('touchend', (e) => {
-      const endX = e.changedTouches[0].screenX;
-      if (startX - endX > 50) flipPage('next');
-      else if (endX - startX > 50) flipPage('prev');
-    });
+    prevBtn.onclick = () => turn('prev');
+    nextBtn.onclick = () => turn('next');
 
-    // Initial render and listeners
-    renderSpread(currentSpread);
-    // Delay attaching photo listeners until after initial render
-    setTimeout(attachPhotoListeners, 1000);
-  </script>
-</body>
+    render(0);
+  </script></body>
 </html>
