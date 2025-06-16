@@ -27,9 +27,10 @@ h1 {
 .book {
   width: 90vw;
   max-width: 900px;
-  aspect-ratio: 16/9;
+  height: 520px;
   perspective: 2000px;
   position: relative;
+  margin-bottom: 40px; /* added space below book */
 }
 
 /* Spread holds two pages side by side */
@@ -78,10 +79,12 @@ h1 {
 .flipped { transform: rotateY(-180deg); }
 
 .nav-buttons {
-  margin-top: 30px;
+  margin-top: 60px; /* was 30px */
   display: flex;
   gap: 30px;
   justify-content: center;
+  position: relative;
+  z-index: 1; /* ensures it's above background, below images */
 }
 .nav-btn {
   background-color: #ffb6b9;
