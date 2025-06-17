@@ -24,7 +24,7 @@
     /* Grid of envelopes */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
       gap: 30px;
       max-width: 1000px;
       margin: auto;
@@ -105,7 +105,6 @@
       color: #b35e5e;
       cursor: pointer;
     }
-    /* Typewriter effect */
     .letter-text {
       white-space: pre-wrap;
       font-family: 'Merriweather', serif;
@@ -115,15 +114,13 @@
 <body>
   <h1>Letters to You</h1>
   <div class="grid">
-    <div class="envelope" onclick="openLetter(0)">
-      <div class="env-title">First Hello</div>
-    </div>
-    <div class="envelope" onclick="openLetter(1)">
-      <div class="env-title">Falling Slowly</div>
-    </div>
-    <div class="envelope" onclick="openLetter(2)">
-      <div class="env-title">Always & Forever</div>
-    </div>
+    <div class="envelope" onclick="openLetter(0)"><div class="env-title">First Hello</div></div>
+    <div class="envelope" onclick="openLetter(1)"><div class="env-title">Falling Slowly</div></div>
+    <div class="envelope" onclick="openLetter(2)"><div class="env-title">Always & Forever</div></div>
+    <div class="envelope" onclick="openLetter(3)"><div class="env-title">Our Late Nights</div></div>
+    <div class="envelope" onclick="openLetter(4)"><div class="env-title">Promise Kept</div></div>
+    <div class="envelope" onclick="openLetter(5)"><div class="env-title">Sunrise Together</div></div>
+    <div class="envelope" onclick="openLetter(6)"><div class="env-title">Endless Journey</div></div>
   </div>  <div class="modal" id="modal">
     <div class="letter">
       <button class="close-btn" onclick="closeLetter()">×</button>
@@ -131,17 +128,21 @@
     </div>
   </div>  <script>
     const letters = [
-      "Hey love,\n\nFrom the moment I saw you, I sensed a spark. It lit up my world and turned ordinary days into something magical. I hope this letter lights up your heart today.\n\nAlways yours, Soham",  
-      "My dearest,\n\nFalling for you felt like a gentle breeze on a summer day—unexpected and completely unforgettable. Every memory with you is a treasure I hold deep within.\n\nLove always, Soham",  
-      "Sweetheart,\n\nIf forever had a name, it would be ours. Each beat of my heart echoes your laughter, and every breath whispers your name. Here's to our endless journey together.\n\nYours truly, Soham"
+      `That day in the rain, your laughter lit up my world brighter than any sunshine.`,
+      `With every glance, I felt my heart taking its first flight toward you.`,
+      `Since you became mine, every moment feels like a forever I never want to end.`,
+      `Those late-night talks, whispered dreams, and shared silence—I'll cherish them always.`,
+      `I made a promise to be there through storms and sunshine, and I keep it every day for you.`,
+      `Waking up next to you, your smile is my morning melody I never tire of.`,
+      `Our journey is endless, but every step with you feels like home.`
     ];
     const envs = document.querySelectorAll('.envelope');
     const modal = document.getElementById('modal');
     const textDiv = document.getElementById('letterText');
-    function typeWriter(text, i = 0) {
+    function typeWriter(text, i=0) {
       if (i < text.length) {
         textDiv.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, i + 1), 30);
+        setTimeout(() => typeWriter(text, i+1), 30);
       }
     }
     function openLetter(idx) {
