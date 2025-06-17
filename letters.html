@@ -5,7 +5,6 @@
   <title>Letters From My Heart</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: linear-gradient(135deg, #ffe4ec 0%, #fff6f0 100%);
@@ -35,6 +34,7 @@
       max-width: 900px;
       margin: auto;
       padding-bottom: 40px;
+      justify-items: center;
     }
     .envelope {
       position: relative;
@@ -63,8 +63,8 @@
     .env-title {
       position:absolute; bottom:12px; width:100%; text-align:center;
       font-family:'Quicksand',sans-serif; font-weight:700; color:#7a4c4c;
+      pointer-events: none;
     }
-    .envelope:nth-child(7) { justify-self: center; }
     .modal {
       position:fixed; top:0; left:0; width:100%; height:100%;
       background:rgba(0,0,0,0.7);
@@ -79,10 +79,11 @@
       box-shadow:0 12px 24px rgba(0,0,0,0.2);
       transform: scale(0.8) rotate(calc(-3deg + 6deg * var(--modaltilt)));
       animation: popIn 0.8s forwards;
+      text-align: center;
     }
     @keyframes popIn { to { transform: scale(1) rotate(0deg); } }
     .letter-content h2 { margin-bottom:20px; font-size:2rem; color:#c94f7c; }
-    .letter-content p { font-size:1rem; line-height:1.6; margin-bottom:20px; }
+    .letter-content p { font-size:1rem; line-height:1.6; margin-bottom:20px; white-space: pre-wrap; text-align: left; }
     .close-btn {
       background:#ffb6b9; color:#fff; border:none; padding:10px 20px;
       border-radius:30px; cursor:pointer; font-family:'Quicksand',sans-serif;
@@ -104,12 +105,15 @@
     <div class="envelope" style="--tilt:0.7" onclick="openLetter(6)"><div class="env-title">Endless</div></div>
   </div>
   <div class="modal" id="modal">
-    <div class="letter-content" id="letterContent"></div>
+    <div class="letter-content" id="letterContent">
+      <!-- content inserted here -->
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
   </div>
   <script>
     // Petal background
     const bg = document.getElementById('petalBg');
-    for(let i=0;i<25;i++){const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=6+Math.random()*6+'s';p.style.width=p.style.height=8+Math.random()*12+'px';bg.appendChild(p);}
+    for(let i=0;i<25;i++){const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=6+Math.random()*6+'s';p.style.width=p.style.height=8+Math.random()*12+'px';bg.appendChild(p);}    
     const letters=[
       {title:'The Beginning',text:`My dearest,\n\nI still recall that moment our eyes met as if it echoed through the universe. From that first spark, I knew my life had changed forever. Every word, every heartbeat since has been a testament to that instant.\n\nLove always, Soham`},
       {title:'Shared Smiles',text:`Sweetheart,\n\nYour laughter became my favorite melody. In it, I found warmth on the coldest days and sunshine even in the rain. Thank you for every smile you shared with me.\n\nForever yours, Soham`},
@@ -117,11 +121,11 @@
       {title:'Quiet Nights',text:`My love,\n\nThe world quiets when it’s just us. In those silent nights, words aren’t needed—our souls speak in gentle whispers and shared breaths. Those moments are my favorite chapters.\n\nAlways listening, Soham`},
       {title:'Promise',text:`Darling,\n\nI made you a promise: to stand by you, in joy and sorrow. Today, I renew that vow—my heart belongs to you, irrevocably, endlessly.\n\nWith all I am, Soham`},
       {title:'Morning Light',text:`Sunshine,\n\nYour presence is my dawn. Waking beside you, hearing your breath, is the greatest blessing. May each morning we share shine brighter than the last.\n\nYours at dawn, Soham`},
-      {title:'Endless',text:`My forever,\n\nThis isn’t a chapter—it’s an endless story. With you, every page is a new adventure. Here’s to the countless pages we’ve yet to write together.\n\nAll my love, Soham`}
+      {title:'Endless',text:`My forever,\n\nThis isn’t a chapter—it’s an endless story. With you, every page is a new adventure. Here’s to the countless pages we’ve yet to write together.\n\nAll my love, Soham`}    
     ];
     const envs=document.querySelectorAll('.envelope'),modal=document.getElementById('modal'),lc=document.getElementById('letterContent');
-    function typeWriter(txt,i=0){ if(i<txt.length){lc.innerHTML+=txt.charAt(i++); setTimeout(()=>typeWriter(txt,i),40);} }
-    function openLetter(i){envs[i].classList.add('open');modal.style.setProperty('--modaltilt',Math.random());setTimeout(()=>{lc.innerHTML=`<h2>${letters[i].title}</h2>`;typeWriter(letters[i].text); modal.classList.add('active');},700);}    
+    function typeWriter(txt,i=0){ if(i<txt.length){lc.innerHTML+=txt.charAt(i++); setTimeout(()=>typeWriter(txt,i),50);} }
+    function openLetter(i){envs[i].classList.add('open');modal.style.setProperty('--modaltilt',Math.random());modal.classList.remove('active');setTimeout(()=>{lc.innerHTML=`<h2>${letters[i].title}</h2><p>${letters[i].text}</p><button class='close-btn' onclick='closeModal()'>Close</button>`;modal.classList.add('active');typeWriter(letters[i].text);},700);}    
     function closeModal(){modal.classList.remove('active');envs.forEach(e=>e.classList.remove('open'));}
   </script>
 </body>
