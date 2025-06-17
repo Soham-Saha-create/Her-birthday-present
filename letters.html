@@ -2,160 +2,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Letters to You</title>
+  <title>Letters From My Heart</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { 
-      background: #fdf8f4;
+    body {
+      background: linear-gradient(135deg, #ffe4ec 0%, #fff6f0 100%);
       font-family: 'Merriweather', serif;
       color: #333;
       overflow-x: hidden;
       padding: 40px 20px;
+      position: relative;
     }
     h1 {
       font-family: 'Dancing Script', cursive;
-      font-size: 3.5rem;
+      font-size: 3rem;
       text-align: center;
-      color: #b35e5e;
-      margin-bottom: 30px;
+      color: #c94f7c;
+      margin-bottom: 40px;
+      animation: fadeIn 1s ease-out;
     }
-    /* Grid of envelopes */
-    .grid {
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-20px);} to { opacity:1; transform: translateY(0);} }
+    .heart-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: -1;
+    }
+    .heart {
+      position: absolute; width: 15px; height: 15px;
+      background: rgba(201,79,124,0.4);
+      transform: rotate(45deg);
+      animation: rise 8s linear infinite;
+    }
+    .heart::before, .heart::after { content: ''; position: absolute; width: inherit; height: inherit; background: inherit; border-radius: 50%; }
+    .heart::before { top:-7px; left:0; }
+    .heart::after { left:7px; top:0; }
+    @keyframes rise { 0% { transform: translateY(0) rotate(45deg) scale(0.5); opacity:0;} 10%{opacity:0.6;} 100%{transform: translateY(-120vh) rotate(45deg) scale(1); opacity:0;} }
+    .letter-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
       gap: 30px;
       max-width: 1000px;
       margin: auto;
       padding-bottom: 40px;
     }
     .envelope {
-      width: 100%;
-      aspect-ratio: 4/3;
       position: relative;
-      background: #fff;
-      border: 2px solid #d8b4b4;
-      border-radius: 8px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      cursor: pointer;
+      width: 100%; aspect-ratio:4/3;
+      background:#fff;
+      border:2px solid #d8b4b4;
+      border-radius:10px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.15);
+      cursor:pointer;
+      transform: rotate(calc(-4deg + 8deg * var(--tilt)));
       transition: transform 0.3s;
-      perspective: 600px;
+      perspective:600px;
+      animation: bob 6s ease-in-out infinite;
     }
-    .envelope:hover { transform: translateY(-8px); }
-    /* Flap */
+    .envelope:hover { transform: translateY(-8px) rotate(0deg); }
+    @keyframes bob { 0%,100%{transform:translateY(0) rotate(calc(-4deg + 8deg * var(--tilt)));}50%{transform:translateY(-10px) rotate(calc(-4deg + 8deg * var(--tilt)));} }
     .envelope::before {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60%;
-      background: #f4e7e5;
-      transform-origin: top;
-      transition: transform 0.5s ease;
-      border-bottom: 1px solid #d8b4b4;
+      position: absolute; top:0; left:0; width:100%; height:60%;
+      background:#f4e7e5;
+      transform-origin:top;
+      transition: transform 0.5s;
+      border-bottom:1px solid #d8b4b4;
     }
     .envelope.open::before { transform: rotateX(-180deg); }
-    /* Title */
     .env-title {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      font-weight: bold;
-      color: #7a4c4c;
+      position:absolute; bottom:12px; width:100%; text-align:center;
+      font-family:'Quicksand',sans-serif; font-weight:700; color:#7a4c4c;
     }
-    /* Modal letter container */
     .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
-      padding: 20px;
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.7);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:opacity 0.4s;
+      padding:20px;
     }
-    .modal.active { opacity: 1; pointer-events: auto; }
-    .letter {
-      background: #fffdf9;
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 700px;
-      width: 100%;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-      position: relative;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      max-height: 80vh;
-      overflow-y: auto;
-      animation: popIn 0.4s ease;
+    .modal.active { opacity:1; pointer-events:auto; }
+    .letter-content {
+      background:#fffdf9; padding:30px; border-radius:12px;
+      max-width:700px; width:100%; max-height:80vh; overflow-y:auto;
+      box-shadow:0 12px 24px rgba(0,0,0,0.2);
+      transform: scale(0.8) rotate(calc(-3deg + 6deg * var(--modaltilt)));
+      animation: popIn 0.5s forwards;
     }
-    @keyframes popIn { from { transform: scale(0.8); } to { transform: scale(1); } }
+    @keyframes popIn { to { transform: scale(1) rotate(0deg); } }
+    .letter-content h2 { margin-bottom:20px; font-size:2rem; color:#c94f7c; }
+    .letter-content p { font-size:1rem; line-height:1.6; margin-bottom:20px; }
     .close-btn {
-      position: absolute;
-      top: 12px; right: 16px;
-      background: none;
-      border: none;
-      font-size: 2rem;
-      color: #b35e5e;
-      cursor: pointer;
+      background:#ffb6b9; color:#fff; border:none; padding:10px 20px;
+      border-radius:30px; cursor:pointer; font-family:'Quicksand',sans-serif;
+      transition:background 0.3s;
     }
-    .letter-text {
-      white-space: pre-wrap;
-      font-family: 'Merriweather', serif;
-    }
+    .close-btn:hover { background:#ff8b94; }
   </style>
 </head>
 <body>
-  <h1>Letters to You</h1>
-  <div class="grid">
-    <div class="envelope" onclick="openLetter(0)"><div class="env-title">First Hello</div></div>
-    <div class="envelope" onclick="openLetter(1)"><div class="env-title">Falling Slowly</div></div>
-    <div class="envelope" onclick="openLetter(2)"><div class="env-title">Always & Forever</div></div>
-    <div class="envelope" onclick="openLetter(3)"><div class="env-title">Our Late Nights</div></div>
-    <div class="envelope" onclick="openLetter(4)"><div class="env-title">Promise Kept</div></div>
-    <div class="envelope" onclick="openLetter(5)"><div class="env-title">Sunrise Together</div></div>
-    <div class="envelope" onclick="openLetter(6)"><div class="env-title">Endless Journey</div></div>
-  </div>  <div class="modal" id="modal">
-    <div class="letter">
-      <button class="close-btn" onclick="closeLetter()">×</button>
-      <div id="letterText" class="letter-text"></div>
-    </div>
-  </div>  <script>
-    const letters = [
-      `That day in the rain, your laughter lit up my world brighter than any sunshine.`,
-      `With every glance, I felt my heart taking its first flight toward you.`,
-      `Since you became mine, every moment feels like a forever I never want to end.`,
-      `Those late-night talks, whispered dreams, and shared silence—I'll cherish them always.`,
-      `I made a promise to be there through storms and sunshine, and I keep it every day for you.`,
-      `Waking up next to you, your smile is my morning melody I never tire of.`,
-      `Our journey is endless, but every step with you feels like home.`
+  <div class="heart-bg" id="heartBg"></div>
+  <h1>Letters From My Heart</h1>
+  <div class="letter-grid">
+    <div class="envelope" style="--tilt:0.2" onclick="openLetter(0)"><div class="env-title">The Beginning</div></div>
+    <div class="envelope" style="--tilt:0.8" onclick="openLetter(1)"><div class="env-title">Shared Smiles</div></div>
+    <div class="envelope" style="--tilt:0.4" onclick="openLetter(2)"><div class="env-title">Storm & Shelter</div></div>
+    <div class="envelope" style="--tilt:0.6" onclick="openLetter(3)"><div class="env-title">Quiet Nights</div></div>
+    <div class="envelope" style="--tilt:0.3" onclick="openLetter(4)"><div class="env-title">Promise</div></div>
+    <div class="envelope" style="--tilt:0.5" onclick="openLetter(5)"><div class="env-title">Morning Light</div></div>
+    <div class="envelope" style="--tilt:0.7" onclick="openLetter(6)"><div class="env-title">Endless</div></div>
+  </div>
+  <div class="modal" id="modal">
+    <div class="letter-content" id="letterContent"></div>
+  </div>
+  <script>
+    // Hearts
+    const hb = document.getElementById('heartBg');
+    for(let i=0;i<20;i++){const h=document.createElement('div');h.className='heart';h.style.left=Math.random()*100+'%';h.style.animationDuration=5+Math.random()*5+'s';h.style.width=h.style.height=10+Math.random()*20+'px';hb.appendChild(h);}    
+    const letters=[
+      {title:'The Beginning',text:'That day it all began, I never knew a simple hello could echo through eternity.'},
+      {title:'Shared Smiles',text:'Every smile you gave became a memory I replayed on repeat.'},
+      {title:'Storm & Shelter',text:'When storms came, your arms were my harbor. I found my peace in you.'},
+      {title:'Quiet Nights',text:'In the silence of night, our hearts spoke volumes no words could capture.'},
+      {title:'Promise',text:'I vowed to stand by you, in sun and shadow. I keep that vow every day.'},
+      {title:'Morning Light',text:'Waking up beside you, your smile is my morning melody I never tire of.'},
+      {title:'Endless',text:'Our story doesn’t end—it unfolds beyond every horizon we chase together.'}
     ];
-    const envs = document.querySelectorAll('.envelope');
-    const modal = document.getElementById('modal');
-    const textDiv = document.getElementById('letterText');
-    function typeWriter(text, i=0) {
-      if (i < text.length) {
-        textDiv.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, i+1), 30);
-      }
-    }
-    function openLetter(idx) {
-      envs[idx].classList.add('open');
-      setTimeout(() => {
-        textDiv.innerHTML = '';
-        modal.classList.add('active');
-        typeWriter(letters[idx]);
-      }, 500);
-    }
-    function closeLetter() {
-      modal.classList.remove('active');
-      envs.forEach(e => e.classList.remove('open'));
-    }
-  </script></body>
+    const envs=document.querySelectorAll('.envelope'),modal=document.getElementById('modal'),lc=document.getElementById('letterContent');
+    function openLetter(i){envs[i].classList.add('open');lc.innerHTML=`<h2>${letters[i].title}</h2><p>${letters[i].text}</p><button class='close-btn' onclick='closeModal()'>Close</button>`;modal.style.setProperty('--modaltilt',Math.random());modal.classList.add('active');}
+    function closeModal(){modal.classList.remove('active');envs.forEach(e=>e.classList.remove('open'));}
+  </script>
+</body>
 </html>
