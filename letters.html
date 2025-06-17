@@ -2,74 +2,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Letters I Wrote</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <title>Letters to You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
   <style>
+    /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Quicksand', sans-serif;
-      background: #fdf6f0;
+    body { 
+      background: #fdf8f4;
+      font-family: 'Merriweather', serif;
       color: #333;
       overflow-x: hidden;
       padding: 40px 20px;
     }
     h1 {
-      text-align: center;
       font-family: 'Dancing Script', cursive;
-      font-size: 3rem;
-      color: #c45a69;
-      opacity: 0;
-      animation: fadeInDown 1s ease forwards;
+      font-size: 3.5rem;
+      text-align: center;
+      color: #b35e5e;
+      margin-bottom: 30px;
     }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Grid of envelopes */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
       gap: 30px;
       max-width: 1000px;
-      margin: 60px auto;
+      margin: auto;
+      padding-bottom: 40px;
     }
     .envelope {
-      position: relative;
       width: 100%;
-      padding-top: 75%;
+      aspect-ratio: 4/3;
+      position: relative;
       background: #fff;
+      border: 2px solid #d8b4b4;
       border-radius: 8px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.1);
       cursor: pointer;
-      overflow: hidden;
       transition: transform 0.3s;
+      perspective: 600px;
     }
     .envelope:hover { transform: translateY(-8px); }
+    /* Flap */
     .envelope::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 50%;
-      background: #eecfd2;
+      height: 60%;
+      background: #f4e7e5;
       transform-origin: top;
-      transition: transform 0.6s;
-      border-bottom: 1px solid #d4a6a9;
+      transition: transform 0.5s ease;
+      border-bottom: 1px solid #d8b4b4;
     }
-    .envelope.open::before {
-      transform: perspective(600px) rotateX(-180deg);
-    }
-    .envelope-title {
+    .envelope.open::before { transform: rotateX(-180deg); }
+    /* Title */
+    .env-title {
       position: absolute;
-      bottom: 12px;
+      bottom: 10px;
       width: 100%;
       text-align: center;
-      font-weight: 600;
-      color: #6e4c4c;
-      opacity: 0;
-      transition: opacity 0.3s 0.3s;
+      font-weight: bold;
+      color: #7a4c4c;
     }
-    .envelope:hover .envelope-title { opacity: 1; }
+    /* Modal letter container */
     .modal {
       position: fixed;
       top: 0; left: 0;
@@ -81,73 +78,83 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.4s;
+      padding: 20px;
     }
-    .modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal.active { opacity: 1; pointer-events: auto; }
     .letter {
-      background: #fffdfc;
+      background: #fffdf9;
       padding: 30px;
       border-radius: 12px;
       max-width: 700px;
-      width: 90%;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.2rem;
-      line-height: 1.6;
+      width: 100%;
       box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-      transform: scale(0.8);
-      transition: transform 0.4s;
+      position: relative;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: popIn 0.4s ease;
     }
-    .modal.active .letter { transform: scale(1); }
+    @keyframes popIn { from { transform: scale(0.8); } to { transform: scale(1); } }
     .close-btn {
       position: absolute;
-      top: 20px; right: 20px;
+      top: 12px; right: 16px;
       background: none;
       border: none;
       font-size: 2rem;
-      color: #c45a69;
+      color: #b35e5e;
       cursor: pointer;
     }
-    @media (max-width: 600px) {
-      .envelope::before { height: 60%; }
+    /* Typewriter effect */
+    .letter-text {
+      white-space: pre-wrap;
+      font-family: 'Merriweather', serif;
     }
   </style>
 </head>
 <body>
-  <h1>Letters I Wrote</h1>
+  <h1>Letters to You</h1>
   <div class="grid">
-    <div class="envelope" onclick="showLetter(0)">
-      <div class="envelope-title">First Meeting</div>
+    <div class="envelope" onclick="openLetter(0)">
+      <div class="env-title">First Hello</div>
     </div>
-    <div class="envelope" onclick="showLetter(1)">
-      <div class="envelope-title">Falling for You</div>
+    <div class="envelope" onclick="openLetter(1)">
+      <div class="env-title">Falling Slowly</div>
     </div>
-    <div class="envelope" onclick="showLetter(2)">
-      <div class="envelope-title">Forever & Always</div>
+    <div class="envelope" onclick="openLetter(2)">
+      <div class="env-title">Always & Forever</div>
     </div>
   </div>  <div class="modal" id="modal">
-    <button class="close-btn" onclick="closeLetter()">×</button>
-    <div class="letter" id="letterContent"></div>
+    <div class="letter">
+      <button class="close-btn" onclick="closeLetter()">×</button>
+      <div id="letterText" class="letter-text"></div>
+    </div>
   </div>  <script>
-    const content = [
-      `That day in the coffee shop, your laughter was the spark I never knew I needed. I still replay that moment in my head.Seconds felt like minutes, and I knew my world had changed.`,
-      `The first time I realized I loved you was when you reached for my hand during the rain. Everything else disappeared but your warmth.`,
-      `Today, tomorrow, and all the days after—it’s you. Every heartbeat whispers your name, and every breath is for you.`
+    const letters = [
+      "Hey love,\n\nFrom the moment I saw you, I sensed a spark. It lit up my world and turned ordinary days into something magical. I hope this letter lights up your heart today.\n\nAlways yours, Soham",  
+      "My dearest,\n\nFalling for you felt like a gentle breeze on a summer day—unexpected and completely unforgettable. Every memory with you is a treasure I hold deep within.\n\nLove always, Soham",  
+      "Sweetheart,\n\nIf forever had a name, it would be ours. Each beat of my heart echoes your laughter, and every breath whispers your name. Here's to our endless journey together.\n\nYours truly, Soham"
     ];
-    const envelopes = document.querySelectorAll('.envelope');
+    const envs = document.querySelectorAll('.envelope');
     const modal = document.getElementById('modal');
-    const letterDiv = document.getElementById('letterContent');
-    function showLetter(i) {
-      envelopes[i].classList.add('open');
+    const textDiv = document.getElementById('letterText');
+    function typeWriter(text, i = 0) {
+      if (i < text.length) {
+        textDiv.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(text, i + 1), 30);
+      }
+    }
+    function openLetter(idx) {
+      envs[idx].classList.add('open');
       setTimeout(() => {
-        letterDiv.innerText = content[i];
+        textDiv.innerHTML = '';
         modal.classList.add('active');
-      }, 600);
+        typeWriter(letters[idx]);
+      }, 500);
     }
     function closeLetter() {
       modal.classList.remove('active');
-      envelopes.forEach(env => env.classList.remove('open'));
+      envs.forEach(e => e.classList.remove('open'));
     }
   </script></body>
 </html>
