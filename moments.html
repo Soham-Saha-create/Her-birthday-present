@@ -1,249 +1,182 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Our Sweetest Moments</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You — Photo Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff6f0;
+      background: #faf5f2;
+      font-family: 'Quicksand', sans-serif;
       color: #333;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    header {
-      background-color: #ffb6b9;
-      padding: 40px 20px;
-      text-align: center;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      letter-spacing: 1px;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 16px;
-    }
-
-    .moment {
-      background-color: #fff;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      margin-bottom: 40px;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
-      transform: translateY(40px);
-      opacity: 0;
-      transition: all 0.8s ease-in-out;
-      cursor: pointer;
+      align-items: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
     }
-
-    .moment.left.visible {
-      transform: translateX(0);
-      opacity: 1;
+    h1 {
+      color: #e75480;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
     }
-
-    .moment.right.visible {
-      transform: translateX(0);
-      opacity: 1;
+    /* Book container */
+    .book {
+      width: 90vw;
+      max-width: 900px;
+      height: 520px;
+      perspective: 2000px;
+      position: relative;
+      margin-bottom: 40px;
     }
-
-    .moment.left {
-      transform: translateX(-60px);
-    }
-
-    .moment.right {
-      transform: translateX(60px);
-    }
-
-    .moment img {
+    /* Spread holds two pages side by side */
+    .spread {
       width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .moment-text {
-      padding: 24px;
-    }
-
-    .moment-text h2 {
-      color: #e2556c;
-      font-size: 1.7em;
-      margin-bottom: 10px;
-    }
-
-    .moment-text p {
-      font-size: 1.1em;
-      line-height: 1.6;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      font-style: italic;
-      color: #777;
-      font-size: 1em;
-    }
-
-    /* Image popup modal */
-    .modal {
-      position: fixed;
+      height: 100%;
+      position: absolute;
       top: 0;
       left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(0,0,0,0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    .modal img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255, 182, 185, 0.6);
-    }
-
-    .modal.show {
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
       display: flex;
     }
-
-    @media (min-width: 768px) {
-      .moment {
-        flex-direction: row;
-        height: 400px;
-      }
-
-      .moment img {
-        width: 50%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .moment-text {
-        width: 50%;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+    /* Both pages use CSS grid 2x2 */
+    .page {
+      width: 50%;
+      height: 100%;
+      background: #fff8f5;
+      border: 1px solid #dcd0c0;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      padding: 20px;
+      backface-visibility: hidden;
     }
-.continue-link {
-  text-align: center;
-  margin-top: 40px;
-}
-.continue-link p {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 10px;
-}
-.continue-btn {
-  background: #e75480;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: background 0.3s, transform 0.2s;
-}
-.continue-btn:hover {
-  background: #ff9aa2;
-  transform: scale(1.05);
-}
-  </style>
+    .page img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .page img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .left { transform-origin: left center; }
+    .right { transform-origin: right center; }
+    .flipped { transform: rotateY(-180deg); }
+    .nav-buttons {
+      margin-top: 60px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .nav-btn {
+      background-color: #ffb6b9;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: none;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: #ff9aa2;
+      transform: translateY(-2px);
+    }
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    /* Continue link styling */
+    .continue-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .continue-link p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .continue-btn {
+      background-color: #e75480;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .continue-btn:hover {
+      background-color: #ff9aa2;
+      transform: scale(1.05);
+    }
+    @media (max-width: 700px) { .book { aspect-ratio: 4/3; } }
+    @media (max-width: 450px) { .page { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; } }.continue-link { text-align: center; margin: 60px auto 40px; } .continue-link p { font-size: 1.3rem; color: #6e4c4c; margin-bottom: 12px; animation: fadeInUp 1s ease; } .continue-btn { display: inline-block; background: #e75480; color: white; padding: 14px 28px; border: none; border-radius: 30px; font-size: 1.1rem; text-decoration: none; box-shadow: 0 6px 14px rgba(0,0,0,0.1); transition: background 0.3s, transform 0.2s; animation: fadeInUp 1s ease 0.3s forwards; opacity: 0; transform: translateY(20px); } .continue-btn:hover { background: #ff9aa2; transform: translateY(-3px) scale(1.02); }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } </style>
+
 </head>
 <body>
-
-  <header>
-    <h1>Our Sweetest Moments</h1>
-  </header>
-
-  <div class="container">
-
-    <div class="moment left">
-      <img src="assets/moments/moment1.jpg" alt="Moment 1" />
-      <div class="moment-text">
-        <h2>The Day We Met</h2>
-        <p>Somehow, someway, we ended up in each other’s orbit. That moment still lives rent-free in my mind.</p>
-      </div>
+  <h1>You — Photo Book</h1>
+  <div class="book">
+    <div class="spread" id="spread">
+      <div class="page left" id="leftPage"></div>
+      <div class="page right" id="rightPage"></div>
     </div>
-
-    <div class="moment right">
-      <img src="assets/moments/moment2.jpg" alt="Moment 2" />
-      <div class="moment-text">
-        <h2>That One Walk</h2>
-        <p>We weren’t in a rush. Just steps and laughter — but time paused for us.</p>
-      </div>
-    </div>
-
-    <div class="moment left">
-      <img src="assets/moments/moment3.jpg" alt="Moment 3" />
-      <div class="moment-text">
-        <h2>The Laugh That Stuck</h2>
-        <p>That laugh? It echoed in my head for days. Pure, perfect, unfairly beautiful.</p>
-      </div>
-    </div>
-
   </div>
-
-  <footer>
-    Many more to come... if you're still writing this story with me.
-  </footer>
-
-  <!-- Modal -->
-  <div class="modal" id="imageModal">
-    <img id="modalImage" src="" alt="Expanded moment image" />
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" disabled>‹ Previous</button>
+    <button class="nav-btn" id="nextBtn">Next ›</button>
   </div>
-
+  <!-- Continue to Letters -->
+  <div class="continue-link">
+    <p>Feeling all the warmth?</p>
+    <a href="letter-archives.html" class="continue-btn">Read the Letters</a>
+  </div>
   <script>
-    const moments = document.querySelectorAll('.moment');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+    const images = Array.from({length:80}, (_,i) => `media/you/photo${i+1}.jpeg`);
+    const per = 4;
+    const total = Math.ceil(images.length / per);
+    let idx = 0;
+    const left = document.getElementById('leftPage');
+    const right = document.getElementById('rightPage');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const spread = document.getElementById('spread');
+    function render(i) {
+      left.innerHTML = '';
+      right.innerHTML = '';
+      const chunk = images.slice(i*per, i*per+per);
+      chunk.forEach((src,j) => {
+        const page = j<2 ? left : right;
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Photo ${i*per+j+1}`;
+        page.appendChild(img);
       });
-    }, { threshold: 0.3 });
-
-    moments.forEach(moment => observer.observe(moment));
-
-    // Image modal popup
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-
-    document.querySelectorAll('.moment img').forEach(img => {
-      img.addEventListener('click', () => {
-        modal.classList.add('show');
-        modalImg.src = img.src;
-      });
-    });
-
-    modal.addEventListener('click', () => {
-      modal.classList.remove('show');
-    });
+      prevBtn.disabled = i===0;
+      nextBtn.disabled = i===total-1;
+    }
+    function turn(d) {
+      if(d==='next'&&idx<total-1){ spread.classList.add('flipped'); setTimeout(()=>{ idx++; render(idx); spread.classList.remove('flipped');},800);} 
+      if(d==='prev'&&idx>0){ spread.classList.add('flipped'); setTimeout(()=>{ idx--; render(idx); spread.classList.remove('flipped');},800);}  }
+    prevBtn.onclick = ()=>turn('prev');
+    nextBtn.onclick = ()=>turn('next');
+    render(0);
   </script>
-<div class="continue-link">
-  <p>Memories don’t end here…</p>
-  <a href="you.html" class="continue-btn">See the Photo Album</a>
-</div>
-
 </body>
 </html>
