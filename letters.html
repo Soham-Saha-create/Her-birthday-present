@@ -2,149 +2,152 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Letters I Wrote With You in My Heart</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand&display=swap" rel="stylesheet">
+  <title>Letters I Wrote</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to bottom, #fff3f3, #fffaf9);
+      background: #fdf6f0;
+      color: #333;
       overflow-x: hidden;
       padding: 40px 20px;
-      color: #4e3d3d;
-    }h1 {
-  text-align: center;
-  font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
-  margin-bottom: 40px;
-  color: #d04e5a;
-}
-
-.garden {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.envelope {
-  position: relative;
-  width: 220px;
-  height: 150px;
-  background: #ffebee;
-  border: 2px solid #dca3a6;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  transition: transform 0.4s;
-  cursor: pointer;
-}
-.envelope:hover {
-  transform: translateY(-10px);
-}
-
-.hint {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
-  font-style: italic;
-  font-size: 0.95rem;
-  color: #6e4c4c;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.envelope:hover .hint {
-  opacity: 1;
-}
-
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  display: none;
-}
-.modal.active {
-  display: flex;
-}
-.letter-content {
-  max-width: 700px;
-  background: #fffdfc;
-  padding: 40px;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-  font-family: 'Great Vibes', cursive;
-  position: relative;
-}
-.letter-content button {
-  position: absolute;
-  top: 20px; right: 20px;
-  background: #f7c5cc;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: 'Quicksand', sans-serif;
-}
-
-.section-title {
-  font-size: 1.4rem;
-  margin: 50px auto 20px;
-  text-align: center;
-  color: #a35c5c;
-}
-
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: #c45a69;
+      opacity: 0;
+      animation: fadeInDown 1s ease forwards;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 60px auto;
+    }
+    .envelope {
+      position: relative;
+      width: 100%;
+      padding-top: 75%;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .envelope:hover { transform: translateY(-8px); }
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #eecfd2;
+      transform-origin: top;
+      transition: transform 0.6s;
+      border-bottom: 1px solid #d4a6a9;
+    }
+    .envelope.open::before {
+      transform: perspective(600px) rotateX(-180deg);
+    }
+    .envelope-title {
+      position: absolute;
+      bottom: 12px;
+      width: 100%;
+      text-align: center;
+      font-weight: 600;
+      color: #6e4c4c;
+      opacity: 0;
+      transition: opacity 0.3s 0.3s;
+    }
+    .envelope:hover .envelope-title { opacity: 1; }
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .letter {
+      background: #fffdfc;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 90%;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+      transform: scale(0.8);
+      transition: transform 0.4s;
+    }
+    .modal.active .letter { transform: scale(1); }
+    .close-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #c45a69;
+      cursor: pointer;
+    }
+    @media (max-width: 600px) {
+      .envelope::before { height: 60%; }
+    }
   </style>
 </head>
 <body>
-  <h1>Letters I Wrote With You in My Heart</h1>  <div class="section-title">Back Then</div>
-  <div class="garden">
-    <div class="envelope" onclick="openLetter(0)">
-      <div class="hint">"Khaamoshi bhi kuch kehti thi..."</div>
+  <h1>Letters I Wrote</h1>
+  <div class="grid">
+    <div class="envelope" onclick="showLetter(0)">
+      <div class="envelope-title">First Meeting</div>
     </div>
-  </div>  <div class="section-title">When I Realised I Love You</div>
-  <div class="garden">
-    <div class="envelope" onclick="openLetter(1)">
-      <div class="hint">"Tum muskuraaye toh sab kuch theher gaya..."</div>
+    <div class="envelope" onclick="showLetter(1)">
+      <div class="envelope-title">Falling for You</div>
     </div>
-  </div>  <div class="section-title">Now That You're Mine</div>
-  <div class="garden">
-    <div class="envelope" onclick="openLetter(2)">
-      <div class="hint">"Dil ke kone mein tumhare liye jagah thi hi..."</div>
+    <div class="envelope" onclick="showLetter(2)">
+      <div class="envelope-title">Forever & Always</div>
     </div>
-  </div>  <!-- Modal Popup -->  <div class="modal" id="letterModal">
-    <div class="letter-content">
-      <button onclick="closeLetter()">Close</button>
-      <div id="letterText">
-        <!-- Dynamic letter text will be inserted here -->
-      </div>
-    </div>
+  </div>  <div class="modal" id="modal">
+    <button class="close-btn" onclick="closeLetter()">×</button>
+    <div class="letter" id="letterContent"></div>
   </div>  <script>
-    const letters = [
-      `Kabhi socha na tha ki kisi ki hansi mere din ka sabse khoobsurat hissa ban jayegi. Tumhara "hi" uss din meri duniya ko shift kar gaya.`,
-
-      `Pata nahi kab aur kaise, tum meri har baat mein ghul gaye. Tumhara naam bina bole bhi har sentence mein tha. Shayad isi ko mohabbat kehte hain.`,
-
-      `Aaj bhi jab tum mujhe dekhti ho na... sab kuch ruk jata hai. Tum meri har dua ka saboot ho.`
+    const content = [
+      `That day in the coffee shop, your laughter was the spark I never knew I needed. I still replay that moment in my head.Seconds felt like minutes, and I knew my world had changed.`,
+      `The first time I realized I loved you was when you reached for my hand during the rain. Everything else disappeared but your warmth.`,
+      `Today, tomorrow, and all the days after—it’s you. Every heartbeat whispers your name, and every breath is for you.`
     ];
-
-    function openLetter(index) {
-      document.getElementById('letterText').innerText = letters[index];
-      document.getElementById('letterModal').classList.add('active');
+    const envelopes = document.querySelectorAll('.envelope');
+    const modal = document.getElementById('modal');
+    const letterDiv = document.getElementById('letterContent');
+    function showLetter(i) {
+      envelopes[i].classList.add('open');
+      setTimeout(() => {
+        letterDiv.innerText = content[i];
+        modal.classList.add('active');
+      }, 600);
     }
-
     function closeLetter() {
-      document.getElementById('letterModal').classList.remove('active');
+      modal.classList.remove('active');
+      envelopes.forEach(env => env.classList.remove('open'));
     }
   </script></body>
 </html>
