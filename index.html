@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Our Story</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Playfair+Display&display=swap" rel="stylesheet" />
@@ -12,107 +12,61 @@
       background: linear-gradient(135deg, #ffe8e1 0%, #fff9f5 100%);
       color: #333;
       overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      position: relative;
       min-height: 100vh;
-    }/* Animated background floating circles */
-.bg-animation {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: -1;
-}
-.bg-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,182,193,0.3);
-  animation: float 8s ease-in-out infinite;
-}
-@keyframes float {
-  0% { transform: translateY(0) scale(1); opacity: 0.7; }
-  50% { transform: translateY(-20px) scale(1.1); opacity: 0.4; }
-  100% { transform: translateY(0) scale(1); opacity: 0.7; }
-}
-
-header {
-  padding: 100px 20px 40px;
-}
-header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3.5rem;
-  color: #c45a69;
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeInDown 1s ease forwards;
-}
-header p {
-  font-size: 1.2rem;
-  max-width: 700px;
-  margin: auto;
-  color: #5a3e3e;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.5s forwards;
-}
-
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    }
+    /* Floating circles background */
+    .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+    .bg-circle { position: absolute; border-radius: 50%; background: rgba(255,182,193,0.3); animation: float 8s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-20px) scale(1.1); opacity: 0.4; } }header { padding: 100px 20px 40px; text-align: center; animation: fadeInDown 1s ease forwards; opacity: 0; }
+header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: #c45a69; margin-bottom: 20px; }
+header p { font-size: 1.2rem; max-width: 700px; margin: auto; color: #5a3e3e; animation: fadeInUp 1s ease 0.5s forwards; opacity: 0; }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
 nav {
-  margin: 60px 0;
+  margin: 60px auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 30px;
-  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  width: 90%;
   max-width: 800px;
   padding: 0 20px;
-  opacity: 0;
   animation: fadeIn 1s ease 0.8s forwards;
+  opacity: 0;
 }
 nav a {
   display: block;
-  padding: 20px 0;
+  padding: 16px 0;
   background: #ffd6d6;
   color: #503232;
   text-decoration: none;
   font-weight: 600;
   border-radius: 30px;
+  text-align: center;
   box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-  transition: transform 0.3s, background 0.3s;
+  transition: background 0.3s, transform 0.3s;
 }
-nav a:hover {
-  background: #ff9aa2;
-  transform: translateY(-4px);
-}
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
+nav a:hover { background: #ff9aa2; transform: translateY(-4px); }
+@keyframes fadeIn { to { opacity: 1; } }
 
 footer {
   margin-top: auto;
   padding: 40px 20px;
+  text-align: center;
   font-size: 0.9rem;
   color: #8a7a7a;
-  opacity: 0;
   animation: fadeInUp 1s ease 1.2s forwards;
+  opacity: 0;
 }
 
   </style>
 </head>
 <body>
-  <!-- Background floating circles -->
+  <!-- Animated Background -->
   <div class="bg-animation" id="bg"></div>  <header>
     <h1>Welcome to Our Story</h1>
-    <p>A space to cherish the moments, discover the heartbeat behind every memory, and explore the secrets we share.</p>
+    <p>A space to cherish each moment, discover the heartbeat behind every memory, and explore our secrets together.</p>
   </header>  <nav>
     <a href="letters.html">Letter Archives</a>
     <a href="memory.html">Memory Lane</a>
@@ -121,18 +75,17 @@ footer {
   </nav>  <footer>
     Crafted with care & love by Soham.<br>May this journey make us smile forever.
   </footer>  <script>
-    // Create floating circles
+    // Floating circles creation
     const bg = document.getElementById('bg');
-    const count = 15;
-    for (let i = 0; i < count; i++) {
+    for (let i=0; i<20; i++) {
       const circle = document.createElement('div');
-      const size = Math.random() * 100 + 50;
-      circle.classList.add('bg-circle');
+      const size = Math.random()*80 + 40;
+      circle.className = 'bg-circle';
       circle.style.width = size + 'px';
       circle.style.height = size + 'px';
-      circle.style.left = Math.random() * 100 + '%';
-      circle.style.top = Math.random() * 100 + '%';
-      circle.style.animationDuration = (6 + Math.random() * 6) + 's';
+      circle.style.left = Math.random()*100 + '%';
+      circle.style.top = Math.random()*100 + '%';
+      circle.style.animationDuration = (6 + Math.random()*6) + 's';
       bg.appendChild(circle);
     }
   </script></body>
