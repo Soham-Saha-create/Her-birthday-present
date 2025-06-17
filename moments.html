@@ -144,6 +144,30 @@
         justify-content: center;
       }
     }
+.continue-link {
+  text-align: center;
+  margin-top: 40px;
+}
+.continue-link p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+.continue-btn {
+  background: #e75480;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background 0.3s, transform 0.2s;
+}
+.continue-btn:hover {
+  background: #ff9aa2;
+  transform: scale(1.05);
+}
   </style>
 </head>
 <body>
@@ -216,6 +240,10 @@
       modal.classList.remove('show');
     });
   </script>
+<div class="continue-link">
+  <p>Memories don’t end here…</p>
+  <a href="you.html" class="continue-btn">See the Photo Album</a>
+</div>
 
 </body>
 </html>
