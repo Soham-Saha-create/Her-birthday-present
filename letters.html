@@ -2,205 +2,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Letter Archives</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <title>Letters to You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #ffe4ec 0%, #fff6f0 100%);
-      color: #4b2e2e;
+      background: linear-gradient(135deg, #ffe4ec, #fff6f0);
+      color: #333;
       overflow-x: hidden;
-      padding: 40px 20px;
-    }h1 {
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: 3rem;
-  color: #c94f7c;
-  animation: fadeInDown 1s ease-in-out forwards;
-}
-
-.letter-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  justify-items: center;
-  margin-bottom: 60px;
-}
-
-.envelope {
-  width: 200px;
-  height: 140px;
-  background: linear-gradient(145deg, #ffc2c7, #ff9aa2);
-  border-radius: 10px;
-  position: relative;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  cursor: pointer;
-  transform: rotate(calc(-5deg + (10deg * var(--rand))));
-  animation: floaty 6s ease-in-out infinite;
-}
-
-.envelope::before, .envelope::after {
-  content: '';
-  position: absolute;
-  background: rgba(255,255,255,0.5);
-  border-radius: 10px;
-}
-
-.envelope:hover {
-  transform: scale(1.05) rotate(0deg);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-  transition: 0.4s ease;
-}
-
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-.modal.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.letter-content {
-  background: #fff;
-  max-width: 700px;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(255,182,193,0.6);
-  transform: scale(0.8) rotate(1deg);
-  animation: zoomIn 0.4s forwards;
-}
-
-.letter-content h2 {
-  margin-bottom: 20px;
-  font-size: 2rem;
-  color: #d14a78;
-}
-
-.letter-content p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-.close-btn {
-  margin-top: 30px;
-  display: inline-block;
-  background: #ffb6b9;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s ease;
-}
-
-.close-btn:hover {
-  background: #ff8b94;
-}
-
-.back-home-btn {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #ffc6c7;
-  color: #4b2e2e;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 30px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  transition: background 0.3s ease, transform 0.3s ease;
-  font-size: 1rem;
-}
-
-.back-home-btn:hover {
-  background-color: #ff9aa2;
-  transform: translateY(-3px);
-}
-
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes zoomIn {
-  to { transform: scale(1) rotate(0deg); }
-}
-
-@keyframes floaty {
-  0%, 100% { transform: translateY(0) rotate(calc(-5deg + (10deg * var(--rand)))); }
-  50% { transform: translateY(-10px) rotate(calc(-5deg + (10deg * var(--rand)))); }
-}
-
+      position: relative;
+    }
+    /* Background shapes */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(231,84,128,0.2);
+      animation: float 10s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    /* Header */
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      text-align: center;
+      margin: 40px 0;
+      font-size: 3rem;
+    }
+    /* Envelopes grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    .envelope {
+      background: #fff;
+      border-radius: 8px;
+      height: 120px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: rotate(var(--tilt));
+      opacity: 0;
+      transform-origin: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .envelope.visible {
+      opacity: 1;
+      transform: rotate(var(--tilt)) translateY(0);
+    }
+    /* Modal backdrop blur */
+    .blurred { filter: blur(4px); }
+    .modal-backdrop {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center; justify-content: center;
+      z-index: 10;
+    }
+    .modal-backdrop.active {
+      display: flex;
+    }
+    .modal {
+      background: #fffdf9;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal h2 {
+      font-family: 'Dancing Script', cursive;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .modal p {
+      font-size: 1rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow: hidden;
+      width: 0;
+      animation: typewriter 3s steps(60) 0.5s forwards;
+    }
+    @keyframes typewriter { to { width: 100%; } }
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #ffb6b9;
+      border: none;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h1>Letters From the Heart</h1>
-  <div class="letter-grid">
-    <div class="envelope" style="--rand:0.2" onclick="openLetter(0)"></div>
-    <div class="envelope" style="--rand:0.6" onclick="openLetter(1)"></div>
-    <div class="envelope" style="--rand:0.8" onclick="openLetter(2)"></div>
-    <div class="envelope" style="--rand:0.3" onclick="openLetter(3)"></div>
-    <div class="envelope" style="--rand:0.5" onclick="openLetter(4)"></div>
-    <div class="envelope" style="--rand:0.1" onclick="openLetter(5)"></div>
-    <div class="envelope" style="--rand:0.0" onclick="openLetter(6)"></div>
-  </div>  <div class="modal" id="modal">
-    <div class="letter-content">
-      <h2 id="letterTitle">Title</h2>
-      <p id="letterText">Text</p>
-      <div class="close-btn" onclick="closeModal()">Close</div>
-    </div>
-  </div>  <div style="text-align: center; margin-top: 60px;">
-    <a href="index.html" class="back-home-btn">← Back to Home</a>
-  </div>  <script>
-    const letters = [
-      {
-        title: "The Beginning",
-        text: "The day it all started feels like a whisper in time, but it echoes through everything we've built. I didn't know then that one hello would change everything."
-      },
-      {
-        title: "A Touch of You",
-        text: "Your presence softened edges I didn’t know existed. I started smiling wider, thinking brighter — even silence became meaningful with you around."
-      },
-      {
-        title: "The Storm We Weathered",
-        text: "It wasn’t always easy. But love never is. What mattered is that we never let go. And we won't. I believe in that — in us."
-      },
-      {
-        title: "Everyday Magic",
-        text: "From the way you look at me to the small quirks in your laughter, you make ordinary days feel like a poem gently unfolding."
-      },
-      {
-        title: "The Unspoken",
-        text: "Some things I never say enough — like how safe I feel with you. How your arms feel like the final piece of every puzzle I’ve ever been."
-      },
-      {
-        title: "The What-Ifs",
-        text: "Even if the world shifted and everything fell apart, I'd still find my way back to you. You are my constant, my compass, my chaos."
-      },
-      {
-        title: "The Forever Promise",
-        text: "This isn't just a chapter. It's a vow. That every sunrise you wake to will be filled with love — mine. Every night, a whisper from me to you: I'm here. Always."
+  <div id="bg">
+    <!-- 15 shapes -->
+    <script>
+      for(let i=0;i<15;i++){
+        const s=document.createElement('div');
+        s.className='shape';
+        const size=20+Math.random()*80;
+        s.style.width=size+'px'; s.style.height=size+'px';
+        s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+        s.style.animationDuration=5+Math.random()*5+'s';
+        document.body.appendChild(s);
       }
+    </script>
+  </div>  <h1>Letters to You</h1>
+  <div class="grid" id="grid">
+    <!-- 7 envelopes -->
+    <script>
+      const grid=document.getElementById('grid');
+      for(let i=0;i<7;i++){
+        const env=document.createElement('div');
+        env.className='envelope';
+        const tilt=Math.random()*20-10;
+        env.style.setProperty('--tilt',tilt+'deg');
+        env.dataset.index=i;
+        grid.appendChild(env);
+      }
+    </script>
+  </div>  <!-- Modal -->  <div class="modal-backdrop" id="backdrop">
+    <div class="modal">
+      <button class="close-btn" id="closeBtn">X</button>
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+    </div>
+  </div>  <script>
+    // Letters data
+    const letters=[
+      {title:'Day One',text:`My love,\n\nRemember our first hello? It felt like the world paused so we could find each other...`},
+      {title:'Your Smile',text:`Darling,\n\nYour smile became my sunrise...`},
+      {title:'Our Challenges',text:`Beloved,\n\nWe’ve faced storms and doubts...`},
+      {title:'Silent Stars',text:`Sweetheart,\n\nUnder quiet skies...`},
+      {title:'My Vow',text:`My dearest,\n\nI vowed to stand by you...`},
+      {title:'Morning Light',text:`Sunshine,\n\nWaking beside you...`},
+      {title:'Forever',text:`My forever,\n\nOur story unfolds beyond...`}
     ];
+    const envelopes=document.querySelectorAll('.envelope');
+    const backdrop=document.getElementById('backdrop');
+    const modalTitle=document.getElementById('modalTitle');
+    const modalText=document.getElementById('modalText');
+    const closeBtn=document.getElementById('closeBtn');
 
-    function openLetter(index) {
-      document.getElementById('letterTitle').innerText = letters[index].title;
-      document.getElementById('letterText').innerText = letters[index].text;
-      document.getElementById('modal').classList.add('active');
-    }
+    // Fade-in on scroll
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){ entry.target.classList.add('visible'); io.unobserve(entry.target);}  
+      });
+    },{threshold:0.3});
+    envelopes.forEach(env=> io.observe(env));
 
-    function closeModal() {
-      document.getElementById('modal').classList.remove('active');
-    }
+    // Open letter
+    envelopes.forEach(env=> env.addEventListener('click',()=>{
+      const idx=env.dataset.index;
+      modalTitle.innerText=letters[idx].title;
+      modalText.innerText=letters[idx].text;
+      document.body.classList.add('blurred');
+      backdrop.classList.add('active');
+    }));
+    // Close
+    closeBtn.addEventListener('click',()=>{
+      backdrop.classList.remove('active');
+      document.body.classList.remove('blurred');
+    });
   </script></body>
 </html>
