@@ -124,33 +124,33 @@ h1 {
   <!-- Background shapes -->
   <script>
     for(let i=0;i<15;i++){
-      const s=document.createElement('div');
-      s.className='shape';
-      const size=20+Math.random()*80;
-      s.style.width=size+'px'; s.style.height=size+'px';
-      s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
-      s.style.setProperty('--tilt',(Math.random()*20-10)+'deg');
+      const s = document.createElement('div');
+      s.className = 'shape';
+      const size = 20 + Math.random() * 80;
+      s.style.width = size + 'px'; s.style.height = size + 'px';
+      s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 100 + '%';
       document.body.appendChild(s);
     }
   </script>  <h1>Letters to You</h1>
-  <div class="grid" id="grid">
-    <script>
-      for(let i=0;i<7;i++){
-        const env=document.createElement('div');
-        env.className='envelope';
-        env.style.setProperty('--tilt',(Math.random()*20-10)+'deg');
-        env.dataset.index=i;
-        document.getElementById('grid').appendChild(env);
-      }
-    </script>
-  </div>  <div class="modal-backdrop" id="backdrop">
+  <div class="grid" id="grid"></div>  <div class="modal-backdrop" id="backdrop">
     <div class="modal" id="modal">
       <button class="close-btn" id="closeBtn">X</button>
       <h2 id="modalTitle"></h2>
       <p id="modalText"></p>
     </div>
   </div>  <script>
-    const letters=[
+    // Generate envelopes
+    const grid = document.getElementById('grid');
+    for(let i=0; i<7; i++){
+      const env = document.createElement('div');
+      env.className = 'envelope';
+      const tilt = (Math.random()*20 - 10) + 'deg';
+      env.style.setProperty('--tilt', tilt);
+      env.dataset.index = i;
+      grid.appendChild(env);
+    }
+
+    const letters = [
       {title:'Day One',text:`My love,\n\nRemember our first hello? It felt like the world paused so we could find each other...`},
       {title:'Your Smile',text:`Darling,\n\nYour smile became my sunrise...`},
       {title:'Our Challenges',text:`Beloved,\n\nWe’ve faced storms and doubts...`},
@@ -159,27 +159,39 @@ h1 {
       {title:'Morning Light',text:`Sunshine,\n\nWaking beside you...`},
       {title:'Forever',text:`My forever,\n\nOur story unfolds beyond...`}
     ];
-    const envelopes=document.querySelectorAll('.envelope');
-    const backdrop=document.getElementById('backdrop');
-    const modal=document.getElementById('modal');
-    const titleEl=document.getElementById('modalTitle');
-    const textEl=document.getElementById('modalText');
-    const closeBtn=document.getElementById('closeBtn');
 
-    // Scroll fade-in
-    const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.3});
-    envelopes.forEach(env=>io.observe(env));
+    const envelopes = document.querySelectorAll('.envelope');
+    const backdrop = document.getElementById('backdrop');
+    const modal = document.getElementById('modal');
+    const titleEl = document.getElementById('modalTitle');
+    const textEl = document.getElementById('modalText');
+    const closeBtn = document.getElementById('closeBtn');
 
-    function openLetter(i){
-      titleEl.textContent=letters[i].title;
-      textEl.textContent=letters[i].text;
-      document.body.classList.add('modal-blur');
-      backdrop.classList.add('active');
-    }
-    function closeLetter(){
+    // Fade-in on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.3});
+    envelopes.forEach(env => io.observe(env));
+
+    // Click listeners
+    envelopes.forEach(env => {
+      env.addEventListener('click', () => {
+        const idx = env.dataset.index;
+        titleEl.textContent = letters[idx].title;
+        textEl.textContent = letters[idx].text;
+        document.body.classList.add('modal-blur');
+        backdrop.classList.add('active');
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
       backdrop.classList.remove('active');
       document.body.classList.remove('modal-blur');
-    }
-    closeBtn.addEventListener('click',closeLetter);
+    });
   </script></body>
 </html>
