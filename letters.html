@@ -19,7 +19,22 @@
     .envelope.visible { opacity:1; transform:rotate(var(--tilt)); }
     .modal-backdrop { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:10; }
     .modal-backdrop.active { display:flex; }
-    .modal { background:#fffdf9; border-radius:12px; padding:30px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; position:relative; z-index:11; backface-visibility:hidden; transform:rotateX(-90deg) scale(0.7); opacity:0; animation:paperUnfold 0.8s ease forwards; }
+    .modal {
+  background: #fffdf9;
+  border-radius: 12px;
+  padding: 30px 20px;
+  max-width: 90vw;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 11;
+  backface-visibility: hidden;
+  transform: rotateX(-90deg) scale(0.7);
+  opacity: 0;
+  animation: paperUnfold 0.8s ease forwards;
+  box-sizing: border-box;
+}
     @keyframes paperUnfold { to { transform:rotateX(0) scale(1); opacity:1; } }
     .modal h2 { font-family:'Dancing Script', cursive; margin-bottom:15px; text-align:center; }
     .modal p {
