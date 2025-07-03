@@ -59,14 +59,15 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  padding: 0 16px; /* NEW: adds safe space on small screens */
+  padding: 0 10px; /* ensures spacing on mobile */
   box-sizing: border-box;
 }
+
 .modal-backdrop.active {
   display: flex;
 }
@@ -82,11 +83,10 @@
   overflow-y: auto;
   position: relative;
   z-index: 11;
-  transform: rotateX(-90deg) scale(0.7); /* keep animation transform */
   opacity: 0;
+  transform: rotateX(-90deg) scale(0.7);
   animation: paperUnfold 0.8s ease forwards;
   box-sizing: border-box;
-}
 }
 @keyframes paperUnfold { to { transform:rotateX(0) scale(1); opacity:1; } }
 
