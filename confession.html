@@ -122,7 +122,7 @@
       const polaroid = clone.querySelector('.polaroid');
       const tilt = (Math.random() * 8 - 4).toFixed(2) + 'deg';
       polaroid.style.setProperty('--tilt', tilt);
-      clone.querySelector('img').src = `media/heartbeats/Polaroid${i + 1}.jpg`;
+      clone.querySelector('img').src = `media/heartbeats/Polaroid${i + 1}.jpeg`;
       clone.querySelector('.caption').textContent = text;
       grid.appendChild(clone);
     });
