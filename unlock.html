@@ -3,112 +3,243 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Unlock the Secret</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <title>Unlock Our Secret</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      height: 100vh;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      color: #333;
+      align-items: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      color: #fff;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-size: 1rem;
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
       text-align: center;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      color: #6a1b9a;
-      margin-bottom: 10px;
-    }
-
-    p {
-      max-width: 600px;
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-    }
-
-    .clue {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-
-    .input-section {
-      margin-top: 20px;
-    }
-
-    input[type="text"] {
-      padding: 10px 16px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #aaa;
+    input:focus {
       outline: none;
-      width: 220px;
+      box-shadow: 0 0 10px rgba(255,100,150,0.7);
     }
 
-    button {
+    .btn {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      background: #ff5f7e;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff2e63;
+    }
+
+    .error {
+      color: #ffe0e0;
+      font-size: 0.9rem;
+      margin-top: 5px;
+      min-height: 18px;
+    }
+
+    .hint-btn {
       margin-top: 15px;
       padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #ba68c8;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #9c27b0;
-    }
-
-    #second-clue {
-      display: none;
-      margin-top: 20px;
+      background: #fff;
+      color: #ff2e63;
+      border-radius: 10px;
       font-weight: bold;
-      color: #d81b60;
+      cursor: pointer;
+      border: none;
+      display: none;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      color: #333;
+    }
+    .modal-content input {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .modal-content button {
+      margin-top: 15px;
+      background: #ff2e63;
+      color: #fff;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Unlock the Secret</h1>
-  <p>This page holds something precious... if you can figure out the key 💌</p>
+  <div class="card">
+    <h2>🔒 Unlock Our Secret</h2>
+    <form id="unlockForm">
+      <label>Our Anniversary 💍</label>
+      <input type="text" id="anniversary" placeholder="dd-mm-yyyy"/>
+      <div class="error" id="errAnn"></div>
 
-  <div class="clue">
-    <p><strong>Clue 1:</strong> It falls but never breaks. It touches the ground but dances with the wind. 🍂</p>
-    <button onclick="revealClue()">Need another clue?</button>
-    <div id="second-clue">
-      <p><em>Clue 2 (you owe me a kiss for this 😘):</em> It’s what covers the ground in our favorite season.</p>
+      <label>Our First Kiss 💋</label>
+      <input type="text" id="kiss" placeholder="dd-mm-yyyy"/>
+      <div class="error" id="errKiss"></div>
+
+      <label>Our First Hug 🤗</label>
+      <input type="text" id="hug" placeholder="dd-mm-yyyy"/>
+      <div class="error" id="errHug"></div>
+
+      <button type="submit" class="btn">Unlock</button>
+    </form>
+    <button class="hint-btn" id="hintBtn">Need a Hint? 👀</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="hintModal">
+    <div class="modal-content">
+      <p><b>Answer this:</b><br>What is one thing I do that turns you on the most? 😉</p>
+      <input type="text" id="turnOnAnswer" placeholder="Write here..."/>
+      <button id="submitAnswer">Submit</button>
+      <p id="hintText" style="margin-top:10px; display:none; color:#ff2e63; font-weight:bold;">
+        Hint: It's hidden somewhere in our chat 💬
+      </p>
     </div>
   </div>
 
-  <div class="input-section">
-    <input type="text" id="answer" placeholder="Enter your answer..." />
-    <br />
-    <button onclick="checkAnswer()">Unlock</button>
-    <p id="feedback" style="color: red; margin-top: 10px;"></p>
-  </div>
-
   <script>
-    function revealClue() {
-      document.getElementById('second-clue').style.display = 'block';
-    }
+    const form = document.getElementById('unlockForm');
+    const errAnn = document.getElementById('errAnn');
+    const errKiss = document.getElementById('errKiss');
+    const errHug = document.getElementById('errHug');
+    const hintBtn = document.getElementById('hintBtn');
+    const hintModal = document.getElementById('hintModal');
+    const submitAnswer = document.getElementById('submitAnswer');
+    const turnOnAnswer = document.getElementById('turnOnAnswer');
+    const hintText = document.getElementById('hintText');
 
-    function checkAnswer() {
-      const answer = document.getElementById('answer').value.trim().toLowerCase();
-      if (answer === 'autumnleaf') {
-        window.location.href = 'secret.html';
+    // Correct answers
+    const answers = {
+      anniversary: "11-06-2025",
+      kiss: "29-07-2024",
+      hug: "19-02-2024"
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let ann = document.getElementById('anniversary').value.trim();
+      let kiss = document.getElementById('kiss').value.trim();
+      let hug = document.getElementById('hug').value.trim();
+
+      let valid = true;
+
+      // Anniversary
+      if (ann !== answers.anniversary) {
+        errAnn.textContent = "Bubu… how can you forget our anniversary? 😢";
+        valid = false;
       } else {
-        document.getElementById('feedback').textContent = 'Nope... try again!';
+        errAnn.textContent = "";
       }
-    }
+
+      // Kiss
+      if (kiss !== answers.kiss) {
+        errKiss.textContent = "Tch tch… did my kiss not fry your brain that day? 🤨";
+        valid = false;
+      } else {
+        errKiss.textContent = "";
+      }
+
+      // Hug
+      if (hug !== answers.hug) {
+        errHug.textContent = "Ohooo, first hug bhi bhool gayi? 🫢";
+        valid = false;
+        if (ann === answers.anniversary && kiss === answers.kiss) {
+          hintBtn.style.display = "inline-block";
+        }
+      } else {
+        errHug.textContent = "";
+      }
+
+      if (ann === answers.anniversary && kiss === answers.kiss && hug === answers.hug) {
+        window.location.href = "secret.html"; // redirect on success
+      }
+    });
+
+    // Hint system
+    hintBtn.addEventListener('click', () => {
+      hintModal.style.display = "flex";
+    });
+
+    submitAnswer.addEventListener('click', () => {
+      let ans = turnOnAnswer.value.trim();
+      if(ans){
+        localStorage.setItem("turnOnAnswer", ans); // stores her answer
+        hintText.style.display = "block";
+      }
+    });
+
+    // Close modal if clicked outside
+    window.addEventListener('click', (e) => {
+      if(e.target == hintModal){
+        hintModal.style.display = "none";
+      }
+    });
   </script>
 </body>
 </html>
