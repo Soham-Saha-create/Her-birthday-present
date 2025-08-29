@@ -1,279 +1,367 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Unlock Our Secret</title>
 <style>
-  /* Simple romantic styling */
-  body {
-    margin: 0;
-    min-height: 100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: linear-gradient(135deg,#ffdde1,#ee9ca7);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Quicksand", sans-serif;
-    color: #222;
-    padding: 20px;
+  :root{
+    --accent:#e75480;
+    --bg1:#fff2f5;
+    --card:#ffffff;
   }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Quicksand",sans-serif;background:linear-gradient(135deg,#ffe8ec,#fff5f7);color:#222}
+  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
   .card{
-    width:100%;
-    max-width:420px;
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(8px);
-    border-radius:16px;
-    padding:22px;
-    box-shadow:0 12px 40px rgba(0,0,0,0.18);
-    color: #fff;
+    width:100%;max-width:460px;background:var(--card);border-radius:16px;padding:22px 20px 26px;box-shadow:0 18px 50px rgba(231,84,128,0.12);position:relative;
   }
-  h2 { text-align:center; margin:0 0 12px; font-size:1.6rem; text-shadow:0 1px 8px rgba(255,255,255,0.08); }
-  label{ display:block; margin:14px 0 6px; font-size:0.95rem; opacity:0.95; text-align:left; }
-  .row { display:flex; gap:8px; align-items:center; }
-  input.date-input {
-    width:100%;
-    padding:10px 12px;
-    border-radius:10px;
-    border:none;
-    font-size:1rem;
-    text-align:center;
-    background: rgba(255,255,255,0.06);
-    color: #fff;
+  h1{margin:0 0 6px;font-size:1.45rem;color:var(--accent);text-align:center}
+  p.lead{margin:0 0 18px;color:#5a3e3e;text-align:center;font-size:0.95rem}
+  .step{
+    margin-top:12px;display:flex;flex-direction:column;gap:8px;transition:all .28s ease;
   }
-  input.date-input::placeholder{ color: rgba(255,255,255,0.6); }
-  .error { color:#ffd7db; font-size:0.85rem; min-height:20px; margin-top:6px; }
-  .btn {
-    margin-top:16px;
-    width:100%;
-    padding:12px;
-    border-radius:12px;
-    border:none;
-    background:#ff5f7e;
-    color:#fff;
-    font-weight:700;
-    cursor:pointer;
+  label{font-weight:600;color:#5a3e3e;font-size:0.9rem}
+  .input{
+    display:flex;gap:10px;align-items:center;
   }
-  .hint-btn { margin-top:10px; display:none; width:100%; padding:10px; border-radius:10px; border:none; background:#fff; color:#ff2e63; font-weight:700; cursor:pointer; }
+  input.date-input{
+    width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);background:#fff;color:#111;font-size:1rem;box-shadow:0 6px 18px rgba(0,0,0,0.04);text-align:center;outline:none;
+  }
+  input.date-input:focus{box-shadow:0 10px 28px rgba(231,84,128,0.12);border-color:rgba(231,84,128,0.18)}
+  .err{color:#b00020;background:linear-gradient(180deg, rgba(184,37,68,0.06), rgba(184,37,68,0.02));padding:8px;border-radius:10px;font-size:0.88rem;display:none}
+  .hint-btn{display:none;margin-top:10px;padding:10px;border-radius:10px;border:none;background:#fff;color:var(--accent);font-weight:700;cursor:pointer}
+  .controls{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:14px}
+  .btn-primary{flex:1;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-weight:800;cursor:pointer}
+  .btn-ghost{padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:#fff;color:#444;cursor:pointer}
+  .subtle{font-size:0.85rem;color:#666;text-align:center;margin-top:10px}
+  .small{font-size:0.85rem;color:#666}
   /* modal */
-  .modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); z-index:999; padding:20px; }
-  .modal.show { display:flex; }
-  .modal-card { background:#fff; color:#222; border-radius:12px; padding:18px; max-width:420px; width:100%; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
-  .modal-card input{ width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid #ddd; }
-  .modal-card button{ margin-top:12px; width:100%; padding:10px; border-radius:8px; border:none; background:#ff2e63; color:#fff; font-weight:700; cursor:pointer; }
-  .small { font-size:0.9rem; color:#444; margin-top:8px; }
+  .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);z-index:1000;padding:20px}
+  .modal.show{display:flex}
+  .modal-card{background:#fff;width:100%;max-width:480px;border-radius:12px;padding:18px;box-shadow:0 18px 60px rgba(0,0,0,0.25);color:#222}
+  .modal-card h3{margin:0 0 6px}
+  .modal-card .hint{margin-top:10px;font-weight:700;color:var(--accent)}
+  .modal-card input{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-top:8px}
+  .modal-card button{margin-top:12px;padding:10px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;width:100%}
+  .modal-card .close{margin-top:8px;background:#fff;border:1px solid #ddd;color:#444}
+  /* success overlay */
+  .success{position:absolute;inset:0;border-radius:16px;background:linear-gradient(180deg, rgba(231,84,128,0.06), rgba(231,84,128,0.02));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+  .success h2{color:var(--accent);margin:0}
+  /* responsive */
+  @media (max-width:420px){ .card{padding:18px} .btn-primary{padding:10px} }
 </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <h1 id="title">🔐 Unlock Our Secret</h1>
+      <p class="lead">Enter the three dates we remember together. Questions will appear one by one — only after the previous is correct. If you need a hint, answer a small question first.</p>
 
-<div class="card" role="main" aria-labelledby="title">
-  <h2 id="title">🔒 Unlock Our Secret</h2>
+      <!-- STEP container -->
+      <div id="steps">
+        <!-- Step 1 -->
+        <div class="step" id="step-anniversary" data-step="1" aria-hidden="false">
+          <label for="anniversary">Our Anniversary 💍</label>
+          <div class="input">
+            <input id="anniversary" class="date-input" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10" autocomplete="off" />
+          </div>
+          <div id="errAnn" class="err">Error</div>
+        </div>
 
-  <form id="unlockForm" autocomplete="off" novalidate>
-    <label for="anniversary">Our Anniversary 💍</label>
-    <input id="anniversary" class="date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" />
+        <!-- Step 2 (hidden initially) -->
+        <div class="step" id="step-kiss" data-step="2" aria-hidden="true" style="display:none;opacity:0;transform:translateY(8px)">
+          <label for="kiss">Our First Kiss 💋</label>
+          <div class="input">
+            <input id="kiss" class="date-input" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10" autocomplete="off" />
+          </div>
+          <div id="errKiss" class="err">Error</div>
+        </div>
 
-    <div class="error" id="errAnn"></div>
+        <!-- Step 3 (hidden initially) -->
+        <div class="step" id="step-hug" data-step="3" aria-hidden="true" style="display:none;opacity:0;transform:translateY(8px)">
+          <label for="hug">Our First Hug 🤗</label>
+          <div class="input">
+            <input id="hug" class="date-input" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10" autocomplete="off" />
+          </div>
+          <div id="errHug" class="err">Error</div>
+        </div>
 
-    <label for="kiss">Our First Kiss 💋</label>
-    <input id="kiss" class="date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" />
-    <div class="error" id="errKiss"></div>
+      </div>
 
-    <label for="hug">Our First Hug 🤗</label>
-    <input id="hug" class="date-input" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" />
-    <div class="error" id="errHug"></div>
+      <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:16px">
+        <button id="hintBtn" class="hint-btn" aria-hidden="true">Need a hint? 👀</button>
+        <div style="flex:1"></div>
+        <div class="controls">
+          <button id="backBtn" class="btn-ghost" style="display:none">Back</button>
+          <button id="nextBtn" class="btn-primary">Next</button>
+        </div>
+      </div>
 
-    <button class="btn" type="submit">Unlock</button>
-  </form>
-
-  <button id="hintBtn" class="hint-btn">Need a Hint? 👀</button>
-</div>
-
-<!-- Hint modal -->
-<div class="modal" id="hintModal" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="modal-card">
-    <div style="font-weight:700">Answer this first</div>
-    <div class="small">What is one thing I do that turns you on the most?</div>
-    <input id="turnOnAnswer" placeholder="Write your answer..." />
-    <button id="submitAnswer">Submit & Show Hint</button>
-    <div id="hintText" class="small" style="display:none; color:#e63a5a; font-weight:700; margin-top:10px;">
-      Hint: It's hidden somewhere in our chat 💬
+      <div class="subtle">Tip: You can type digits only — slashes will appear automatically.</div>
     </div>
-    <div style="margin-top:8px;"><button id="closeHint" style="margin-top:12px;width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;background:#fff;">Close</button></div>
   </div>
-</div>
+
+  <!-- Modal for hint prompts -->
+  <div class="modal" id="hintModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <h3 id="hintTitle">Answer to get a hint</h3>
+      <div id="hintPrompt" class="small">Question ...</div>
+      <input id="hintInput" placeholder="Write your answer..." />
+      <button id="hintSubmit">Submit & Show Hint</button>
+      <button id="hintClose" class="close" style="width:100%;padding:10px;border-radius:8px;">Close</button>
+      <div id="hintReveal" class="hint" style="display:none;margin-top:12px"></div>
+    </div>
+  </div>
 
 <script>
-/* ====== CONFIG (your dates) ======
-   We compare digits only: "ddmmyyyy"
-*/
+/* ===== CONFIG: correct dates as digits ddmmyyyy ===== */
 const CORRECT = {
-  anniversary: '11062025', // 11 June 2025
-  kiss:        '29072024', // 29 July 2024
-  hug:         '19022024'  // 19 Feb 2024
+  anniversary: '11062025',
+  kiss:        '29072024',
+  hug:         '19022024'
 };
 
-// helper: strip non-digits
-function digitsOnly(s){ return (s||'').replace(/\D/g,''); }
+/* ===== Hint prompts and reveals per step ===== */
+const HINTS = {
+  anniversary: {
+    prompt: "What is one thing that I have done that made you the happiest?",
+    reveal: "Hint: Check your diary entries 😉",
+    storageKey: 'hint_anniversary'
+  },
+  kiss: {
+    prompt: "What is one habit of mine that you really love?",
+    reveal: "Hint: It’s in one of those late-night convos 😌",
+    storageKey: 'hint_kiss'
+  },
+  hug: {
+    prompt: "What is one thing I do that turns you on the most?",
+    reveal: "Hint: It's hidden somewhere in our chat 💬",
+    storageKey: 'hint_hug'
+  }
+};
 
-// format digits to dd/mm/yyyy for display
-function formatDateDigits(d){
-  const dd = d.slice(0,2), mm = d.slice(2,4), yyyy = d.slice(4,8);
-  if(d.length<5) return d;
-  return `${dd}/${mm}/${yyyy}`;
+/* ===== helpers ===== */
+const digitsOnly = s => (s||'').replace(/\D/g,'').slice(0,8);
+function formatDDMMYYYY(digits){
+  const r = digitsOnly(digits);
+  if(!r) return '';
+  const dd = r.slice(0,2);
+  const mm = r.slice(2,4);
+  const yyyy = r.slice(4,8);
+  if(r.length <= 2) return dd;
+  if(r.length <= 4) return dd + '/' + mm;
+  return dd + '/' + mm + '/' + yyyy;
 }
 
-/* ====== input masking: auto-insert slashes as user types/pastes ====== */
-function setupDateMask(el){
-  // prevent non-digit keystrokes except backspace/arrow
-  el.addEventListener('keydown', (e) => {
-    // allow control keys
-    const ctrl = e.ctrlKey || e.metaKey;
-    if (ctrl) return;
-    // allow navigation & special keys
-    const allowed = ['Backspace','ArrowLeft','ArrowRight','Tab','Delete'];
-    if (allowed.includes(e.key)) return;
-    // allow digits only
-    if (!/^[0-9]$/.test(e.key)) e.preventDefault();
-  });
-
-  // handle input & paste
-  el.addEventListener('input', (e) => {
-    const raw = digitsOnly(el.value);
-    let out = raw;
-    if(raw.length>2) out = raw.slice(0,2) + '/' + raw.slice(2);
-    if(raw.length>4) out = out.slice(0,5) + '/' + raw.slice(5);
-    // limit to dd/mm/yyyy => max 10 chars
-    el.value = out.slice(0,10);
-  });
-
-  // on blur, if user typed full digits, format (keeps slashes)
-  el.addEventListener('blur', () => {
-    const raw = digitsOnly(el.value);
-    if(raw.length === 8){
-      el.value = formatDateDigits(raw);
-    }
-  });
-}
-
-// wire masks
-['anniversary','kiss','hug'].forEach(id => setupDateMask(document.getElementById(id)));
-
-const form = document.getElementById('unlockForm');
+/* ===== DOM refs ===== */
+const stepAnn = document.getElementById('step-anniversary');
+const stepKiss = document.getElementById('step-kiss');
+const stepHug = document.getElementById('step-hug');
+const inputAnn = document.getElementById('anniversary');
+const inputKiss = document.getElementById('kiss');
+const inputHug = document.getElementById('hug');
 const errAnn = document.getElementById('errAnn');
 const errKiss = document.getElementById('errKiss');
 const errHug = document.getElementById('errHug');
+const nextBtn = document.getElementById('nextBtn');
+const backBtn = document.getElementById('backBtn');
 const hintBtn = document.getElementById('hintBtn');
-
 const hintModal = document.getElementById('hintModal');
-const submitAnswer = document.getElementById('submitAnswer');
-const turnOnAnswer = document.getElementById('turnOnAnswer');
-const hintText = document.getElementById('hintText');
-const closeHint = document.getElementById('closeHint');
+const hintTitle = document.getElementById('hintTitle');
+const hintPrompt = document.getElementById('hintPrompt');
+const hintInput = document.getElementById('hintInput');
+const hintSubmit = document.getElementById('hintSubmit');
+const hintClose = document.getElementById('hintClose');
+const hintReveal = document.getElementById('hintReveal');
 
-// helper to check equality of ddmmyyyy digits
-function matches(expectedDigits, inputEl){
-  const inputDigits = digitsOnly(inputEl.value);
-  return inputDigits.length === 8 && inputDigits === expectedDigits;
+/* state */
+let currentStep = 1; // 1=ann,2=kiss,3=hug
+
+/* ===== input mask: auto-insert slashes & accept pasted digits ===== */
+function attachMask(el){
+  el.addEventListener('input', () => {
+    const raw = digitsOnly(el.value);
+    el.value = formatDDMMYYYY(raw);
+  });
+  // allow only digits and control keys on keydown
+  el.addEventListener('keydown', (e) => {
+    if(e.ctrlKey || e.metaKey || ['Backspace','Delete','ArrowLeft','ArrowRight','Tab'].includes(e.key)) return;
+    if(!/^[0-9]$/.test(e.key)) e.preventDefault();
+  });
 }
+[ inputAnn, inputKiss, inputHug ].forEach(attachMask);
 
-/* Show hint button logic - called when anniversary & kiss correct but hug wrong */
-function maybeShowHint(){
-  const annOk = matches(CORRECT.anniversary, document.getElementById('anniversary'));
-  const kissOk = matches(CORRECT.kiss, document.getElementById('kiss'));
-  const hugOk = matches(CORRECT.hug, document.getElementById('hug'));
-  if(annOk && kissOk && !hugOk){
-    hintBtn.style.display = 'block';
-  } else {
-    hintBtn.style.display = 'none';
-  }
-}
-
-/* Form submit */
-form.addEventListener('submit', (ev) => {
-  ev.preventDefault();
-  // clear errors
-  errAnn.textContent = '';
-  errKiss.textContent = '';
-  errHug.textContent = '';
-
-  const annEl = document.getElementById('anniversary');
-  const kissEl = document.getElementById('kiss');
-  const hugEl = document.getElementById('hug');
-
-  const annDigits = digitsOnly(annEl.value);
-  const kissDigits = digitsOnly(kissEl.value);
-  const hugDigits = digitsOnly(hugEl.value);
-
-  let valid = true;
-
-  if(!(annDigits.length === 8 && annDigits === CORRECT.anniversary)){
-    errAnn.textContent = "Bubu… how can you forget our anniversary? 😢";
-    valid = false;
-  }
-  if(!(kissDigits.length === 8 && kissDigits === CORRECT.kiss)){
-    errKiss.textContent = "Tch tch… did my kiss not fry your brain that day? 🤨";
-    valid = false;
-  }
-  if(!(hugDigits.length === 8 && hugDigits === CORRECT.hug)){
-    errHug.textContent = "Ohooo, first hug bhi bhool gayi? 🫢";
-    valid = false;
-  }
-
-  // show hint button when first two correct but hug wrong
+/* ===== show/hide steps helpers ===== */
+function showStep(n){
+  currentStep = n;
+  // hide all
+  [stepAnn, stepKiss, stepHug].forEach(s => { s.style.display = 'none'; s.setAttribute('aria-hidden','true'); });
+  // show requested
+  if(n===1){ stepAnn.style.display='flex'; stepAnn.setAttribute('aria-hidden','false'); inputAnn.focus(); backBtn.style.display='none'; nextBtn.textContent='Next'; }
+  if(n===2){ stepKiss.style.display='flex'; stepKiss.setAttribute('aria-hidden','false'); inputKiss.focus(); backBtn.style.display='inline-block'; nextBtn.textContent='Next'; }
+  if(n===3){ stepHug.style.display='flex'; stepHug.setAttribute('aria-hidden','false'); inputHug.focus(); backBtn.style.display='inline-block'; nextBtn.textContent='Finish'; }
+  // hide hint by default
+  hintBtn.style.display='none';
+  // clear visible error for shown step
+  clearErrors();
+  // maybe show hint button if previous correct & this wrong (live)
   maybeShowHint();
+}
 
-  if(valid){
-    // success -> redirect to secret.html
-    // small success animation (optional) then redirect
-    window.location.href = 'secret.html';
+/* clear errors */
+function clearErrors(){ [errAnn,errKiss,errHug].forEach(e=>{ e.style.display='none'; e.textContent=''; }); }
+
+/* check match for step */
+function isMatchForStep(n){
+  if(n===1) return digitsOnly(inputAnn.value) === CORRECT.anniversary;
+  if(n===2) return digitsOnly(inputKiss.value) === CORRECT.kiss;
+  if(n===3) return digitsOnly(inputHug.value) === CORRECT.hug;
+  return false;
+}
+
+/* maybe show hint button logic:
+   show hint button when previous steps are correct (or none), and current step has a wrong attempt (non-empty but not match)
+*/
+function maybeShowHint(){
+  const annOk = digitsOnly(inputAnn.value).length===8 && digitsOnly(inputAnn.value) === CORRECT.anniversary;
+  const kissOk = digitsOnly(inputKiss.value).length===8 && digitsOnly(inputKiss.value) === CORRECT.kiss;
+  const hugOk  = digitsOnly(inputHug.value).length===8 && digitsOnly(inputHug.value) === CORRECT.hug;
+
+  if(currentStep===1){
+    const attempted = digitsOnly(inputAnn.value).length>0 && digitsOnly(inputAnn.value) !== CORRECT.anniversary;
+    hintBtn.style.display = attempted ? 'inline-block' : 'none';
+  } else if(currentStep===2){
+    // only show if anniversary already correct and kiss attempted wrong
+    const attempted = digitsOnly(inputKiss.value).length>0 && digitsOnly(inputKiss.value) !== CORRECT.kiss;
+    hintBtn.style.display = (annOk && attempted) ? 'inline-block' : 'none';
+  } else if(currentStep===3){
+    const attempted = digitsOnly(inputHug.value).length>0 && digitsOnly(inputHug.value) !== CORRECT.hug;
+    hintBtn.style.display = (annOk && kissOk && attempted) ? 'inline-block' : 'none';
+  }
+}
+
+/* event listeners to show hint button while typing */
+[ inputAnn, inputKiss, inputHug ].forEach(el => el.addEventListener('input', maybeShowHint));
+
+/* Next button click: validate current step */
+nextBtn.addEventListener('click', () => {
+  clearErrors();
+  if(currentStep === 1){
+    if(isMatchForStep(1)){
+      // reveal next
+      revealStep(2);
+    } else {
+      // show single specific error
+      errAnn.textContent = "Bubu… how can you forget our anniversary? 😢";
+      errAnn.style.display = 'block';
+      maybeShowHint();
+    }
+  } else if(currentStep === 2){
+    if(isMatchForStep(2)){
+      revealStep(3);
+    } else {
+      errKiss.textContent = "Tch tch… did my kiss not fry your brain that day? 🤨";
+      errKiss.style.display = 'block';
+      maybeShowHint();
+    }
+  } else if(currentStep === 3){
+    if(isMatchForStep(3)){
+      // success: small celebration then redirect
+      showSuccessAndRedirect();
+    } else {
+      errHug.textContent = "Ohooo, first hug bhi bhul gayi? 🫢";
+      errHug.style.display = 'block';
+      maybeShowHint();
+    }
   }
 });
 
-/* Hint button opens modal */
-hintBtn.addEventListener('click', () => {
-  hintModal.classList.add('show');
-  hintModal.setAttribute('aria-hidden','false');
+/* Back button */
+backBtn.addEventListener('click', () => {
+  if(currentStep>1) showStep(currentStep-1);
 });
 
-/* Submit answer inside modal */
-submitAnswer.addEventListener('click', () => {
-  const text = (turnOnAnswer.value || '').trim();
-  if(!text) {
-    // small inline feedback
-    turnOnAnswer.style.border = '1px solid #e63a5a';
+/* reveal step with a tiny fade/slide */
+function revealStep(n){
+  const target = n===2 ? stepKiss : stepHug;
+  // show target for animation
+  target.style.display='flex';
+  target.style.opacity=0;
+  target.style.transform='translateY(10px)';
+  setTimeout(()=>{ target.style.opacity=1; target.style.transform='translateY(0)'; }, 20);
+  showStep(n);
+}
+
+/* hint button opens modal with step-specific prompt */
+hintBtn.addEventListener('click', () => {
+  let sKey = currentStep===1 ? 'anniversary' : (currentStep===2 ? 'kiss' : 'hug');
+  const cfg = HINTS[sKey];
+  hintTitle.textContent = 'Answer to reveal a hint';
+  hintPrompt.textContent = cfg.prompt;
+  hintReveal.style.display='none';
+  hintInput.value = '';
+  hintModal.classList.add('show'); hintModal.setAttribute('aria-hidden','false');
+});
+
+/* submit hint answer */
+hintSubmit.addEventListener('click', () => {
+  const ans = (hintInput.value || '').trim();
+  if(!ans){
+    hintInput.style.border = '1px solid #e63a5a';
     return;
   }
-  localStorage.setItem('turnOnAnswer', text); // you can retrieve this later
-  hintText.style.display = 'block';
-  // keep modal open so she can read the hint; optionally hide input
-  turnOnAnswer.value = '';
+  // store based on current step
+  const sKey = currentStep===1 ? 'anniversary' : (currentStep===2 ? 'kiss' : 'hug');
+  const cfg = HINTS[sKey];
+  localStorage.setItem(cfg.storageKey, ans);
+  hintReveal.textContent = cfg.reveal;
+  hintReveal.style.display = 'block';
 });
 
 /* close hint modal */
-closeHint.addEventListener('click', () => {
-  hintModal.classList.remove('show');
-  hintModal.setAttribute('aria-hidden','true');
+hintClose.addEventListener('click', () => {
+  hintModal.classList.remove('show'); hintModal.setAttribute('aria-hidden','true');
 });
 
-/* click outside to close modal */
-hintModal.addEventListener('click', (e) => {
-  if(e.target === hintModal){
-    hintModal.classList.remove('show');
-    hintModal.setAttribute('aria-hidden','true');
+/* click outside to close */
+hintModal.addEventListener('click', (e) => { if(e.target === hintModal){ hintModal.classList.remove('show'); hintModal.setAttribute('aria-hidden','true'); } });
+
+/* success animation + redirect */
+function showSuccessAndRedirect(){
+  nextBtn.disabled = true;
+  backBtn.style.display='none';
+  hintBtn.style.display='none';
+  const card = document.querySelector('.card');
+  const success = document.createElement('div');
+  success.className = 'success';
+  success.innerHTML = '<h2>Unlocked ❤️</h2><div class="small">Taking you to the surprise...</div>';
+  card.appendChild(success);
+  // small delay then redirect
+  setTimeout(()=>{ window.location.href = 'secret.html'; }, 1300);
+}
+
+/* on load show step 1 */
+showStep(1);
+
+/* keyboard: Enter triggers Next for accessibility */
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){
+    // if modal open, treat Enter as submit hint
+    if(hintModal.classList.contains('show')){
+      hintSubmit.click();
+    } else {
+      nextBtn.click();
+    }
   }
 });
 
-/* Real-time: show hint button if appropriate as she types */
-['anniversary','kiss','hug'].forEach(id => {
-  document.getElementById(id).addEventListener('input', maybeShowHint);
-});
-
-/* How you (Soham) can see what she wrote later:
+/* For Soham (you) — how to read saved answers later:
    - Open browser devtools (Console) and run:
-       localStorage.getItem('turnOnAnswer')
-   - Or I can add a small "answers.html" for your eyes only to show that value.
+       localStorage.getItem('hint_anniversary')
+       localStorage.getItem('hint_kiss')
+       localStorage.getItem('hint_hug')
+   Or I can add a tiny answers.html to show them if you want.
 */
-
 </script>
 </body>
 </html>
