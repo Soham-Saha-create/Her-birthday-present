@@ -1,1 +1,255 @@
-ss
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Rewards ✨</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --accent: #f28b82;
+      --paper: #fffaf0;
+      --muted: #888;
+    }
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: radial-gradient(circle at top, #1c1c2b, #0b0c10);
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 42px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255,255,255,0.5);
+    }
+
+    /* Polaroid Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .polaroid {
+      background: var(--paper);
+      padding: 12px 12px 28px 12px;
+      border-radius: 6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transform: rotate(-2deg);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      color: #000;
+    }
+    .polaroid:hover {
+      transform: scale(1.05) rotate(0deg);
+      z-index: 2;
+    }
+    .polaroid img {
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .polaroid span {
+      display: block;
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 20px;
+    }
+
+    /* Modal styling */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+    .modal-content {
+      background: var(--paper);
+      color: #000;
+      max-width: 600px;
+      padding: 24px;
+      border-radius: 10px;
+      position: relative;
+      text-align: center;
+    }
+    .modal-content h2 {
+      font-family: 'Dancing Script', cursive;
+      margin-top: 0;
+      font-size: 28px;
+    }
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+    }
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #000;
+    }
+
+    /* Final Treasure Section */
+    .final-treasure {
+      margin-top: 60px;
+      text-align: center;
+    }
+    .final-polaroid {
+      background: var(--paper);
+      display: inline-block;
+      padding: 12px 12px 28px 12px;
+      border-radius: 6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transform: rotate(1deg);
+      max-width: 480px;
+      position: relative;
+    }
+    .final-polaroid video {
+      width: 100%;
+      border-radius: 4px;
+      background: #000;
+    }
+    .locked-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #fff;
+      font-family: 'Dancing Script', cursive;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Rewards ✨</h1>
+
+  <div class="grid">
+    <!-- Reward 1 -->
+    <div class="polaroid" data-modal="modal1">
+      <img src="https://via.placeholder.com/300x200?text=Poem" alt="Poem">
+      <span>Poem</span>
+    </div>
+    <!-- Reward 2 -->
+    <div class="polaroid" data-modal="modal2">
+      <img src="https://via.placeholder.com/300x200?text=Playlist" alt="Playlist">
+      <span>Playlist</span>
+    </div>
+    <!-- Reward 3 -->
+    <div class="polaroid" data-modal="modal3">
+      <img src="https://via.placeholder.com/300x200?text=Album" alt="Album">
+      <span>Album</span>
+    </div>
+    <!-- Reward 4 -->
+    <div class="polaroid" data-modal="modal4">
+      <img src="https://via.placeholder.com/300x200?text=Letter" alt="Letter">
+      <span>Letter</span>
+    </div>
+    <!-- Reward 5 -->
+    <div class="polaroid" data-modal="modal5">
+      <img src="https://via.placeholder.com/300x200?text=Voucher" alt="Voucher">
+      <span>Voucher</span>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Poem</h2>
+      <p><em>PLACEHOLDER: Write your original poem here...</em></p>
+    </div>
+  </div>
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Playlist</h2>
+      <p><em>PLACEHOLDER: Embed or link your playlist here...</em></p>
+    </div>
+  </div>
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Album</h2>
+      <p><em>PLACEHOLDER: Link or show extra album photos...</em></p>
+    </div>
+  </div>
+  <div id="modal4" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Letter</h2>
+      <p><em>PLACEHOLDER: A mini handwritten-style letter...</em></p>
+    </div>
+  </div>
+  <div id="modal5" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Voucher</h2>
+      <p><em>PLACEHOLDER: Add your custom voucher (like “One Hug Anytime”)...</em></p>
+    </div>
+  </div>
+
+  <!-- Final Treasure -->
+  <div class="final-treasure">
+    <h2 style="font-family:'Dancing Script',cursive;font-size:32px;margin-bottom:20px;">The Final Treasure 🎥</h2>
+    <div class="final-polaroid">
+      <video controls>
+        <source src="placeholder.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="locked-overlay">✨ Locked – Coming Soon ✨</div>
+    </div>
+  </div>
+
+  <script>
+    // Modal logic
+    const polaroids = document.querySelectorAll('.polaroid');
+    const modals = document.querySelectorAll('.modal');
+    const closes = document.querySelectorAll('.close');
+
+    polaroids.forEach(p => {
+      p.addEventListener('click', () => {
+        const modalId = p.getAttribute('data-modal');
+        document.getElementById(modalId).style.display = 'flex';
+      });
+    });
+
+    closes.forEach(c => {
+      c.addEventListener('click', () => {
+        c.parentElement.parentElement.style.display = 'none';
+      });
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
+      }
+    });
+
+    // Unlock video (you can remove overlay on 29th)
+    const overlay = document.querySelector('.locked-overlay');
+    // Remove this line after 29th:
+    // overlay.style.display = 'none';
+  </script>
+</body>
+</html>
