@@ -27,18 +27,22 @@
       font-size: 1.1rem;
       margin: 20px;
     }
-    .image-section {
-      margin: 20px 0;
-    }
-   .image-section img {
+   .image-section {
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;        /* allows wrapping on smaller screens */
+  justify-content: center;
+  gap: 20px;              /* space between images */
+}
+
+.image-section img {
   width: 100%;
-  max-width: 200px;   /* <- controls how large each photo gets */
-flex: 1 1 calc(50% - 20px);
+  max-width: 200px;       /* each image’s max width */
+  flex: 1 1 calc(50% - 20px); /* two per row */
   height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-  object-fit: cover;  /* keeps proportions clean */
+  object-fit: cover;
 }
     .us-buttons {
       margin-top: 40px;
