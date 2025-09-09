@@ -30,18 +30,20 @@
    .image-section {
   margin: 20px 0;
   display: flex;
-  flex-wrap: wrap;       /* lets them break to next line */
+  flex-wrap: wrap;        /* allows wrapping on smaller screens */
   justify-content: center;
-  gap: 20px;             /* space between images */
+  gap: 20px;              /* space between images */
 }
 
 .image-section img {
-  flex: 1 1 calc(50% - 20px); /* each takes about half the row */
-  max-width: 45%;             /* cap width so they sit side by side */
+  width: 100%;
+  max-width: 400px;       /* each image’s max width */
+  flex: 1 1 calc(50% - 20px); /* two per row */
   height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   object-fit: cover;
+
 }
     .us-buttons {
       margin-top: 40px;
