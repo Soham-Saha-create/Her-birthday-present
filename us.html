@@ -1,261 +1,161 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Our Story — The Book</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">  <style>
-    :root{ --paper:#fffaf0; --accent:#f28b82; --muted:#6b6b6b; --shadow: rgba(17,17,17,0.12); --max-width:1100px }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;font-family:'Playfair Display',serif;background:linear-gradient(180deg,#fbfafa 0%,#f1ece6 100%);
-      display:flex;align-items:center;justify-content:center;padding:20px;-webkit-font-smoothing:antialiased;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story — Diary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Zeyada&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #fdfcf7 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-size: cover;
+      font-family: 'Playfair Display', serif;
+      color: #2c2c2c;
+      line-height: 1.8;
+    }.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
 
-    /* Book wrapper */
-    .book-wrap{width:100%;max-width:var(--max-width);height:calc(100vh - 80px);margin:0 auto;position:relative}
+.entry {
+  margin-bottom: 5rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
 
-    /* Controls */
-    .controls{position:absolute;top:50%;left:0;right:0;pointer-events:none;transform:translateY(-50%);display:flex;justify-content:space-between;padding:0 8px;z-index:60}
-    .controls button{pointer-events:auto;background:rgba(255,255,255,0.95);border:1px solid rgba(0,0,0,0.06);padding:10px 14px;border-radius:10px;box-shadow:0 6px 20px var(--shadow);cursor:pointer;font-weight:600;transition:transform .12s ease,opacity .12s ease}
-    .controls button:active{transform:scale(.98)}
+.entry.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    /* Book container */
-    #book{width:100%;height:100%;margin:0 auto}
+.entry h2 {
+  font-family: 'Zeyada', cursive;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #4a2c2a;
+}
 
-    /* Page styling */
-    .page{background:var(--paper);border-radius:6px;box-shadow:0 12px 30px var(--shadow);padding:28px 32px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
-    .page .media{width:100%;height:58%;display:flex;align-items:center;justify-content:center}
-    .page .media img{max-width:100%;max-height:100%;border-radius:10px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-    .page .text{padding-top:14px;height:36%;display:flex;flex-direction:column;justify-content:center}
-    .page h2{margin:0 0 8px 0;font-family:'Dancing Script',cursive;font-weight:700;font-size:28px;line-height:1}
-    .page p{margin:0;color:var(--muted);line-height:1.6;font-size:16px;text-align:justify}
-    .page .footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-    .btn{background:var(--accent);color:#fff;padding:8px 14px;border-radius:10px;text-decoration:none;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,0.12)}
-    .page-num{color:var(--muted);font-size:14px}
+.entry p {
+  font-size: 1.1rem;
+  text-align: justify;
+  margin-bottom: 1.5rem;
+}
 
-    /* Cover */
-    .cover{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:40px}
-    .cover h1{margin:0 0 8px 0;font-size:42px;letter-spacing:1px}
-    .cover p{color:var(--muted);max-width:520px}
+.entry img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  margin-top: 1rem;
+}
 
-    /* Hotspots for tapping/clicking edges */
-    .hotspot{position:absolute;top:0;bottom:0;width:20%;z-index:70}
-    .hotspot.left{left:0;cursor:ew-resize}
-    .hotspot.right{right:0;cursor:ew-resize}
-    /* subtle visual hint on hover for desktop */
-    .hotspot:hover{background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01))}
+.polaroid {
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.25);
+  display: inline-block;
+  margin-top: 1rem;
+  border-radius: 4px;
+  transform: rotate(-1deg);
+}
 
-    @media (max-width:900px){.book-wrap{height:calc(100vh - 50px)}.page{padding:18px}.cover h1{font-size:32px}.hotspot{width:28%}}
+.button-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.6rem;
+  background: #f28b82;
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
 
-    /* Static fallback for no-js: stack pages vertically */
-    .no-js-stack .page{margin:18px 0}
-  </style></head>
-<body>  <div class="book-wrap" id="book-wrap"><!-- Click hotspots to make flipping obvious (left = prev, right = next) -->
-<div class="hotspot left" id="hot-left" aria-hidden="true" title="Previous page"></div>
-<div class="hotspot right" id="hot-right" aria-hidden="true" title="Next page"></div>
+.button-link:hover {
+  background: #e57373;
+}
 
-<!-- Controls -->
-<div class="controls" aria-hidden="false">
-  <button id="prev" title="Previous page">◀ Prev</button>
-  <button id="next" title="Next page">Next ▶</button>
+footer {
+  text-align: center;
+  margin-top: 5rem;
+  font-family: 'Zeyada', cursive;
+  font-size: 1.8rem;
+  color: #4a2c2a;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="entry">
+      <h2>2018 — The Beginning</h2>
+      <p>Once upon a time, two lives crossed paths... [placeholder text]</p>
+      <div class="polaroid">
+        <img src="placeholder-2018.jpg" alt="2018 memory">
+      </div>
+    </div><div class="entry">
+  <h2>2019 — Friendship Years</h2>
+  <p>Filled with laughter, silly talks, and countless memories... [placeholder text]</p>
+  <div class="polaroid">
+    <img src="placeholder-2019.jpg" alt="2019 memory">
+  </div>
 </div>
 
-<!-- Book element - each direct child is a page for turn.js -->
-<div id="book">
-
-  <!-- Front cover -->
-  <div class="page cover">
-    <div>
-      <h1>Our Story</h1>
-      <p>A little book of everything we became — from 2018 to today. Flip the pages, slow and steady.</p>
-    </div>
-    <div class="page-num">—</div>
+<div class="entry">
+  <h2>2020 — Growing Closer</h2>
+  <p>Through ups and downs, our bond became stronger... [placeholder text]</p>
+  <div class="polaroid">
+    <img src="placeholder-2020.jpg" alt="2020 memory">
   </div>
+</div>
 
-  <!-- Intro image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=Cover+Photo+Placeholder" alt="Cover photo placeholder"></div>
-    <div class="footer"><span class="page-num">Cover Photo</span></div>
+<div class="entry">
+  <h2>2021 — Deeper Bonds</h2>
+  <p>Moments of trust, support, and new beginnings... [placeholder text]</p>
+  <div class="polaroid">
+    <img src="placeholder-2021.jpg" alt="2021 memory">
   </div>
+</div>
 
-  <!-- 2018 text -->
-  <div class="page">
-    <div class="text">
-      <h2>2018 — The Beginning</h2>
-      <p><em>PLACEHOLDER: Write a short beautiful paragraph about the day you met — location, first impressions, small details.</em></p>
-    </div>
-    <div class="footer"><span class="page-num">2018</span></div>
+<div class="entry">
+  <h2>2023 — A Turning Point</h2>
+  <p>When friendship slowly blossomed into something more... [placeholder text]</p>
+  <div class="polaroid">
+    <img src="placeholder-2023.jpg" alt="2023 memory">
   </div>
+</div>
 
-  <!-- 2018 image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=2018+photo" alt="2018 memory placeholder"></div>
-    <div class="footer"><span class="page-num">Image — 2018</span></div>
+<div class="entry">
+  <h2>2025 — Today</h2>
+  <p>Here we are, stronger than ever, writing our story together... [placeholder text]</p>
+  <div class="polaroid">
+    <img src="placeholder-2025.jpg" alt="2025 memory">
   </div>
+</div>
 
-  <!-- 2019 text -->
-  <div class="page">
-    <div class="text">
-      <h2>2019 — Friendship</h2>
-      <p><em>PLACEHOLDER: Jot playful memories — jokes, late-night talks, silly fights, and that time you both ate too much samosa.</em></p>
-    </div>
-    <div class="footer"><span class="page-num">2019</span></div>
-  </div>
+<footer>
+  <p>To Be Continued...</p>
+  <a href="moments.html" class="button-link">View Moments</a>
+</footer>
 
-  <!-- 2019 image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=2019+photo" alt="2019 memory placeholder"></div>
-    <div class="footer"><span class="page-num">Image — 2019</span></div>
-  </div>
-
-  <!-- 2020 text -->
-  <div class="page">
-    <div class="text">
-      <h2>2020 — Growing Close</h2>
-      <p><em>PLACEHOLDER: A small, heartfelt note for the tough times you supported each other through.</em></p>
-    </div>
-    <div class="footer"><span class="page-num">2020</span></div>
-  </div>
-
-  <!-- 2020 image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=2020+photo" alt="2020 memory placeholder"></div>
-    <div class="footer"><span class="page-num">Image — 2020</span></div>
-  </div>
-
-  <!-- 2021 text -->
-  <div class="page">
-    <div class="text">
-      <h2>2021 — Deeper Bonds</h2>
-      <p><em>PLACEHOLDER: Notes about trust, that one secret conversation, the milestones you crossed together.</em></p>
-    </div>
-    <div class="footer"><span class="page-num">2021</span></div>
-  </div>
-
-  <!-- 2021 image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=2021+photo" alt="2021 memory placeholder"></div>
-    <div class="footer"><span class="page-num">Image — 2021</span></div>
-  </div>
-
-  <!-- 2023 text -->
-  <div class="page">
-    <div class="text">
-      <h2>2023 — The Turning Point</h2>
-      <p><em>PLACEHOLDER: Write the moment things changed — confessions, realizations, or the first spark that made everything different.</em></p>
-    </div>
-    <div class="footer"><span class="page-num">2023</span></div>
-  </div>
-
-  <!-- 2023 image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=2023+photo" alt="2023 memory placeholder"></div>
-    <div class="footer"><span class="page-num">Image — 2023</span></div>
-  </div>
-
-  <!-- 2025 text -->
-  <div class="page">
-    <div class="text">
-      <h2>2025 — Today</h2>
-      <p><em>PLACEHOLDER: Short piece about how things are now — the kiss (29 July 2025), the small joys, and the comfort you share.</em></p>
-    </div>
-    <div class="footer"><span class="page-num">2025</span></div>
-  </div>
-
-  <!-- 2025 image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=2025+photo" alt="2025 memory placeholder"></div>
-    <div class="footer"><span class="page-num">Image — 2025</span></div>
-  </div>
-
-  <!-- To be continued + CTA -->
-  <div class="page">
-    <div class="text">
-      <h2>To Be Continued...</h2>
-      <p><em>PLACEHOLDER: A promise line or short shayari. Example: "This is only chapter one — there are millions more."</em></p>
-    </div>
-    <div class="footer"><a class="btn" href="moments.html" title="Go to Moments page">View Moments →</a><span class="page-num">—</span></div>
-  </div>
-
-  <!-- Future image -->
-  <div class="page">
-    <div class="media"><img src="https://via.placeholder.com/600x760?text=Future+Placeholder" alt="future placeholder"></div>
-    <div class="footer"><span class="page-num">The Future</span></div>
-  </div>
-
-  <!-- Back cover -->
-  <div class="page cover">
-    <div>
-      <h1>— The End?</h1>
-      <p>Flip back anytime. Or drop in a little note for her — I'll help you style it like a handwritten letter.</p>
-    </div>
-    <div class="page-num">back</div>
-  </div>
-
-</div><!-- /#book -->
-
-  </div><!-- /.book-wrap -->  <!-- Scripts: jQuery first, then Turn.js -->  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>  <script>
-    (function($){
-      $(function(){
-        var $book = $('#book');
-
-        function bookSize(){
-          var w = Math.min(1000, $(window).width() * 0.9);
-          var h = Math.min(820, $(window).height() * 0.9);
-          return {w:w, h:h};
+  </div>  <script>
+    // Fade-in effect on scroll
+    const entries = document.querySelectorAll('.entry');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      entries.forEach(entry => {
+        const entryTop = entry.getBoundingClientRect().top;
+        if(entryTop < triggerBottom) {
+          entry.classList.add('visible');
         }
-
-        var size = bookSize();
-        var displayMode = ($(window).width() > 900) ? 'double' : 'single';
-
-        // Initialize turn.js (wrapped in try so corruption or missing lib won't break everything)
-        try{
-          $book.turn({
-            width: size.w,
-            height: size.h,
-            autoCenter: true,
-            display: displayMode,
-            acceleration: true,
-            gradients: true,
-            elevation: 50
-          });
-        }catch(e){
-          console.warn('turn.js failed to initialize', e);
-        }
-
-        // Controls
-        $('#prev').on('click', function(e){ e.preventDefault(); $book.turn('previous'); });
-        $('#next').on('click', function(e){ e.preventDefault(); $book.turn('next'); });
-
-        // Hotspot clicks (left / right edge)
-        $('#hot-right').on('click touchend', function(e){ e.preventDefault(); $book.turn('next'); });
-        $('#hot-left').on('click touchend', function(e){ e.preventDefault(); $book.turn('previous'); });
-
-        // Keyboard navigation
-        $(document).on('keydown', function(e){ if(e.keyCode === 37) $book.turn('previous'); if(e.keyCode === 39) $book.turn('next'); });
-
-        // Basic swipe detection for touch devices (for extra reliability)
-        (function(){
-          var startX = 0, startY = 0, threshold = 40;
-          var wrap = document.getElementById('book-wrap');
-          wrap.addEventListener('touchstart', function(e){ var t = e.touches[0]; startX = t.clientX; startY = t.clientY; }, {passive:true});
-          wrap.addEventListener('touchend', function(e){ var t = e.changedTouches[0]; var dx = t.clientX - startX; var dy = t.clientY - startY; if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold){ if(dx < 0) $book.turn('next'); else $book.turn('previous'); } }, {passive:true});
-        })();
-
-        // Responsive handling: resize the flip area
-        $(window).on('resize', function(){ var s = bookSize(); try{ $book.turn('size', s.w, s.h); var newDisplay = ($(window).width() > 900) ? 'double' : 'single'; $book.turn('display', newDisplay); }catch(e){} });
-
-        // If turn.js isn't available, add a no-js stack class to show pages in a scrollable list
-        if(typeof $book.turn !== 'function'){
-          $('#book').addClass('no-js-stack');
-        }
-
       });
-    })(jQuery);
-  </script>  <noscript>
-    <div style="padding:20px;text-align:center;width:100%">
-      <strong>JavaScript is required</strong> to see the book flip effect. Below is a stacked fallback.
-    </div>
-    <style>.no-js-stack .page{margin:18px 0}</style>
-  </noscript></body>
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script></body>
 </html>
