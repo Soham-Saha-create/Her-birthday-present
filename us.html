@@ -1,344 +1,99 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Our Story</n  ></title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story — The Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Zeyada&display=swap" rel="stylesheet">
   <style>
-    /* Base styles */
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to bottom, #fdebd0, #fad0c4, #c0a3e5, #2c3e50);
+      background: #fdfcf7;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #book {
+      width: 90%;
+      height: 90vh;
+      margin: auto;
+    }
+    .page {
+      background: #fffaf0 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-size: cover;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .page h2 {
+      font-family: 'Zeyada', cursive;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .page p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
+    }
+    .page img {
+      max-width: 100%;
+      max-height: 70%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .button-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.6rem;
+      background: #f28b82;
       color: #fff;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s;
     }
-    /* Semi-transparent overlay for text contrast */
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.4);
-      pointer-events: none;
-      z-index: 0;
+    .button-link:hover {
+      background: #e57373;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1rem 6rem;
-      position: relative;
-      z-index: 1;
-    }
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3.5rem;
-      margin-bottom: 0.25rem;
-      text-align: center;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-    }
-    h2 {
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
-    }/* Branches layout */
-.branches {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  position: relative;
-  padding-bottom: 4rem;
-}
-
-/* Each “memory” node */
-.memory {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  width: 160px;
-  padding: 1rem;
-  cursor: pointer;
-  text-align: center;
-  color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  user-select: none;
-  position: relative;
-  border: 2px solid transparent;
-  opacity: 0;
-  transform: translateY(30px);
-}
-.memory.visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.memory:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  border-color: #f8b500;
-  z-index: 10;
-}
-
-/* Thumbnail images */
-.memory img {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 0.8rem;
-  object-fit: cover;
-  aspect-ratio: 4/3;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  transition: transform 0.25s ease;
-}
-.memory:hover img {
-  transform: scale(1.05);
-}
-
-/* Title below thumbnail */
-.memory-title {
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-}
-/* Shayari text snippet */
-.memory-text {
-  font-style: italic;
-  font-size: 0.9rem;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-  height: 3rem;
-  overflow: hidden;
-}
-
-/* Navigation button for Moments only */
-.nav-buttons {
-  text-align: center;
-  margin-top: 2rem;
-}
-.nav-buttons a {
-  background: #f8b500;
-  color: #2c3e50;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 0.75rem 1.8rem;
-  margin: 0 1rem;
-  border-radius: 40px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: background 0.3s ease, color 0.3s ease;
-  user-select: none;
-}
-.nav-buttons a:hover {
-  background: #fdebd0;
-  color: #5a2a9e;
-}
-
-/* Modal overlay */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 9999;
-  padding: 1rem;
-}
-.modal.active {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* Modal content box */
-.modal-content {
-  background: #fff;
-  color: #2c3e50;
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 20px;
-  overflow-y: auto;
-  padding: 2rem;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  position: relative;
-  animation: popupAnim 0.4s ease forwards;
-  line-height: 1.6;
-  font-family: 'Crimson Text', serif;
-}
-@keyframes popupAnim {
-  from { transform: scale(0.6) translateY(50px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-/* Close button inside modal */
-.close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: transparent;
-  border: none;
-  font-size: 1.8rem;
-  color: #5a2a9e;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.3s ease;
-}
-.close-btn:hover {
-  color: #f8b500;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .memory {
-    width: 140px;
-    padding: 0.75rem;
-  }
-  h1 {
-    font-size: 2.5rem;
-  }
-  .nav-buttons a {
-    padding: 0.5rem 1.2rem;
-    margin: 0 0.5rem;
-  }
-  .modal-content {
-    padding: 1rem;
-    font-size: 1rem;
-  }
-}
-
   </style>
 </head>
 <body>
-  <!-- Overlay behind content for contrast -->
-  <div class="overlay"></div>  <div class="container">
-    <h1>Our Story</n1>
-    <h2>Every moment, a branch of love growing stronger</h2><div class="branches">
-  <!-- Memory 1 -->
-  <div class="memory" 
-       data-title="First Mischievous Smile" 
-       data-text="I still remember how your eyes sparkled with mischief, turning an ordinary day extraordinary." 
-       data-img="images/mischievous-smile.jpg">
-    <img src="images/mischievous-smile-thumb.jpg" alt="First Mischievous Smile" />
-    <div class="memory-title">First Mischievous Smile</div>
-    <div class="memory-text">I still remember how your eyes sparkled with mischief, turning an ordinary day extraordinary.</div>
-  </div>
+  <div id="book">
+    <div class="page"><h2>Our Story Begins</h2><p>Once upon a time, in 2018, two souls crossed paths...</p></div>
+    <div class="page"><img src="placeholder-2018.jpg" alt="2018 memory"></div><div class="page"><h2>2019 - The Friendship Years</h2><p>Filled with laughter, silly talks, and countless moments of joy...</p></div>
+<div class="page"><img src="placeholder-2019.jpg" alt="2019 memory"></div>
 
-  <!-- Memory 2 -->
-  <div class="memory" 
-       data-title="Birthday Glow-Up" 
-       data-text="Each birthday you shone brighter, your joy radiating like sunshine, lighting up every room." 
-       data-img="images/birthday-glowup.jpg">
-    <img src="images/birthday-glowup-thumb.jpg" alt="Birthday Glow-Up" />
-    <div class="memory-title">Birthday Glow-Up</div>
-    <div class="memory-text">Each birthday you shone brighter, your joy radiating like sunshine, lighting up every room.</div>
-  </div>
+<div class="page"><h2>2020 - Growing Closer</h2><p>Through ups and downs, we found strength in each other...</p></div>
+<div class="page"><img src="placeholder-2020.jpg" alt="2020 memory"></div>
 
-  <!-- Memory 3 -->
-  <div class="memory" 
-       data-title="School Days Fun" 
-       data-text="Those afternoons at tuition when laughter echoed louder than any lesson." 
-       data-img="images/school-days.jpg">
-    <img src="images/school-days-thumb.jpg" alt="School Days Fun" />
-    <div class="memory-title">School Days Fun</div>
-    <div class="memory-text">Those afternoons at tuition when laughter echoed louder than any lesson.</div>
-  </div>
+<div class="page"><h2>2021 - Deeper Bonds</h2><p>Moments of support, trust, and new beginnings...</p></div>
+<div class="page"><img src="placeholder-2021.jpg" alt="2021 memory"></div>
 
-  <!-- Memory 4 -->
-  <div class="memory" 
-       data-title="Sunset Walks" 
-       data-text="Walking by your side as the sun dipped below the horizon—pure magic." 
-       data-img="images/sunset-walks.jpg">
-    <img src="images/sunset-walks-thumb.jpg" alt="Sunset Walks" />
-    <div class="memory-title">Sunset Walks</div>
-    <div class="memory-text">Walking by your side as the sun dipped below the horizon—pure magic.</div>
-  </div>
+<div class="page"><h2>2023 - A Turning Point</h2><p>Feelings blossomed into something truly special...</p></div>
+<div class="page"><img src="placeholder-2023.jpg" alt="2023 memory"></div>
 
-  <!-- Memory 5 -->
-  <div class="memory" 
-       data-title="Starry Nights" 
-       data-text="Under a blanket of stars, our dreams whispered promises of forever." 
-       data-img="images/starry-nights.jpg">
-    <img src="images/starry-nights-thumb.jpg" alt="Starry Nights" />
-    <div class="memory-title">Starry Nights</div>
-    <div class="memory-text">Under a blanket of stars, our dreams whispered promises of forever.</div>
-  </div>
+<div class="page"><h2>2025 - Today</h2><p>Our story continues, stronger and brighter than ever...</p></div>
+<div class="page"><img src="placeholder-2025.jpg" alt="2025 memory"></div>
 
-  <!-- Memory 6 -->
-  <div class="memory" 
-       data-title="Rainy Day Laughter" 
-       data-text="Caught in the rain, drenched but so happy—your laughter made that storm beautiful." 
-       data-img="images/rainy-laughter.jpg">
-    <img src="images/rainy-laughter-thumb.jpg" alt="Rainy Day Laughter" />
-    <div class="memory-title">Rainy Day Laughter</div>
-    <div class="memory-text">Caught in the rain, drenched but so happy—your laughter made that storm beautiful.</div>
-  </div>
-
-  <!-- Memory 7 -->
-  <div class="memory" 
-       data-title="Midnight Chats" 
-       data-text="Those late-night talks where our hearts spoke louder than words." 
-       data-img="images/midnight-chats.jpg">
-    <img src="images/midnight-chats-thumb.jpg" alt="Midnight Chats" />
-    <div class="memory-title">Midnight Chats</div>
-    <div class="memory-text">Those late-night talks where our hearts spoke louder than words.</div>
-  </div>
+<div class="page"><h2>To Be Continued...</h2><p>Our book has many more chapters yet to be written.</p>
+  <a href="moments.html" class="button-link">View Moments</a>
 </div>
+<div class="page"><img src="placeholder-future.jpg" alt="Future memory"></div>
 
-<div class="nav-buttons">
-  <a href="moments.html">📸 View Moments</a>
-</div>
-
-  </div>  <!-- Modal (pop-up) structure -->  <div class="modal" id="modal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <h2 id="modalTitle"></h2>
-      <img id="modalImg" src="" alt="" style="width:100%; border-radius: 12px; margin: 1rem 0;" />
-      <p id="modalText"></p>
-    </div>
-  </div>  <script>
-    // Scroll-triggered reveal for memory nodes
-    const memories = document.querySelectorAll('.memory');
-    const revealOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.85;
-      memories.forEach(mem => {
-        const memTop = mem.getBoundingClientRect().top;
-        if (memTop < triggerBottom) {
-          mem.classList.add('visible');
-        }
-      });
-    };
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
-
-    // Modal functionality
-    const modal = document.getElementById('modal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalImg = document.getElementById('modalImg');
-    const modalText = document.getElementById('modalText');
-
-    memories.forEach(mem => {
-      mem.addEventListener('click', () => {
-        const title = mem.getAttribute('data-title');
-        const text = mem.getAttribute('data-text');
-        const imgSrc = mem.getAttribute('data-img');
-
-        modalTitle.textContent = title;
-        modalText.textContent = text;
-        modalImg.src = imgSrc;
-        modalImg.alt = title;
-
-        modal.classList.add('active');
+  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const book = document.getElementById("book");
+      $(book).turn({
+        width: book.offsetWidth,
+        height: book.offsetHeight,
+        autoCenter: true,
       });
     });
-
-    function closeModal() {
-      modal.classList.remove('active');
-    }
-  </script></body>
+  </script>  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script></body>
 </html>
