@@ -30,13 +30,15 @@
     .image-section {
       margin: 20px 0;
     }
-    .image-section img {
-      max-width: 90vw;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
+   .image-section img {
+  width: 100%;
+  max-width: 600px;   /* <- controls how large each photo gets */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  object-fit: cover;  /* keeps proportions clean */
+}
     .us-buttons {
       margin-top: 40px;
       display: flex;
