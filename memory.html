@@ -30,15 +30,14 @@
    .image-section {
   margin: 20px 0;
   display: flex;
-  flex-wrap: wrap;        /* allows wrapping on smaller screens */
+  flex-wrap: wrap;       /* lets them break to next line */
   justify-content: center;
-  gap: 20px;              /* space between images */
+  gap: 20px;             /* space between images */
 }
 
 .image-section img {
-  width: 100%;
-  max-width: 200px;       /* each image’s max width */
-  flex: 1 1 calc(50% - 20px); /* two per row */
+  flex: 1 1 calc(50% - 20px); /* each takes about half the row */
+  max-width: 45%;             /* cap width so they sit side by side */
   height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
