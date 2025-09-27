@@ -139,5 +139,29 @@
 
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('load', revealOnScroll);
-  </script></body>
+  </script><!-- Add this just before the closing </body> tag -->
+<div style="text-align:center; margin: 50px 0;">
+  <a href="index.html" class="home-btn">Back to Home</a>
+</div>
+
+<style>
+  .home-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #e75480;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .home-btn:hover {
+    background: #d64571;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+  }
+</style></body>
 </html>
