@@ -6,7 +6,7 @@
   <title>Your Rewards ✨</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -49,6 +49,7 @@
       cursor: pointer;
       transition: transform 0.2s ease;
       color: #000;
+      text-align: center;
     }
     .polaroid:hover {
       transform: scale(1.05) rotate(0deg);
@@ -64,6 +65,26 @@
       text-align: center;
       font-family: 'Dancing Script', cursive;
       font-size: 20px;
+    }
+
+    /* Custom Poem & Letter styles */
+    .calligraphy-card {
+      width: 100%;
+      min-height: 200px;
+      background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+      background-color: #fdf5e6;
+      border-radius: 4px;
+      padding: 20px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 24px;
+      color: #3b2f2f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.2);
     }
 
     /* Modal styling */
@@ -145,9 +166,9 @@
   <h1>Your Rewards ✨</h1>
 
   <div class="grid">
-    <!-- Reward 1 -->
+    <!-- Reward 1 (Poem) -->
     <div class="polaroid" data-modal="modal1">
-      <img src="https://via.placeholder.com/300x200?text=Poem" alt="Poem">
+      <div class="calligraphy-card">A Poem Awaits You...</div>
       <span>Poem</span>
     </div>
     <!-- Reward 2 -->
@@ -160,9 +181,9 @@
       <img src="https://via.placeholder.com/300x200?text=Album" alt="Album">
       <span>Album</span>
     </div>
-    <!-- Reward 4 -->
+    <!-- Reward 4 (Letter) -->
     <div class="polaroid" data-modal="modal4">
-      <img src="https://via.placeholder.com/300x200?text=Letter" alt="Letter">
+      <div class="calligraphy-card">A Letter for You...</div>
       <span>Letter</span>
     </div>
     <!-- Reward 5 -->
