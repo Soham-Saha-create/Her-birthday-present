@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your Rewards ✨</title>
 
@@ -15,6 +15,7 @@
       --paper: #fffaf0;
       --muted: #888;
     }
+    html,body{height:100%;}
     body {
       margin: 0;
       font-family: 'Playfair Display', serif;
@@ -47,18 +48,21 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
       transform: rotate(-2deg);
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.18s ease;
       color: #000;
       text-align: center;
+      user-select: none;
     }
+    .polaroid:active { transform: scale(0.98) rotate(-2deg); }
     .polaroid:hover {
       transform: scale(1.05) rotate(0deg);
       z-index: 2;
     }
-    .polaroid img {
+    .polaroid img, .polaroid .calligraphy-card {
       width: 100%;
       border-radius: 4px;
       margin-bottom: 12px;
+      display: block;
     }
     .polaroid span {
       display: block;
@@ -67,16 +71,16 @@
       font-size: 20px;
     }
 
-    /* Custom Poem & Letter styles */
+    /* Calligraphy preview card */
     .calligraphy-card {
       width: 100%;
-      min-height: 200px;
+      min-height: 180px;
       background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
       background-color: #fdf5e6;
       border-radius: 4px;
-      padding: 20px;
+      padding: 18px;
       font-family: 'Great Vibes', cursive;
-      font-size: 24px;
+      font-size: 22px;
       color: #3b2f2f;
       display: flex;
       align-items: center;
@@ -84,7 +88,7 @@
       text-align: center;
       box-sizing: border-box;
       margin-bottom: 12px;
-      box-shadow: inset 0 0 12px rgba(0,0,0,0.2);
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.12);
     }
 
     /* Modal styling */
@@ -102,22 +106,23 @@
     .modal-content {
       background: var(--paper);
       color: #000;
-      max-width: 600px;
+      max-width: 720px;
+      width: calc(100% - 40px);
+      max-height: 80vh;       /* limit height to viewport */
+      overflow-y: auto;      /* scroll if too long */
       padding: 24px;
       border-radius: 10px;
       position: relative;
       text-align: center;
+      box-sizing: border-box;
     }
     .modal-content h2 {
       font-family: 'Dancing Script', cursive;
       margin-top: 0;
       font-size: 28px;
     }
-    .modal-content p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #333;
-    }
+    .modal-content p { font-size: 16px; line-height: 1.6; color: #333; }
+
     .close {
       position: absolute;
       top: 12px;
@@ -125,62 +130,74 @@
       font-size: 28px;
       cursor: pointer;
       color: #000;
+      background: transparent;
+      border: none;
+      line-height: 1;
     }
-.modal-content {
-  background: var(--paper);
-  color: #000;
-  max-width: 600px;
-  max-height: 80vh;       /* Limit height to viewport */
-  overflow-y: auto;       /* Scroll if content too long */
-  padding: 24px;
-  border-radius: 10px;
-  position: relative;
-  text-align: center;     /* Center-align text inside */
-  box-sizing: border-box;
-}
 
-.poem-text, .letter-text {
-  white-space: pre-line;  /* Keep line breaks */
-  font-family: 'Great Vibes', cursive;
-  font-size: 20px;
-  line-height: 1.8;
-  text-align: center;     /* Center each line */
-  margin: 0 auto;
-  padding: 10px;
-}
-
-    /* Final Treasure Section */
-    .final-treasure {
-      margin-top: 60px;
+    /* Poem / Letter area */
+    .poem-text, .letter-text {
+      white-space: pre-line;  /* preserves newlines entered in HTML */
+      font-family: 'Great Vibes', cursive;
+      font-size: 20px;
+      line-height: 1.8;
       text-align: center;
+      margin: 0 auto;
+      padding: 14px;
+      color: #3b2f2f;
+      background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+      background-color: #fdf5e6;
+      border-radius: 8px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.06);
+      max-width: 100%;
     }
-    .final-polaroid {
-      background: var(--paper);
-      display: inline-block;
-      padding: 12px 12px 28px 12px;
-      border-radius: 6px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transform: rotate(1deg);
-      max-width: 480px;
-      position: relative;
-    }
-    .final-polaroid video {
+
+    /* Album carousel (swipeable) */
+    .carousel-wrapper {
       width: 100%;
-      border-radius: 4px;
-      background: #000;
+      overflow: hidden;
+      box-sizing: border-box;
     }
-    .locked-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
+    .carousel {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      color: #fff;
-      font-family: 'Dancing Script', cursive;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; /* smooth on iOS */
+      padding-bottom: 12px;
+      margin-top: 8px;
     }
+    .carousel::-webkit-scrollbar{ height: 10px; }
+    .carousel img {
+      min-width: 80%;
+      max-width: 640px;
+      height: auto;
+      border-radius: 8px;
+      scroll-snap-align: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      object-fit: cover;
+    }
+    @media (min-width: 900px){
+      .carousel img { min-width: 45%; }
+    }
+
+    /* Voucher image display */
+    .voucher-img {
+      width: 100%;
+      max-width: 540px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Final treasure */
+    .final-treasure { margin-top: 60px; text-align: center; }
+    .final-polaroid { background: var(--paper); display: inline-block; padding: 12px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transform: rotate(1deg); max-width: 480px; position: relative; }
+    .final-polaroid video { width: 100%; border-radius: 4px; background: #000; }
+    .locked-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:22px; color:#fff; font-family:'Dancing Script',cursive; }
+
   </style>
 </head>
 <body>
@@ -188,98 +205,117 @@
   <h1>Your Rewards ✨</h1>
 
   <div class="grid">
-    <!-- Reward 1 (Poem) -->
+    <!-- Poem -->
     <div class="polaroid" data-modal="modal1">
       <div class="calligraphy-card">A Poem Awaits You...</div>
       <span>Poem</span>
     </div>
-    <!-- Reward 2 -->
+
+    <!-- Playlist (Spotify iframe will go inside modal2) -->
     <div class="polaroid" data-modal="modal2">
       <img src="https://via.placeholder.com/300x200?text=Playlist" alt="Playlist">
       <span>Playlist</span>
     </div>
-    <!-- Reward 3 -->
+
+    <!-- Album: will open modal3 with swipeable carousel -->
     <div class="polaroid" data-modal="modal3">
       <img src="https://via.placeholder.com/300x200?text=Album" alt="Album">
       <span>Album</span>
     </div>
-    <!-- Reward 4 (Letter) -->
+
+    <!-- Letter -->
     <div class="polaroid" data-modal="modal4">
       <div class="calligraphy-card">A Letter for You...</div>
       <span>Letter</span>
     </div>
-    <!-- Reward 5 -->
+
+    <!-- Voucher -->
     <div class="polaroid" data-modal="modal5">
       <img src="https://via.placeholder.com/300x200?text=Voucher" alt="Voucher">
       <span>Voucher</span>
     </div>
   </div>
 
-  <!-- Modals -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>The Flow Of Time</h2>
-      <p><em>
-You were the quiet shelter I leaned on, <br>
-a shoulder carved from distance, <br>
-a comfort that came without promise, <br>
-yet never too far to vanish. <br>
-I mistook silence for indifference, <br>
-but even then— <br>
-your presence stitched my scattered nights. <br>
+  <!-- Modal: Poem -->
+  <div id="modal1" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="poemTitle">
+      <button class="close" aria-label="Close">&times;</button>
+      <h2 id="poemTitle">Poem</h2>
+      <div class="poem-text">
+Roses are red,
+Violets are blue,
+I've poured my lines here,
+All written for you.
 
-Now, your yes has turned my world around. <br>
-No maps, no compasses— <br>
-I walk fearless, for your hand is enough. <br>
-You love me the way my heart <br>
-has always begged to be loved— <br>
-sometimes softer than I deserve, <br>
-sometimes stronger than I can hold. <br>
-You are not just my girlfriend; <br>
-you are the echo of every prayer I never knew I prayed. <br>
+Sometimes we're silly,
+Sometimes we're shy,
+But when I look at you,
+The world goes by.
+      </div>
+    </div>
+  </div>
 
-Soon, miles may stretch between us, <br>
-but let them. <br>
-For I don’t want us to fight distance, <br>
-I want us to hold hands across it. <br>
-Not enemies in arguments, <br>
-but teammates through storms. <br>
-Not just lovers in the sunlight, <br>
-but anchors in the darkest seas. <br>
-With you, I want every hurdle to be an "us," <br>
-every tomorrow to be a promise, 
-and forever— <br>
-not just a word, <br>
-but the story we never stop writing.</em></p>
+  <!-- Modal: Playlist (replace iframe src with your Spotify embed) -->
+  <div id="modal2" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="playlistTitle">
+      <button class="close" aria-label="Close">&times;</button>
+      <h2 id="playlistTitle">Playlist</h2>
+      <p style="color:#555;margin-bottom:12px">Replace the example iframe below with the Spotify embed code for your playlist.</p>
+      <div id="spotify-placeholder" style="max-width:100%;overflow:hidden;">
+        <!-- ==== REPLACE THIS IFRAME WITH YOUR SPOTIFY EMBED ==== -->
+        <iframe style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID?utm_source=generator"
+                width="100%" height="380" frameborder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+      </div>
     </div>
   </div>
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Playlist</h2>
-      <p><em>PLACEHOLDER: Embed or link your playlist here...</em></p>
+
+  <!-- Modal: Album (swipeable; replace the srcs with your 5 jpgs) -->
+  <div id="modal3" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="albumTitle">
+      <button class="close" aria-label="Close">&times;</button>
+      <h2 id="albumTitle">Album</h2>
+      <p style="color:#555;margin-bottom:8px">Swipe left/right (or drag) to browse. Replace the src URLs with your JPG images.</p>
+
+      <div class="carousel-wrapper">
+        <div class="carousel" id="albumCarousel">
+          <!-- Replace these five placeholders with your actual album images (JPG/PNG). Use full or relative URLs. -->
+          <img src="https://via.placeholder.com/800x800?text=Album+1" alt="Album image 1">
+          <img src="https://via.placeholder.com/800x800?text=Album+2" alt="Album image 2">
+          <img src="https://via.placeholder.com/800x800?text=Album+3" alt="Album image 3">
+          <img src="https://via.placeholder.com/800x800?text=Album+4" alt="Album image 4">
+          <img src="https://via.placeholder.com/800x800?text=Album+5" alt="Album image 5">
+        </div>
+      </div>
+      <p style="font-size:13px;color:#666;margin-top:10px">Tip: on desktop you can also click an image to open it in a new tab for full view.</p>
     </div>
   </div>
-  <div id="modal3" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Album</h2>
-      <p><em>PLACEHOLDER: Link or show extra album photos...</em></p>
+
+  <!-- Modal: Letter -->
+  <div id="modal4" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="letterTitle">
+      <button class="close" aria-label="Close">&times;</button>
+      <h2 id="letterTitle">Letter</h2>
+      <div class="letter-text">
+My dearest,
+Today I fold these small words into a corner of your heart.
+When you read them, I hope you feel the quiet, steady warmth
+I keep for you in the small, unspectacular minutes.
+Always yours,
+— S
+      </div>
     </div>
   </div>
-  <div id="modal4" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Letter</h2>
-      <p><em>PLACEHOLDER: A mini handwritten-style letter...</em></p>
-    </div>
-  </div>
-  <div id="modal5" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Voucher</h2>
-      <p><em>PLACEHOLDER: Add your custom voucher (like “One Hug Anytime”)...</em></p>
+
+  <!-- Modal: Voucher (replace src with your voucher JPG) -->
+  <div id="modal5" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="voucherTitle">
+      <button class="close" aria-label="Close">&times;</button>
+      <h2 id="voucherTitle">Voucher</h2>
+      <p style="color:#555;margin-bottom:12px">Replace the image URL below with your voucher JPG.</p>
+      <img id="voucherImage" class="voucher-img" src="https://via.placeholder.com/900x600?text=Your+Voucher.jpg" alt="Voucher image">
     </div>
   </div>
 
@@ -296,7 +332,7 @@ but the story we never stop writing.</em></p>
   </div>
 
   <script>
-    // Modal logic
+    // Modal logic (open / close / outside click / Esc)
     const polaroids = document.querySelectorAll('.polaroid');
     const modals = document.querySelectorAll('.modal');
     const closes = document.querySelectorAll('.close');
@@ -304,26 +340,50 @@ but the story we never stop writing.</em></p>
     polaroids.forEach(p => {
       p.addEventListener('click', () => {
         const modalId = p.getAttribute('data-modal');
-        document.getElementById(modalId).style.display = 'flex';
+        const node = document.getElementById(modalId);
+        if (node) {
+          node.style.display = 'flex';
+          node.setAttribute('aria-hidden', 'false');
+          // focus for accessibility
+          const closeBtn = node.querySelector('.close');
+          if (closeBtn) closeBtn.focus();
+        }
       });
     });
 
     closes.forEach(c => {
-      c.addEventListener('click', () => {
-        c.parentElement.parentElement.style.display = 'none';
+      c.addEventListener('click', (ev) => {
+        const modal = ev.target.closest('.modal');
+        if (modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
       });
     });
 
     window.addEventListener('click', (e) => {
       if (e.target.classList.contains('modal')) {
         e.target.style.display = 'none';
+        e.target.setAttribute('aria-hidden', 'true');
       }
     });
 
-    // Unlock video (you can remove overlay on 29th)
-    const overlay = document.querySelector('.locked-overlay');
-    // Remove this line after 29th:
-    // overlay.style.display = 'none';
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modals.forEach(m => { m.style.display = 'none'; m.setAttribute('aria-hidden','true'); });
+      }
+    });
+
+    // Allow clicking an album image to open it in a new tab (for full view)
+    document.getElementById('albumCarousel').addEventListener('click', (ev) => {
+      const img = ev.target.closest('img');
+      if (img) {
+        window.open(img.src, '_blank');
+      }
+    });
+
+    // OPTIONAL: if you want to dynamically update voucher preview via file input in future,
+    // you could add an <input type="file"> and hook it to the #voucherImage.src with FileReader.
   </script>
 </body>
 </html>
