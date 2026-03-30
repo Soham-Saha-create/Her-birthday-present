@@ -4,298 +4,494 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>See You Soon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --rose-deep: #8b3a4a;
+      --rose-mid: #c45a69;
+      --rose-soft: #e8a0a8;
+      --cream: #fdf6f0;
+      --dark-bg: #1a0e10;
+      --mid-bg: #2e1a1f;
+      --text-light: #f0e6e8;
+      --text-muted: #b8959a;
+      --gold: #d4a574;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #ffe8e1 0%, #fff9f5 100%);
-      color: #333;
+      background: var(--dark-bg);
+      color: var(--text-light);
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* Floating circles background */
-    .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
-    .bg-circle { position: absolute; border-radius: 50%; background: rgba(255,182,193,0.3); animation: float 8s ease-in-out infinite; }
-    @keyframes float { 0%,100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-20px) scale(1.1); opacity: 0.4; } }
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.3;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--rose-soft);
+      border-radius: 50%;
+      animation: drift linear infinite;
+      opacity: 0;
+    }
+    @keyframes drift {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+    }
 
     /* Back button */
     .back-btn {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 24px;
+      left: 24px;
       z-index: 100;
-      background: #ffd6d6;
-      color: #503232;
+      background: rgba(255,255,255,0.07);
+      color: var(--text-muted);
       text-decoration: none;
       font-weight: 600;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 30px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: background 0.3s, transform 0.3s;
-      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
     }
-    .back-btn:hover { background: #ff9aa2; transform: translateY(-2px); }
+    .back-btn:hover {
+      background: rgba(196,90,105,0.2);
+      color: var(--rose-soft);
+      border-color: var(--rose-soft);
+    }
 
-    /* Hero Section */
+    /* ── HERO ── */
     .hero {
-      padding: 120px 20px 60px;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      max-width: 750px;
-      margin: auto;
-      animation: fadeInDown 1s ease forwards;
+      padding: 80px 30px;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(139,58,74,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--rose-soft);
+      margin-bottom: 24px;
       opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
     }
+
     .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.2rem;
-      color: #c45a69;
-      margin-bottom: 16px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
     }
-    .hero .subtitle {
-      font-size: 1rem;
-      color: #b07a7a;
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--rose-soft);
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--rose-soft), transparent);
+      margin: 30px auto;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+
+    .hero p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      line-height: 2;
+      max-width: 680px;
+      color: #d4c0c3;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.9s forwards;
+    }
+
+    .hero-scroll {
+      margin-top: 60px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.3s forwards;
+      color: var(--text-muted);
+      font-size: 0.8rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 30px;
     }
-    .hero p {
-      font-size: 1.15rem;
-      line-height: 1.9;
-      color: #5a3e3e;
-      animation: fadeInUp 1s ease 0.5s forwards;
-      opacity: 0;
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--rose-soft), transparent);
+      margin: 12px auto 0;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Divider */
-    .divider {
+    /* ── SECTION HEADER ── */
+    .section-header {
       text-align: center;
-      margin: 50px auto;
-      color: #e8a0a0;
-      font-size: 1.4rem;
-      letter-spacing: 8px;
+      padding: 100px 20px 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .section-header h2 em {
+      font-style: italic;
+      color: var(--rose-soft);
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
     }
 
-    /* Section Title */
-    .section-title {
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: #c45a69;
-      margin: 60px auto 10px;
-      padding: 0 20px;
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
-    }
-    .section-subtitle {
-      text-align: center;
-      color: #b07a7a;
-      font-size: 1rem;
-      margin-bottom: 50px;
-      padding: 0 20px;
-    }
-
-    /* Polaroid Grid */
+    /* ── POLAROID GRID ── */
     .polaroid-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
-      padding: 20px 40px 60px;
+      gap: 36px;
+      padding: 60px 40px 80px;
       max-width: 1100px;
       margin: auto;
+      position: relative;
+      z-index: 1;
     }
 
     .polaroid {
-      background: #fff;
-      padding: 14px 14px 50px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      background: #fdf0f0;
+      padding: 14px 14px 52px;
       width: 200px;
-      transform: rotate(var(--rot));
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeInUp 0.8s ease forwards;
+      transform: rotate(var(--rot)) translateY(40px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 4px 12px rgba(139,58,74,0.2);
       opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, opacity 0.6s ease;
+      cursor: pointer;
+      position: relative;
     }
+
+    .polaroid.visible {
+      opacity: 1;
+      transform: rotate(var(--rot)) translateY(0);
+    }
+
     .polaroid:hover {
-      transform: rotate(0deg) scale(1.05);
-      box-shadow: 0 16px 40px rgba(196,90,105,0.2);
+      transform: rotate(0deg) translateY(-12px) scale(1.06) !important;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 8px 24px rgba(196,90,105,0.3);
       z-index: 10;
     }
+
     .polaroid img {
       width: 100%;
       height: 180px;
       object-fit: cover;
       display: block;
+      filter: sepia(0.1) contrast(1.05);
+      transition: filter 0.3s;
     }
+    .polaroid:hover img { filter: sepia(0) contrast(1.1); }
+
     .polaroid .caption {
-      margin-top: 12px;
-      font-size: 0.82rem;
-      color: #5a3e3e;
+      margin-top: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem;
+      font-style: italic;
+      color: #5a3040;
       text-align: center;
       line-height: 1.5;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
     }
 
-    /* Staggered animation delays for polaroids */
-    .polaroid:nth-child(1) { --rot: -3deg; animation-delay: 0.1s; }
-    .polaroid:nth-child(2) { --rot: 2deg; animation-delay: 0.2s; }
-    .polaroid:nth-child(3) { --rot: -2deg; animation-delay: 0.3s; }
-    .polaroid:nth-child(4) { --rot: 3deg; animation-delay: 0.4s; }
-    .polaroid:nth-child(5) { --rot: -1deg; animation-delay: 0.5s; }
-    .polaroid:nth-child(6) { --rot: 2.5deg; animation-delay: 0.6s; }
-    .polaroid:nth-child(7) { --rot: -3deg; animation-delay: 0.7s; }
-    .polaroid:nth-child(8) { --rot: 1.5deg; animation-delay: 0.8s; }
-    .polaroid:nth-child(9) { --rot: -2.5deg; animation-delay: 0.9s; }
-    .polaroid:nth-child(10) { --rot: 2deg; animation-delay: 1.0s; }
+    .polaroid:nth-child(1)  { --rot: -3deg;   transition-delay: 0.05s; }
+    .polaroid:nth-child(2)  { --rot: 2deg;    transition-delay: 0.1s; }
+    .polaroid:nth-child(3)  { --rot: -2deg;   transition-delay: 0.15s; }
+    .polaroid:nth-child(4)  { --rot: 3deg;    transition-delay: 0.2s; }
+    .polaroid:nth-child(5)  { --rot: -1.5deg; transition-delay: 0.25s; }
+    .polaroid:nth-child(6)  { --rot: 2.5deg;  transition-delay: 0.3s; }
+    .polaroid:nth-child(7)  { --rot: -3deg;   transition-delay: 0.35s; }
+    .polaroid:nth-child(8)  { --rot: 1.5deg;  transition-delay: 0.4s; }
+    .polaroid:nth-child(9)  { --rot: -2.5deg; transition-delay: 0.45s; }
+    .polaroid:nth-child(10) { --rot: 2deg;    transition-delay: 0.5s; }
 
-    /* Countdown Section */
-    .countdown-section {
+    /* ── QUOTE BREAK ── */
+    .quote-break {
       text-align: center;
-      padding: 60px 20px 80px;
-      background: rgba(255,255,255,0.5);
-      backdrop-filter: blur(10px);
-      margin: 40px 0 0;
+      padding: 80px 40px;
+      position: relative;
+      z-index: 1;
     }
+    .quote-break blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--rose-soft);
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .quote-break blockquote.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .quote-break blockquote::before { content: '\201C'; font-size: 4rem; color: var(--rose-deep); line-height: 0; vertical-align: -1rem; margin-right: 4px; }
+    .quote-break blockquote::after  { content: '\201D'; font-size: 4rem; color: var(--rose-deep); line-height: 0; vertical-align: -1.4rem; margin-left: 4px; }
+
+    /* ── COUNTDOWN ── */
+    .countdown-section {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 80px 20px 100px;
+    }
+
+    .countdown-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center bottom, rgba(139,58,74,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
     .countdown-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: #c45a69;
-      margin-bottom: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 8px;
     }
-    .countdown-section .next-date {
-      color: #b07a7a;
-      font-size: 0.95rem;
-      margin-bottom: 40px;
+    .countdown-section h2 em {
+      font-style: italic;
+      color: var(--rose-soft);
     }
+    .next-date {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
     .countdown-boxes {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 16px;
       flex-wrap: wrap;
+      margin-bottom: 40px;
     }
+
     .countdown-box {
-      background: #fff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(196,90,105,0.2);
       border-radius: 16px;
-      padding: 20px 28px;
-      box-shadow: 0 6px 20px rgba(196,90,105,0.15);
-      min-width: 90px;
+      padding: 24px 28px;
+      min-width: 100px;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s;
     }
+    .countdown-box:hover { border-color: var(--rose-soft); }
+
     .countdown-box .number {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      color: #c45a69;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 300;
+      color: var(--cream);
       line-height: 1;
     }
     .countdown-box .label {
-      font-size: 0.75rem;
-      color: #b07a7a;
+      font-size: 0.7rem;
+      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 6px;
-    }
-    .countdown-message {
-      margin-top: 30px;
-      font-size: 1rem;
-      color: #7a5a5a;
-      font-style: italic;
+      letter-spacing: 2px;
+      margin-top: 8px;
     }
 
-    /* Footer */
-    footer {
-      padding: 40px 20px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #8a7a7a;
+    .countdown-message {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
     }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 50px 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #5a4045;
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ── HORIZONTAL RULE ── */
+    .hr {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--rose-deep), transparent);
+      margin: 0 auto;
+    }
+
   </style>
 </head>
 <body>
 
-  <div class="bg-animation" id="bg"></div>
+  <!-- Particles -->
+  <div class="particles" id="particles"></div>
 
   <a href="index.html" class="back-btn">← Back</a>
 
-  <!-- Hero Section -->
+  <!-- ── HERO ── -->
   <section class="hero">
-    <p class="subtitle">A letter before the distance</p>
-    <h1>See You Soon</h1>
+    <p class="hero-eyebrow">a letter before the distance</p>
+    <h1>See You <em>Soon</em></h1>
+    <div class="hero-divider"></div>
     <p>
-      <!-- PLACEHOLDER: Write your heartfelt paragraph here about the LDR, what this means, how you feel about leaving, what you promise her. Be real, be raw, be you. -->
-      The miles between us don't change a single thing. You are still my first thought in the morning and my last thought at night. This isn't goodbye — it's just see you soon. And I mean that with everything I have.
+      <!-- PLACEHOLDER: Replace this with your heartfelt paragraph. Talk about the LDR, what leaving feels like, what you promise her, why she doesn't need to be scared. Be raw. Be real. Be you. -->
+      The miles between us don't change a single thing. You are still my first thought in the morning and my last at night. This isn't goodbye — it never could be. It's just see you soon. And I mean that with everything I have.
     </p>
+    <div class="hero-scroll">scroll</div>
   </section>
 
-  <div class="divider">· · · ♡ · · ·</div>
+  <!-- ── POLAROIDS ── -->
+  <div class="section-header">
+    <h2>Things I'll <em>Miss</em> About You</h2>
+    <p>just a few of the thousand reasons you're irreplaceable</p>
+  </div>
 
-  <!-- Things I'll Miss -->
-  <h2 class="section-title">Things I'll Miss About You</h2>
-  <p class="section-subtitle">Just a few of the thousand reasons you're irreplaceable.</p>
-
-  <div class="polaroid-grid">
+  <div class="polaroid-grid" id="grid">
 
     <div class="polaroid">
-      <img src="media/farewell/photo1.jpg" alt="Memory 1" />
+      <img src="media/farewell/photo1.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #1 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo2.jpg" alt="Memory 2" />
+      <img src="media/farewell/photo2.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #2 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo3.jpg" alt="Memory 3" />
+      <img src="media/farewell/photo3.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #3 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo4.jpg" alt="Memory 4" />
+      <img src="media/farewell/photo4.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #4 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo5.jpg" alt="Memory 5" />
+      <img src="media/farewell/photo5.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #5 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo6.jpg" alt="Memory 6" />
+      <img src="media/farewell/photo6.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #6 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo7.jpg" alt="Memory 7" />
+      <img src="media/farewell/photo7.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #7 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo8.jpg" alt="Memory 8" />
+      <img src="media/farewell/photo8.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #8 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo9.jpg" alt="Memory 9" />
+      <img src="media/farewell/photo9.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #9 --></p>
     </div>
 
     <div class="polaroid">
-      <img src="media/farewell/photo10.jpg" alt="Memory 10" />
+      <img src="media/farewell/photo10.jpg" alt="Memory" />
       <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #10 --></p>
     </div>
 
   </div>
 
-  <div class="divider">· · · ♡ · · ·</div>
+  <!-- ── QUOTE BREAK ── -->
+  <div class="quote-break">
+    <blockquote id="quote">
+      <!-- PLACEHOLDER: Drop a meaningful quote here, or a line from a song you both love, or something you've said to each other. -->
+      Distance means so little when someone means so much.
+    </blockquote>
+  </div>
 
-  <!-- Countdown Section -->
+  <div class="hr"></div>
+
+  <!-- ── COUNTDOWN ── -->
   <section class="countdown-section">
-    <h2>Until We Meet Again</h2>
+    <h2>Until We <em>Meet Again</em></h2>
     <p class="next-date" id="next-date-display"></p>
     <div class="countdown-boxes">
       <div class="countdown-box">
@@ -315,54 +511,80 @@
         <div class="label">Seconds</div>
       </div>
     </div>
-    <p class="countdown-message">Every second that passes is one second closer to you. 🤍</p>
+    <p class="countdown-message">
+      Every second that ticks by is one second closer to you.<br>I'm counting every single one. 🤍
+    </p>
   </section>
 
   <footer>
-    Crafted with care & love by MOTA.<br>May this journey make us smile forever.<br>Started on 23rd May, 2025.
+    Crafted with care & love by MOTA.<br>
+    May this journey make us smile forever.<br>
+    Started on 23rd May, 2025.
   </footer>
 
   <script>
-    // Floating circles
-    const bg = document.getElementById('bg');
-    for (let i = 0; i < 20; i++) {
-      const circle = document.createElement('div');
-      const size = Math.random() * 80 + 40;
-      circle.className = 'bg-circle';
-      circle.style.width = size + 'px';
-      circle.style.height = size + 'px';
-      circle.style.left = Math.random() * 100 + '%';
-      circle.style.top = Math.random() * 100 + '%';
-      circle.style.animationDuration = (6 + Math.random() * 6) + 's';
-      bg.appendChild(circle);
+    // ── Floating particles ──
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 3 + 1;
+      p.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${Math.random() * 100}%;
+        animation-duration: ${8 + Math.random() * 12}s;
+        animation-delay: ${Math.random() * 10}s;
+      `;
+      container.appendChild(p);
     }
 
-    // Countdown Timer
-    // To update the meeting date after each meet, just change the date below
+    // ── Scroll reveal for polaroids ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.polaroid').forEach(el => observer.observe(el));
+
+    // ── Scroll reveal for quote ──
+    const quoteObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.3 });
+    quoteObserver.observe(document.getElementById('quote'));
+
+    // ── Countdown Timer ──
+    // Change this date after every meeting
     const nextMeeting = new Date('2025-05-01T00:00:00');
 
     document.getElementById('next-date-display').textContent =
-      'Next meeting: ' + nextMeeting.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+      'next meeting · ' + nextMeeting.toLocaleDateString('en-IN', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
 
     function updateCountdown() {
       const now = new Date();
       const diff = nextMeeting - now;
 
       if (diff <= 0) {
-        document.getElementById('days').textContent = '00';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
+        ['days','hours','minutes','seconds'].forEach(id => {
+          document.getElementById(id).textContent = '00';
+        });
         return;
       }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      document.getElementById('days').textContent = String(days).padStart(2, '0');
-      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('days').textContent    = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent   = String(hours).padStart(2, '0');
       document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
       document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
     }
