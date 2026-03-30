@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>See You Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffe8e1 0%, #fff9f5 100%);
+      color: #333;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Floating circles background */
+    .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+    .bg-circle { position: absolute; border-radius: 50%; background: rgba(255,182,193,0.3); animation: float 8s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-20px) scale(1.1); opacity: 0.4; } }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      background: #ffd6d6;
+      color: #503232;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: background 0.3s, transform 0.3s;
+      font-size: 0.9rem;
+    }
+    .back-btn:hover { background: #ff9aa2; transform: translateY(-2px); }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 20px 60px;
+      text-align: center;
+      max-width: 750px;
+      margin: auto;
+      animation: fadeInDown 1s ease forwards;
+      opacity: 0;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      color: #c45a69;
+      margin-bottom: 16px;
+    }
+    .hero .subtitle {
+      font-size: 1rem;
+      color: #b07a7a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: #5a3e3e;
+      animation: fadeInUp 1s ease 0.5s forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Divider */
+    .divider {
+      text-align: center;
+      margin: 50px auto;
+      color: #e8a0a0;
+      font-size: 1.4rem;
+      letter-spacing: 8px;
+    }
+
+    /* Section Title */
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #c45a69;
+      margin: 60px auto 10px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: #b07a7a;
+      font-size: 1rem;
+      margin-bottom: 50px;
+      padding: 0 20px;
+    }
+
+    /* Polaroid Grid */
+    .polaroid-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px 40px 60px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 14px 14px 50px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      width: 200px;
+      transform: rotate(var(--rot));
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.05);
+      box-shadow: 0 16px 40px rgba(196,90,105,0.2);
+      z-index: 10;
+    }
+    .polaroid img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .polaroid .caption {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #5a3e3e;
+      text-align: center;
+      line-height: 1.5;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Staggered animation delays for polaroids */
+    .polaroid:nth-child(1) { --rot: -3deg; animation-delay: 0.1s; }
+    .polaroid:nth-child(2) { --rot: 2deg; animation-delay: 0.2s; }
+    .polaroid:nth-child(3) { --rot: -2deg; animation-delay: 0.3s; }
+    .polaroid:nth-child(4) { --rot: 3deg; animation-delay: 0.4s; }
+    .polaroid:nth-child(5) { --rot: -1deg; animation-delay: 0.5s; }
+    .polaroid:nth-child(6) { --rot: 2.5deg; animation-delay: 0.6s; }
+    .polaroid:nth-child(7) { --rot: -3deg; animation-delay: 0.7s; }
+    .polaroid:nth-child(8) { --rot: 1.5deg; animation-delay: 0.8s; }
+    .polaroid:nth-child(9) { --rot: -2.5deg; animation-delay: 0.9s; }
+    .polaroid:nth-child(10) { --rot: 2deg; animation-delay: 1.0s; }
+
+    /* Countdown Section */
+    .countdown-section {
+      text-align: center;
+      padding: 60px 20px 80px;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px);
+      margin: 40px 0 0;
+    }
+    .countdown-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #c45a69;
+      margin-bottom: 10px;
+    }
+    .countdown-section .next-date {
+      color: #b07a7a;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+    .countdown-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .countdown-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 28px;
+      box-shadow: 0 6px 20px rgba(196,90,105,0.15);
+      min-width: 90px;
+    }
+    .countdown-box .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: #c45a69;
+      line-height: 1;
+    }
+    .countdown-box .label {
+      font-size: 0.75rem;
+      color: #b07a7a;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 6px;
+    }
+    .countdown-message {
+      margin-top: 30px;
+      font-size: 1rem;
+      color: #7a5a5a;
+      font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #8a7a7a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-animation" id="bg"></div>
+
+  <a href="index.html" class="back-btn">← Back</a>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <p class="subtitle">A letter before the distance</p>
+    <h1>See You Soon</h1>
+    <p>
+      <!-- PLACEHOLDER: Write your heartfelt paragraph here about the LDR, what this means, how you feel about leaving, what you promise her. Be real, be raw, be you. -->
+      The miles between us don't change a single thing. You are still my first thought in the morning and my last thought at night. This isn't goodbye — it's just see you soon. And I mean that with everything I have.
+    </p>
+  </section>
+
+  <div class="divider">· · · ♡ · · ·</div>
+
+  <!-- Things I'll Miss -->
+  <h2 class="section-title">Things I'll Miss About You</h2>
+  <p class="section-subtitle">Just a few of the thousand reasons you're irreplaceable.</p>
+
+  <div class="polaroid-grid">
+
+    <div class="polaroid">
+      <img src="media/farewell/photo1.jpg" alt="Memory 1" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #1 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo2.jpg" alt="Memory 2" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #2 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo3.jpg" alt="Memory 3" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #3 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo4.jpg" alt="Memory 4" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #4 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo5.jpg" alt="Memory 5" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #5 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo6.jpg" alt="Memory 6" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #6 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo7.jpg" alt="Memory 7" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #7 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo8.jpg" alt="Memory 8" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #8 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo9.jpg" alt="Memory 9" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #9 --></p>
+    </div>
+
+    <div class="polaroid">
+      <img src="media/farewell/photo10.jpg" alt="Memory 10" />
+      <p class="caption"><!-- PLACEHOLDER: Thing you'll miss #10 --></p>
+    </div>
+
+  </div>
+
+  <div class="divider">· · · ♡ · · ·</div>
+
+  <!-- Countdown Section -->
+  <section class="countdown-section">
+    <h2>Until We Meet Again</h2>
+    <p class="next-date" id="next-date-display"></p>
+    <div class="countdown-boxes">
+      <div class="countdown-box">
+        <div class="number" id="days">00</div>
+        <div class="label">Days</div>
+      </div>
+      <div class="countdown-box">
+        <div class="number" id="hours">00</div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="countdown-box">
+        <div class="number" id="minutes">00</div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="countdown-box">
+        <div class="number" id="seconds">00</div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+    <p class="countdown-message">Every second that passes is one second closer to you. 🤍</p>
+  </section>
+
+  <footer>
+    Crafted with care & love by MOTA.<br>May this journey make us smile forever.<br>Started on 23rd May, 2025.
+  </footer>
+
+  <script>
+    // Floating circles
+    const bg = document.getElementById('bg');
+    for (let i = 0; i < 20; i++) {
+      const circle = document.createElement('div');
+      const size = Math.random() * 80 + 40;
+      circle.className = 'bg-circle';
+      circle.style.width = size + 'px';
+      circle.style.height = size + 'px';
+      circle.style.left = Math.random() * 100 + '%';
+      circle.style.top = Math.random() * 100 + '%';
+      circle.style.animationDuration = (6 + Math.random() * 6) + 's';
+      bg.appendChild(circle);
+    }
+
+    // Countdown Timer
+    // To update the meeting date after each meet, just change the date below
+    const nextMeeting = new Date('2025-05-01T00:00:00');
+
+    document.getElementById('next-date-display').textContent =
+      'Next meeting: ' + nextMeeting.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = nextMeeting - now;
+
+      if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
